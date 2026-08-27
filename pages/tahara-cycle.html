@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>מעגל הטהרה — כלי לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --sage:#8AA88C;
+    --sage-soft:#C4D8C6;
+    --rose-dim:#B99A9A;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.08);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img, svg, video{ max-width:100%; }
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+  }
+  h1,h2,h3,.display{
+    font-family:'Frank Ruhl Libre', serif;
+  }
+  .wrap{
+    max-width:520px;
+    margin:0 auto;
+    padding:18px 16px 8px;
+  }
+  header.app-header{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding:14px 4px 18px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:var(--gold);
+    font-weight:600;
+    text-transform:none;
+  }
+  header.app-header h1{
+    font-size:30px;
+    margin:0;
+    color:var(--navy);
+    font-weight:700;
+  }
+  header.app-header p.sub{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  .controls-row{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+  select, .btn{
+    font-family:'Heebo',sans-serif;
+    font-size:13.5px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--text);
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  select:focus, .btn:focus, button:focus, input:focus{
+    outline:2px solid var(--gold-soft);
+    outline-offset:2px;
+  }
+  .btn:hover{ border-color:var(--gold); }
+  .btn.active{
+    background:var(--navy);
+    color:#fff;
+    border-color:var(--navy);
+  }
+
+  section.card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px 16px;
+    margin-bottom:16px;
+    border:1px solid rgba(43,38,32,0.04);
+  }
+
+  /* ---------- Wheel ---------- */
+  .wheel-card{ text-align:center; }
+  .wheel-title{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:6px;
+  }
+  .wheel-title h2{
+    font-size:18px;
+    margin:0;
+    color:var(--navy);
+  }
+  .wheel-title .day-count{
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  .wheel-svg-holder{
+    display:flex;
+    justify-content:center;
+    margin:6px 0 10px;
+    width:100%;
+  }
+  .wheel-svg{
+    display:block;
+    width:100%;
+    max-width:300px;
+    height:auto;
+  }
+  .wheel-seg{
+    cursor:pointer;
+    transition:opacity .25s ease, filter .25s ease;
+  }
+  .wheel-seg.dim{ opacity:0.28; }
+  .wheel-seg.selected{
+    filter: drop-shadow(0 0 3px rgba(31,42,68,0.6));
+  }
+  .wheel-center-label{
+    font-family:'Frank Ruhl Libre',serif;
+    font-weight:700;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 16px;
+    justify-content:center;
+    margin-top:6px;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  .legend span.dot{
+    display:inline-block;
+    width:9px;height:9px;border-radius:50%;
+    margin-inline-end:5px;
+    vertical-align:middle;
+  }
+  .legend-extra{
+    border-top:1px solid var(--line);
+    padding-top:8px;
+    margin-top:8px;
+    font-size:10.5px;
+    gap:6px 12px;
+  }
+  .legend-extra .legend-icon{
+    min-width:13px;
+    transform:scale(0.85);
+  }
+  .legend-icon{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-inline-end:5px;
+    vertical-align:middle;
+    min-width:16px;
+  }
+
+  /* ---------- Tabs ---------- */
+  .tabs{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .tab-btn{
+    font-family:'Heebo',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--muted);
+    padding:10px 18px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .tab-btn.active{
+    background:var(--navy);
+    color:#fff;
+    border-color:var(--navy);
+  }
+  .screen{ animation:fadein .2s ease; }
+  @keyframes fadein{ from{opacity:0;} to{opacity:1;} }
+
+  .section-title{
+    font-size:17px;
+    color:var(--navy);
+    margin:0 0 4px;
+  }
+  .section-sub{
+    font-size:13px;
+    color:var(--muted);
+    margin:0 0 14px;
+    line-height:1.5;
+  }
+  .checkbox-field{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--text);
+    margin-top:6px;
+    cursor:pointer;
+  }
+  .checkbox-field input{ width:17px; height:17px; }
+
+  .raiyot-list{ display:grid; gap:8px; }
+  .raiyot-empty{ font-size:13px; color:var(--muted); text-align:center; padding:10px 0; }
+  .raiyot-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:var(--bg-alt);
+    border-radius:12px;
+    padding:10px 12px;
+    cursor:pointer;
+  }
+  .raiyot-item .ri-main{ font-size:13.5px; font-weight:600; color:var(--navy); }
+  .raiyot-item .ri-sub{ font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .raiyot-item .ri-tags{ display:flex; gap:6px; margin-top:4px; flex-wrap:wrap; }
+  .ri-tag{
+    font-size:10.5px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:2px 8px;
+    color:var(--muted);
+  }
+  .ri-del{
+    background:none;
+    border:none;
+    color:#B5546B;
+    font-size:18px;
+    cursor:pointer;
+    line-height:1;
+    padding:4px;
+  }
+
+  .veset-card .veset-block{
+    background:var(--bg-alt);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:10px;
+  }
+  .veset-card .veset-block .vb-title{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--gold);
+    margin-bottom:3px;
+  }
+  .veset-card .veset-block .vb-date{
+    font-size:14px;
+    font-weight:600;
+    color:var(--navy);
+  }
+  .veset-card .veset-block .vb-note{
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:3px;
+    line-height:1.5;
+  }
+  .vb-gcal{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:8px;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--navy);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 11px;
+    text-decoration:none;
+  }
+  .vb-gcal:hover{ border-color:var(--gold); }
+  .veset-sensation-note{
+    background:#EFE1F7;
+    border:1px solid #9B7FCB;
+    border-radius:12px;
+    padding:12px 14px;
+    font-size:13.5px;
+    color:var(--navy);
+    margin-bottom:14px;
+    line-height:1.6;
+  }
+  .veset-secondary-label{
+    font-size:12px;
+    color:var(--muted);
+    margin:6px 0 8px;
+  }
+  .kavua-alert{
+    background:#FCE4E6;
+    border:1.5px solid #D9515F;
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:16px;
+  }
+  .kavua-alert .ka-title{
+    font-weight:700;
+    color:#B5546B;
+    font-size:14px;
+    margin-bottom:6px;
+  }
+  .kavua-alert ul{
+    margin:0 0 8px;
+    padding-inline-start:18px;
+    font-size:13px;
+    color:var(--text);
+    line-height:1.6;
+  }
+  .kavua-alert .ka-cta{
+    font-size:13px;
+    font-weight:600;
+    color:#B5546B;
+  }
+  .tab-dot{
+    display:inline-block;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:#D9515F;
+    margin-inline-start:5px;
+    vertical-align:middle;
+  }
+
+  /* ---------- Mini 3-month calendar ---------- */
+  .mini-months{
+    display:grid;
+    gap:16px;
+  }
+  .mini-month h4{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--navy);
+    margin:0 0 6px;
+    font-weight:600;
+    font-family:'Heebo',sans-serif;
+  }
+  .mini-weekdays{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:2px;
+    margin-bottom:2px;
+  }
+  .mini-weekdays div{
+    text-align:center;
+    font-size:8.5px;
+    color:var(--muted);
+  }
+  .mini-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:2px;
+  }
+  .mini-day{
+    aspect-ratio:1/1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-size:9.5px;
+    border-radius:6px;
+    background:var(--bg-alt);
+    position:relative;
+  }
+  .mini-day.empty{ background:transparent; }
+  .mini-day.today{ box-shadow: inset 0 0 0 1.5px var(--gold); }
+  .mini-day .md-num{ line-height:1; }
+  .mini-day .md-dots{
+    display:flex;
+    gap:1.5px;
+    margin-top:2px;
+    height:4px;
+  }
+  .mini-day .md-dots span{
+    width:4px; height:4px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .mini-legend{ margin-top:12px; }
+
+  .mini-day.perisha-day{
+    color:#fff;
+    cursor:pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  }
+  .mini-day.perisha-day .md-num{ color:#fff; font-weight:700; }
+  .mini-day.perisha-day .md-mag{ margin-top:1px; line-height:0; }
+  .mini-day.perisha-day .md-mag svg{ display:block; }
+  .mini-day.perisha-day .md-onah{
+    font-size:6.5px;
+    color:#fff;
+    line-height:1;
+    margin-top:1px;
+    font-weight:600;
+  }
+  .mini-day.perisha-day .md-dots{ position:absolute; bottom:2px; }
+  .mini-day.perisha-day.today{ box-shadow: inset 0 0 0 2px var(--navy); }
+
+  .mini-day.raiya-day{
+    color:#fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.22);
+  }
+  .mini-day.raiya-day .md-num{ color:#fff; font-weight:700; }
+  .mini-day.raiya-day .md-onah{
+    font-size:6.5px;
+    color:#fff;
+    line-height:1;
+    margin-top:1px;
+    font-weight:700;
+  }
+  .mini-day.raiya-day .md-dots{ position:absolute; bottom:2px; }
+  .mini-day.raiya-day.today{ box-shadow: inset 0 0 0 2px var(--navy); }
+
+  .ours-day-detail{
+    background:var(--card);
+    border:1px solid var(--gold-soft);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-top:12px;
+    font-size:13px;
+  }
+  .ours-day-detail .odd-title{
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:6px;
+    font-size:13.5px;
+  }
+  .ours-day-detail .odd-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12.5px;
+    margin-bottom:3px;
+    color:var(--text);
+  }
+  .ours-day-detail .odd-dot{
+    width:8px; height:8px;
+    border-radius:50%;
+    display:inline-block;
+    flex:0 0 auto;
+  }
+  .ours-day-detail .odd-note{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:8px;
+    font-size:12px;
+    color:var(--muted);
+    padding-top:8px;
+    border-top:1px solid var(--line);
+  }
+
+  /* ---------- Calendar ---------- */
+  .cal-card .cal-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .cal-header .month-label{
+    font-size:17px;
+    color:var(--navy);
+    font-weight:600;
+    min-width:150px;
+    text-align:center;
+  }
+  .nav-btn{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--card);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    cursor:pointer;
+    color:var(--navy);
+  }
+  .nav-btn:hover{ background:var(--bg-alt); }
+  .weekdays, .daysgrid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:2px;
+    min-width:0;
+  }
+  .weekdays div{
+    text-align:center;
+    font-size:9px;
+    color:var(--muted);
+    padding-bottom:3px;
+    font-weight:600;
+  }
+  .daycell{
+    position:relative;
+    aspect-ratio:1/1;
+    min-width:0;
+    overflow:hidden;
+    border-radius:8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-size:9.5px;
+    background:var(--bg-alt);
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition:transform .12s ease, border-color .12s ease;
+    padding:1px;
+  }
+  .daycell:hover{ transform:translateY(-1px); }
+  .daycell.empty{ background:transparent; cursor:default; }
+  .daycell.today{ border-color:var(--gold); }
+  .daycell.selected{
+    border-color:var(--navy);
+    background:#fff;
+    box-shadow:0 3px 10px rgba(31,42,68,0.18);
+  }
+  .daycell .num{
+    font-weight:600;
+    font-size:10.5px;
+    line-height:1;
+  }
+  .daycell .cal-dots{
+    display:flex;
+    gap:1.5px;
+    margin-top:2px;
+    height:4px;
+  }
+  .daycell .cal-dots span{
+    width:4px; height:4px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .daycell.status-bleeding{ background:#F0CBB4; }
+  .daycell.status-nekiim{ background:#F5C3D6; }
+  .daycell.status-tevilah{ background:#DCEBF2; }
+  .daycell.status-tahara{ background:#DFF5FA; }
+
+  /* ---------- Detail card ---------- */
+  .detail-card h2{
+    font-size:17px;
+    color:var(--navy);
+    margin:0 0 4px;
+  }
+  .detail-date{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .detail-block{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:12px 0;
+    border-top:1px solid var(--line);
+  }
+  .detail-block:first-of-type{ border-top:none; padding-top:0; }
+  .detail-emo{
+    font-size:26px;
+    flex:0 0 auto;
+    width:38px;
+    text-align:center;
+  }
+  .detail-text .label{
+    font-size:12px;
+    color:var(--gold);
+    font-weight:700;
+    letter-spacing:.02em;
+    margin-bottom:2px;
+  }
+  .detail-text p{
+    margin:0;
+    font-size:14px;
+    line-height:1.55;
+  }
+
+  /* ---------- Settings ---------- */
+  details.settings{
+    margin-bottom:16px;
+  }
+  details.settings summary{
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:'Frank Ruhl Libre',serif;
+    font-size:16px;
+    color:var(--navy);
+    font-weight:600;
+    padding:16px;
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
+  details.settings summary::-webkit-details-marker{ display:none; }
+  details.settings summary .chev{ transition:transform .2s ease; color:var(--gold); }
+  details.settings[open] summary .chev{ transform:rotate(180deg); }
+  details.settings[open] summary{ border-radius:var(--radius) var(--radius) 0 0; box-shadow:none; }
+  .settings-body{
+    background:var(--card);
+    border-radius:0 0 var(--radius) var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px;
+    display:grid;
+    gap:14px;
+  }
+  .field{ display:grid; gap:5px; }
+  .field label{ font-size:12.5px; color:var(--muted); font-weight:600; }
+  .field input[type=date], .field input[type=time], .field input[type=number]{
+    font-family:'Heebo',sans-serif;
+    font-size:14px;
+    padding:9px 10px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--bg-alt);
+    color:var(--text);
+    width:100%;
+  }
+  .field-row{ display:flex; gap:10px; }
+  .field-row .field{ flex:1; }
+  .save-btn{
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    padding:12px;
+    border-radius:12px;
+    font-family:'Heebo',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .save-btn:hover{ background:var(--navy-soft); }
+  .sunset-note{
+    font-size:12px;
+    color:var(--sage);
+    background:var(--sage-soft);
+    padding:8px 10px;
+    border-radius:10px;
+    line-height:1.5;
+  }
+  .warn-note{
+    font-size:12px;
+    color:#7a4b1f;
+    background:#F3E0C6;
+    padding:8px 10px;
+    border-radius:10px;
+    line-height:1.5;
+  }
+
+  .disclaimer{
+    font-size:11.5px;
+    color:var(--muted);
+    text-align:center;
+    line-height:1.6;
+    padding:14px 10px 4px;
+  }
+
+  .app-footer{
+    text-align:center;
+    padding:22px 10px 30px;
+    margin-top:10px;
+  }
+  .app-footer p{
+    margin:0 0 8px;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .footer-whatsapp{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    text-decoration:none;
+    color:var(--navy);
+    font-size:13px;
+    font-weight:600;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:7px 14px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .footer-whatsapp:hover{
+    border-color:#25D366;
+    transform:translateY(-1px);
+  }
+  .footer-whatsapp svg{ flex:0 0 auto; }
+
+  /* ---------- Ovulation ---------- */
+  .ovulation-card{
+    background:linear-gradient(135deg, var(--card), #F0EDE0);
+    border:1px solid var(--gold-soft);
+  }
+  .ovulation-head{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .ovulation-head .detail-emo{ font-size:24px; }
+  #ovulationDateText{
+    margin:0;
+    font-size:14px;
+    font-weight:600;
+    color:var(--navy);
+  }
+  .ovulation-note{
+    margin:10px 0 0;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.55;
+  }
+  .ovulation-note.selected-today{
+    color:var(--navy);
+    font-weight:600;
+  }
+  .ov-badge{
+    position:absolute;
+    top:2px;
+    left:2px;
+    font-size:10px;
+    line-height:1;
+    filter:drop-shadow(0 0 1px rgba(255,255,255,0.9));
+  }
+  .daycell.ovulation{
+    background:#EFE1F7 !important;
+    box-shadow: inset 0 0 0 2px #9B7FCB;
+  }
+
+  /* ---------- Heart-couple composite icon ---------- */
+  .heart-couple{
+    position:relative;
+    display:inline-block;
+    line-height:1;
+  }
+  .heart-couple .hc-heart{ display:block; }
+  .heart-couple .hc-face{
+    position:absolute;
+    top:52%;
+    transform:translateY(-50%);
+    font-size:0.44em;
+    line-height:1;
+  }
+  .heart-couple .hc-face.hc-male{ right:16%; }
+  .heart-couple .hc-face.hc-female{ left:16%; }
+
+  /* ---------- Bedika / addon icons ---------- */
+  .magnifier-svg{ display:inline-block; vertical-align:middle; }
+  .addon-badge{
+    position:absolute;
+    bottom:1px;
+    right:1px;
+    font-size:9px;
+    line-height:1;
+    filter:drop-shadow(0 0 1px rgba(255,255,255,0.9));
+  }
+  .detail-emo{ position:relative; }
+
+  @media (max-width:380px){
+    .wrap{ padding-left:10px; padding-right:10px; }
+    section.card{ padding:16px 10px; }
+  }
+
+  @media (min-width:640px){
+    .wrap{ max-width:600px; }
+  }
+
+  .video-intro{
+    position:fixed; inset:0; background:#000; z-index:9999;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .video-intro video{
+    max-width:100%; max-height:100%; width:auto; height:auto;
+  }
+  .intro-skip{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.5);
+    border-radius:999px; padding:10px 22px; font-family:'Heebo',sans-serif;
+    font-size:14px; cursor:pointer; backdrop-filter:blur(4px);
+  }
+  .intro-skip:hover{ background:rgba(255,255,255,0.28); }
+</style>
+</head>
+<body>
+<div id="videoIntro" class="video-intro">
+  <video id="introVideo" playsinline></video>
+  <button type="button" id="introSkip" class="intro-skip">דלגו ›</button>
+</div>
+<div class="wrap" id="mainWrap" style="display:none;">
+
+  <header class="app-header">
+    <div class="eyebrow">כלי לימוד לחתנים וכלות</div>
+    <h1>מעגל הטהרה</h1>
+    <p class="sub">מעקב הלכתי-ביולוגי מסונכרן עם לוח שנה אמיתי</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" id="tabMain" role="tab" aria-selected="true">מעגל הטהרה</button>
+    <button class="tab-btn" id="tabOurs" role="tab" aria-selected="false">הלכות וסתות<span class="tab-dot" id="tabOursDot" style="display:none"></span></button>
+  </div>
+
+  <div id="screenMain" class="screen">
+
+  <div class="controls-row" style="margin-bottom:14px;">
+    <select id="regionSelect" aria-label="בחירת אזור לחישוב שקיעה"></select>
+    <button class="btn" id="calToggleBtn" aria-pressed="false">לוח שנה: לועזי</button>
+  </div>
+
+  <details class="settings" id="settingsPanel">
+    <summary>הגדרות מחזור <span class="chev">⌄</span></summary>
+    <div class="settings-body">
+      <div class="field-row">
+        <div class="field">
+          <label for="startDate">תאריך תחילת מחזור (ראייה)</label>
+          <input type="date" id="startDate">
+        </div>
+        <div class="field">
+          <label for="startTime">שעה</label>
+          <input type="time" id="startTime">
+        </div>
+      </div>
+      <div id="sunsetInfo" class="sunset-note"></div>
+      <div class="field-row">
+        <div class="field">
+          <label for="cycleLength">אורך מחזור כולל (ימים)</label>
+          <input type="number" id="cycleLength" min="20" max="45" value="28">
+        </div>
+        <div class="field">
+          <label for="bleedLength">אורך ימי דימום (ימים)</label>
+          <input type="number" id="bleedLength" min="3" max="10" value="5">
+        </div>
+      </div>
+      <button class="save-btn" id="saveSettings">שמירה ועדכון</button>
+    </div>
+  </details>
+
+  <section class="card wheel-card">
+    <div class="wheel-title">
+      <h2>מעגל המחזור</h2>
+      <span class="day-count" id="wheelDayCount"></span>
+    </div>
+    <div class="wheel-svg-holder" id="wheelHolder"></div>
+    <div class="legend">
+      <div><span class="dot" style="background:#C97C6D"></span>דימום / איסור 👨❤️👩</div>
+      <div><span class="dot" style="background:#B5546B"></span>שבעה נקיים 🔍</div>
+      <div><span class="dot" style="background:#5C93B0"></span>טבילה 💧</div>
+      <div><span class="dot" style="background:#4FB3C9"></span>ימי טהרה</div>
+      <div><span class="dot" style="background:#9B7FCB"></span>יום ביוץ משוער ⚡</div>
+    </div>
+    <div class="legend legend-extra">
+      <div><span class="legend-icon">🔍</span>בדיקה בשבעה נקיים</div>
+      <div><span class="legend-icon mag-red-wrap" id="legendMagRed"></span>בדיקה מעכבת (יום 1/7, הפסק טהרה)</div>
+      <div><span class="legend-icon">👨❤️👩</span>תזכורת הרחקה (תג קטן בימי נקיים)</div>
+      <div><span class="legend-icon" id="legendHeartCouple"></span>ימי טהרה / קרבה</div>
+      <div><span class="legend-icon">🩸</span>וסת · <span class="legend-icon">🌱</span>זקיק · <span class="legend-icon">⚡</span>ביוץ · <span class="legend-icon">🟡</span>לוטאלי</div>
+    </div>
+  </section>
+
+  <section class="card cal-card">
+    <div class="cal-header">
+      <button class="nav-btn" id="prevMonth" aria-label="חודש קודם">›</button>
+      <div class="month-label" id="monthLabel"></div>
+      <button class="nav-btn" id="nextMonth" aria-label="חודש הבא">‹</button>
+    </div>
+    <div class="weekdays">
+      <div>א</div><div>ב</div><div>ג</div><div>ד</div><div>ה</div><div>ו</div><div>ש</div>
+    </div>
+    <div class="daysgrid" id="daysGrid"></div>
+  </section>
+
+  <section class="card detail-card" id="detailCard">
+    <h2 id="detailTitle">היום</h2>
+    <div class="detail-date" id="detailDate"></div>
+    <div class="detail-block">
+      <div class="detail-emo" id="detailHalachaEmo">💑</div>
+      <div class="detail-text">
+        <div class="label">מה נדרש היום</div>
+        <p id="detailHalachaText"></p>
+      </div>
+    </div>
+    <div class="detail-block">
+      <div class="detail-emo" id="detailBioEmo">🌱</div>
+      <div class="detail-text">
+        <div class="label">מצב הרחם המשוער</div>
+        <p id="detailBioText"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card ovulation-card" id="ovulationCard">
+    <div class="ovulation-head">
+      <div class="detail-emo">⚡</div>
+      <div class="detail-text">
+        <div class="label">יום הביוץ המשוער</div>
+        <p id="ovulationDateText"></p>
+      </div>
+    </div>
+    <p class="ovulation-note" id="ovulationNote"></p>
+  </section>
+
+  <p class="disclaimer">
+    כלי זה נועד למטרות לימוד וארגון אישי בלבד, ומבוסס על הנחות ברירת מחדל כלליות (מחזור של 28 יום, בדיקות והפסק טהרה על פי הכללים הבסיסיים).
+    הוא אינו תחליף לבדיקות בפועל, להפסק טהרה מדויק או להכרעה הלכתית. בכל שאלה של ספק, שינוי במחזור, כתמים או נסיבות מיוחדות — יש לפנות לרב או לרבנית מוסמכים.
+  </p>
+
+  </div>
+
+  <div id="screenOurs" class="screen" style="display:none">
+
+    <section class="card">
+      <h2 class="section-title">היסטוריית ראיות</h2>
+      <p class="section-sub">הוסיפו כאן תאריכי ראייה בפועל. המערכת תשמור אותם ותחשב מהם את תאריכי הפרישה הסמוכה לוסת הצפויה.</p>
+
+      <div class="controls-row" style="justify-content:flex-start; margin-bottom:12px;">
+        <button class="btn active" id="dateModeGreg" type="button">תאריך לועזי</button>
+        <button class="btn" id="dateModeHeb" type="button">תאריך עברי</button>
+      </div>
+
+      <div id="gregDateFields" class="field-row">
+        <div class="field">
+          <label for="raiyaDateGreg">תאריך</label>
+          <input type="date" id="raiyaDateGreg">
+        </div>
+      </div>
+
+      <div id="hebDateFields" class="field-row" style="display:none;">
+        <div class="field">
+          <label for="raiyaDay">יום</label>
+          <select id="raiyaDay"></select>
+        </div>
+        <div class="field">
+          <label for="raiyaMonth">חודש</label>
+          <select id="raiyaMonth"></select>
+        </div>
+        <div class="field">
+          <label for="raiyaYear">שנה עברית</label>
+          <input type="number" id="raiyaYear" min="5700" max="5900">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="raiyaTime">שעה</label>
+          <input type="time" id="raiyaTime">
+        </div>
+        <div class="field">
+          <label for="raiyaBleed">משך דימום (ימים)</label>
+          <input type="number" id="raiyaBleed" min="1" max="14" value="5">
+        </div>
+      </div>
+
+      <label class="checkbox-field">
+        <input type="checkbox" id="raiyaSensation">
+        <span>היו הרגשות גוף (סימני גוף) לפני הראייה הזו</span>
+      </label>
+
+      <div id="raiyaFormMsg" class="warn-note" style="display:none; margin-top:10px;"></div>
+
+      <button class="save-btn" id="addRaiyaBtn" style="margin-top:12px;">הוספת תאריך ראייה</button>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">רשימת ראיות שמורות</h2>
+      <div id="raiyotList" class="raiyot-list"></div>
+    </section>
+
+    <section class="card ours-cal-card">
+      <h2 class="section-title">לוח שנה — ראיות ופרישות עתידיות</h2>
+      <div class="cal-header">
+        <button class="nav-btn" id="oursPrevMonth" aria-label="חודשים קודמים">›</button>
+        <div class="month-label" id="oursMonthLabel"></div>
+        <button class="nav-btn" id="oursNextMonth" aria-label="חודשים הבאים">‹</button>
+      </div>
+      <div class="controls-row" style="margin:6px 0 12px;">
+        <button class="btn" id="oursCalToggleBtn" type="button">לוח: לועזי</button>
+      </div>
+      <div class="mini-months" id="oursMiniMonths"></div>
+      <div id="oursDayDetail" class="ours-day-detail" style="display:none;"></div>
+      <div class="legend mini-legend">
+        <div><span class="dot" style="background:#D9515F"></span>ראייה בפועל</div>
+        <div><span class="dot" style="background:#C9A227"></span>וסת החודש</div>
+        <div><span class="dot" style="background:#5C93B0"></span>וסת בינוני</div>
+        <div><span class="dot" style="background:#9B7FCB"></span>וסת הפלגה</div>
+      </div>
+    </section>
+
+    <section class="card veset-card">
+      <h2 class="section-title">פרישה סמוכה לוסת הצפויה</h2>
+      <div id="vesetContent"></div>
+    </section>
+
+  </div>
+
+  <footer class="app-footer">
+    <p>כל הזכויות שמורות לדביר</p>
+    <a id="footerWhatsapp" class="footer-whatsapp" href="https://wa.me/972528990131" target="_blank" rel="noopener noreferrer" aria-label="שליחת הודעה בוואטסאפ לדביר">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <circle cx="12" cy="12" r="12" fill="#25D366"></circle>
+        <path fill="#ffffff" d="M15.7 13.85c-.28-.14-1.66-.82-1.92-.91-.26-.1-.44-.14-.63.14-.19.28-.72.91-.88 1.1-.16.19-.32.21-.6.07-.28-.14-1.17-.43-2.23-1.38-.83-.74-1.38-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.63-1.53-.87-2.09-.23-.55-.46-.48-.63-.49-.16-.01-.35-.01-.54-.01-.19 0-.5.07-.76.35-.26.28-1 .98-1 2.39 0 1.41 1.02 2.77 1.17 2.96.14.19 2 3.06 4.85 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.66-.68 1.89-1.33.24-.65.24-1.21.16-1.33-.07-.12-.26-.19-.54-.33z"></path>
+      </svg>
+      <span>0528-99-0131</span>
+    </a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     1. GENERIC CALENDAR MATH (Rata Die based)
+     ============================================================ */
+  function mod(a,b){ return a - b*Math.floor(a/b); }
+
+  function isGregorianLeap(y){
+    return (y%4===0 && y%100!==0) || y%400===0;
+  }
+  var CUM_DAYS = [0,31,59,90,120,151,181,212,243,273,304,334];
+  function gregorianToAbsolute(year, month, day){
+    var n = day + CUM_DAYS[month-1];
+    if (month > 2 && isGregorianLeap(year)) n += 1;
+    n += 365*(year-1) + Math.floor((year-1)/4) - Math.floor((year-1)/100) + Math.floor((year-1)/400);
+    return n;
+  }
+  function daysInGregorianMonth(year, month){
+    var d = [31, isGregorianLeap(year)?29:28, 31,30,31,30,31,31,30,31,30,31];
+    return d[month-1];
+  }
+  function absoluteToGregorian(abs){
+    var year = Math.floor(abs/365.2425) + 1;
+    while (gregorianToAbsolute(year+1,1,1) <= abs) year++;
+    while (gregorianToAbsolute(year,1,1) > abs) year--;
+    var month = 1;
+    while (true){
+      var dim = daysInGregorianMonth(year, month);
+      var monthEnd = gregorianToAbsolute(year, month, dim);
+      if (abs <= monthEnd) break;
+      month++;
+    }
+    var day = abs - gregorianToAbsolute(year, month, 1) + 1;
+    return {year:year, month:month, day:day};
+  }
+  function jsDateToAbs(d){ return gregorianToAbsolute(d.getFullYear(), d.getMonth()+1, d.getDate()); }
+  function absToJsDate(abs){ var g = absoluteToGregorian(abs); return new Date(g.year, g.month-1, g.day); }
+  function weekdayOf(abs){ return mod(abs,7); } // 0=Sunday ... 6=Saturday
+
+  /* ============================================================
+     2. HEBREW CALENDAR MATH (Nisan=1 ... Tishrei=7 numbering)
+     ============================================================ */
+  var HEBREW_EPOCH = -1373427;
+  function hebrewLeapYear(y){ return mod(7*y+1, 19) < 7; }
+  function lastMonthOfHebrewYear(y){ return hebrewLeapYear(y) ? 13 : 12; }
+
+  function hebrewCalendarElapsedDays(year){
+    var monthsElapsed = Math.floor((235*year - 234)/19);
+    var partsElapsed = 12084 + 13753*monthsElapsed;
+    var day = 29*monthsElapsed + Math.floor(partsElapsed/25920);
+    if (mod(3*(day+1),7) < 3) day += 1;
+    return day;
+  }
+  function hebrewNewYearDelay(year){
+    var ny1 = hebrewCalendarElapsedDays(year);
+    var ny0 = hebrewCalendarElapsedDays(year-1);
+    var ny2 = hebrewCalendarElapsedDays(year+1);
+    if (ny2 - ny1 === 356) return 2;
+    if (ny1 - ny0 === 382) return 1;
+    return 0;
+  }
+  function hebrewNewYear(year){
+    return HEBREW_EPOCH + hebrewCalendarElapsedDays(year) + hebrewNewYearDelay(year);
+  }
+  function hebrewYearLength(year){
+    return hebrewNewYear(year+1) - hebrewNewYear(year);
+  }
+  function hebrewMonthDays(year, month){
+    // month numbering: 1 Nisan,2 Iyar,3 Sivan,4 Tammuz,5 Av,6 Elul,
+    // 7 Tishrei,8 Cheshvan,9 Kislev,10 Tevet,11 Shevat,12 Adar/AdarI,13 AdarII(leap)
+    if ([1,3,5,7,11].indexOf(month) !== -1) return 30; // Nisan,Sivan,Av,Tishrei,Shevat
+    if ([2,4,6,10].indexOf(month) !== -1) return 29;   // Iyar,Tammuz,Elul,Tevet
+    if (month === 12) return hebrewLeapYear(year) ? 30 : 29; // Adar / Adar I
+    if (month === 13) return 29; // Adar II
+    if (month === 8){ // Cheshvan
+      var len = hebrewYearLength(year);
+      return (len===355 || len===385) ? 30 : 29;
+    }
+    if (month === 9){ // Kislev
+      var len2 = hebrewYearLength(year);
+      return (len2===353 || len2===383) ? 29 : 30;
+    }
+    return 30;
+  }
+  function hebrewToAbsolute(year, month, day){
+    var dayInYear = day;
+    if (month < 7){
+      for (var m=7; m<=lastMonthOfHebrewYear(year); m++) dayInYear += hebrewMonthDays(year,m);
+      for (var m2=1; m2<month; m2++) dayInYear += hebrewMonthDays(year,m2);
+    } else {
+      for (var m3=7; m3<month; m3++) dayInYear += hebrewMonthDays(year,m3);
+    }
+    return hebrewNewYear(year) + dayInYear - 1;
+  }
+  function nextHebrewMonth(year, month){
+    // chronological order within a Hebrew year: 7,8,...,last(Adar/AdarII),1(Nisan),2,...,6(Elul), then 7 of year+1
+    if (month === lastMonthOfHebrewYear(year)) return {year:year, month:1};
+    if (month === 6) return {year:year+1, month:7};
+    return {year:year, month:month+1};
+  }
+  function prevHebrewMonth(year, month){
+    if (month === 1) return {year:year, month:lastMonthOfHebrewYear(year)};
+    if (month === 7) return {year:year-1, month:6};
+    return {year:year, month:month-1};
+  }
+  function absoluteToHebrew(abs){
+    var year = Math.floor((abs - HEBREW_EPOCH)/365) - 1;
+    while (hebrewNewYear(year+1) <= abs) year++;
+    while (hebrewNewYear(year) > abs) year--;
+    var month = 7;
+    var monthStart = hebrewNewYear(year);
+    while (true){
+      var days = hebrewMonthDays(year, month);
+      if (abs < monthStart + days) break;
+      monthStart += days;
+      var nxt = nextHebrewMonth(year, month);
+      year = nxt.year; month = nxt.month;
+    }
+    var day = abs - monthStart + 1;
+    return {year:year, month:month, day:day};
+  }
+  var HEB_MONTH_NAMES = {1:'ניסן',2:'אייר',3:'סיון',4:'תמוז',5:'אב',6:'אלול',
+    7:'תשרי',8:'חשוון',9:'כסלו',10:'טבת',11:'שבט'};
+  function hebMonthName(year, month){
+    if (month === 12) return hebrewLeapYear(year) ? 'אדר א׳' : 'אדר';
+    if (month === 13) return 'אדר ב׳';
+    return HEB_MONTH_NAMES[month];
+  }
+  var HEB_NUM_LETTERS = [
+    ['','א','ב','ג','ד','ה','ו','ז','ח','ט'],
+    ['','י','כ','ל','מ','נ','ס','ע','פ','צ'],
+    ['','ק','ר','ש','ת']
+  ];
+  function hebrewNumeral(n){
+    if (n<=0) return String(n);
+    var out = '';
+    var hundreds = Math.floor(n/100); n -= hundreds*100;
+    while (hundreds > 4){ out += 'ת'; hundreds -= 4; }
+    out += HEB_NUM_LETTERS[2][hundreds] || '';
+    var tens = Math.floor(n/10); var ones = n - tens*10;
+    if (tens===1 && ones===5){ out += 'טו'; }
+    else if (tens===1 && ones===6){ out += 'טז'; }
+    else {
+      out += HEB_NUM_LETTERS[1][tens] || '';
+      out += HEB_NUM_LETTERS[0][ones] || '';
+    }
+    return out + '׳';
+  }
+
+  var GREG_MONTH_NAMES = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+
+  /* ============================================================
+     3. SUNSET CALCULATION (NOAA simplified solar algorithm)
+     ============================================================ */
+  var REGIONS = {
+    jerusalem: {label:'ירושלים', lat:31.7683, lon:35.2137},
+    telaviv:   {label:'תל אביב', lat:32.0853, lon:34.7818},
+    haifa:     {label:'חיפה', lat:32.7940, lon:34.9896},
+    beersheva: {label:'באר שבע', lat:31.2530, lon:34.7915},
+    eilat:     {label:'אילת', lat:29.5577, lon:34.9519}
+  };
+
+  function dayOfYear(year, month, day){
+    return gregorianToAbsolute(year,month,day) - gregorianToAbsolute(year,1,1) + 1;
+  }
+
+  // returns JS Date (UTC-correct instant) of sunset for given civil date & region, or null if it never sets/rises
+  function calcSunsetUTC(year, month, day, lat, lon){
+    var rad = Math.PI/180;
+    var N = dayOfYear(year, month, day);
+    var gamma = 2*Math.PI/365 * (N - 1);
+    var eqtime = 229.18*(0.000075 + 0.001868*Math.cos(gamma) - 0.032077*Math.sin(gamma)
+                 - 0.014615*Math.cos(2*gamma) - 0.040849*Math.sin(2*gamma));
+    var decl = 0.006918 - 0.399912*Math.cos(gamma) + 0.070257*Math.sin(gamma)
+               - 0.006758*Math.cos(2*gamma) + 0.000907*Math.sin(2*gamma)
+               - 0.002697*Math.cos(3*gamma) + 0.00148*Math.sin(3*gamma);
+    var zenith = 90.833*rad;
+    var latRad = lat*rad;
+    var cosH = (Math.cos(zenith)/(Math.cos(latRad)*Math.cos(decl))) - Math.tan(latRad)*Math.tan(decl);
+    if (cosH > 1 || cosH < -1) return null;
+    var ha = Math.acos(cosH) / rad; // degrees
+    var sunsetUTCmin = 720 - 4*lon - eqtime + 4*ha;
+    var hoursUTC = Math.floor(sunsetUTCmin/60);
+    var minutesUTC = Math.round(sunsetUTCmin - hoursUTC*60);
+    return new Date(Date.UTC(year, month-1, day, hoursUTC, minutesUTC));
+  }
+  function formatIsraelTime(jsUtcDate){
+    return jsUtcDate.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit', timeZone:'Asia/Jerusalem'});
+  }
+
+  /* ============================================================
+     4. STATE
+     ============================================================ */
+  var STORAGE_KEY = 'tahara_cycle_state_v1';
+  var todayJs = new Date(); todayJs.setHours(0,0,0,0);
+
+  function pad2(n){ return (n<10?'0':'')+n; }
+  function defaultState(){
+    var now = new Date();
+    return {
+      region: 'jerusalem',
+      calendarView: 'gregorian', // or 'hebrew'
+      cycleLength: 28,
+      bleedLength: 5,
+      startDate: now.getFullYear()+'-'+pad2(now.getMonth()+1)+'-'+pad2(now.getDate()),
+      startTime: pad2(now.getHours())+':'+pad2(now.getMinutes()),
+      viewYear: now.getFullYear(),
+      viewMonth: now.getMonth()+1, // gregorian month being viewed
+      viewHYear: null,
+      viewHMonth: null,
+      selectedAbs: jsDateToAbs(now),
+      raiyot: [], // {id, dateGreg:'YYYY-MM-DD', time:'HH:MM', bleedLength, hasSensation}
+      oursCalView: 'gregorian',
+      oursViewYear: now.getFullYear(),
+      oursViewMonth: now.getMonth()+1,
+      oursViewHYear: null,
+      oursViewHMonth: null
+    };
+  }
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      var parsed = JSON.parse(raw);
+      var d = defaultState();
+      for (var k in d){ if (parsed[k]===undefined) parsed[k]=d[k]; }
+      return parsed;
+    }catch(e){ return defaultState(); }
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState();
+
+  /* Resolve a civil date+time+region into the effective halachic day (abs) and onah (day/night),
+     using the sunset-crossing rule: if the time is after sunset, it belongs to the night onah
+     of the NEXT civil date. */
+  function resolveOnah(dateStr, timeStr, regionKey){
+    var parts = dateStr.split('-');
+    var y = parseInt(parts[0],10), m = parseInt(parts[1],10), d = parseInt(parts[2],10);
+    var tparts = timeStr.split(':');
+    var hh = parseInt(tparts[0],10), mm = parseInt(tparts[1],10);
+    var region = REGIONS[regionKey] || REGIONS.jerusalem;
+    var sunsetUtc = calcSunsetUTC(y,m,d, region.lat, region.lon);
+    var abs = gregorianToAbsolute(y,m,d);
+    var isDay = true;
+    if (sunsetUtc){
+      var sunsetLocalStr = sunsetUtc.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Jerusalem'});
+      var sp = sunsetLocalStr.split(':');
+      var sunsetMinutes = parseInt(sp[0],10)*60 + parseInt(sp[1],10);
+      var enteredMinutes = hh*60+mm;
+      if (enteredMinutes > sunsetMinutes){
+        abs += 1;
+        isDay = false;
+      }
+    }
+    return {abs:abs, isDay:isDay};
+  }
+
+  /* effective absolute start day, adjusted for sunset rule */
+  function computeEffectiveStartAbs(){
+    return resolveOnah(state.startDate, state.startTime, state.region).abs;
+  }
+
+  function cycleDayIndex(abs){
+    var startAbs = computeEffectiveStartAbs();
+    var diff = abs - startAbs;
+    return mod(diff, state.cycleLength) + 1; // 1-based
+  }
+
+  function classifyHalacha(dayIndex){
+    var bl = state.bleedLength;
+    var nekiimEnd = bl + 7;
+    var tevilahDay = nekiimEnd + 1;
+    var baseHarchakaText = 'ימי הרחקה. הבעל והאישה נוהגים בכל דיני ההרחקות.';
+    if (dayIndex <= bl){
+      var isHefsek = (dayIndex === bl);
+      var extra = isHefsek ? ' ביום זה, הפסק הטהרה, יש לבצע בדיקת הפסק טהרה סמוך לשקיעה, ולהניח מוך דחוק.' : '';
+      return {
+        status:'bleeding', emoji:'👨❤️👩', composite:false,
+        title: isHefsek ? 'הפסק טהרה' : 'ימי ראייה / איסור',
+        text: baseHarchakaText + extra,
+        showBedikaAddon: isHefsek,
+        showSeparationMini: false,
+        bedikaCritical: isHefsek
+      };
+    }
+    if (dayIndex <= nekiimEnd){
+      var nCount = dayIndex - bl;
+      var isFirstNekiim = (nCount === 1);
+      var isLastNekiim = (nCount === 7);
+      var isCriticalNekiim = isFirstNekiim || isLastNekiim;
+      var nekiimText = baseHarchakaText + ' ';
+      if (isCriticalNekiim){
+        nekiimText += 'יום זה הוא ה' + (isFirstNekiim ? 'ראשון' : 'שביעי והאחרון') + ' משבעת הנקיים — חובה לעשות בדיקה אחת לפחות.';
+        if (isLastNekiim){
+          nekiimText += ' לאחר צאת הכוכבים האישה טובלת במקווה טהרה.';
+        }
+      } else {
+        nekiimText += 'לכתחילה תעשה האישה בדיקה בבוקר וסמוך לשקיעה. בשעת הצורך ניתן להתייעץ עם פוסק על מיעוט בדיקות.';
+      }
+      return {
+        status:'nekiim', emoji:'🔍', composite:false,
+        title:'שבעה נקיים (יום '+nCount+' מתוך 7)',
+        text: nekiimText,
+        showBedikaAddon: false,
+        showSeparationMini: true,
+        bedikaCritical: isCriticalNekiim
+      };
+    }
+    if (dayIndex === tevilahDay){
+      return {
+        status:'tevilah', emoji:'💧', composite:false,
+        title:'ליל טבילה',
+        text:'הערב שלאחר סיום שבעת הנקיים — זמן הטבילה במקווה, לאחר צאת הכוכבים. לאחר הטבילה מותרת הקרבה.',
+        showBedikaAddon:false, showSeparationMini:false, bedikaCritical:false
+      };
+    }
+    return {
+      status:'tahara', emoji:'💑', composite:true,
+      title:'ימי טהרה',
+      text:'ימי קרבה, לאחר הטבילה ועד תחילת המחזור הבא.',
+      showBedikaAddon:false, showSeparationMini:false, bedikaCritical:false
+    };
+  }
+
+  function ovulationDayIndex(){
+    // Ovulation ≈ 14 days before the next cycle begins (fixed luteal-phase convention)
+    return state.cycleLength - 13;
+  }
+
+  function ovulationAbsForAbs(abs){
+    // Returns the absolute-day of the ovulation day within the SAME cycle iteration that `abs` belongs to
+    var startAbs = computeEffectiveStartAbs();
+    var diff = abs - startAbs;
+    var cycleNum = Math.floor(diff / state.cycleLength);
+    var ovIdx = ovulationDayIndex();
+    return startAbs + cycleNum*state.cycleLength + (ovIdx - 1);
+  }
+
+  function classifyBiology(dayIndex){
+    var bl = state.bleedLength;
+    var cl = state.cycleLength;
+    // Ovulation is defined as 14 days before the NEXT cycle's start (day cl+1 / day 1 of next cycle),
+    // per the standard fixed-length luteal phase convention.
+    var ovDay = cl - 13;
+    if (dayIndex <= bl){
+      return {emoji:'🩸', text:'רירית הרחם מתפרקת ונפלטת — שלב הווסת. רמות ההורמונים אסטרוגן ופרוגסטרון נמוכות.'};
+    }
+    if (dayIndex >= ovDay-1 && dayIndex <= ovDay+1){
+      return {emoji:'⚡', text:'שלב הביוץ המשוער (כ-14 יום לפני המחזור הבא) — שחרור ביצית מהשחלה, בשיא רמת האסטרוגן וקוצר של הורמון LH.'};
+    }
+    if (dayIndex < ovDay-1){
+      return {emoji:'🌱', text:'השלב הזקיקי — רירית הרחם מתעבה מחדש, וזקיק בשחלה מבשיל לקראת ביוץ.'};
+    }
+    return {emoji:'🟡', text:'השלב הלוטאלי — הגופיף הצהוב מפריש פרוגסטרון, והרירית מתכוננת לקליטת עובר אפשרית.'};
+  }
+
+  /* ============================================================
+     5. RENDER: SETTINGS / SUNSET
+     ============================================================ */
+  var regionSelect = document.getElementById('regionSelect');
+  Object.keys(REGIONS).forEach(function(key){
+    var opt = document.createElement('option');
+    opt.value = key; opt.textContent = REGIONS[key].label;
+    regionSelect.appendChild(opt);
+  });
+  regionSelect.value = state.region;
+
+  var startDateInput = document.getElementById('startDate');
+  var startTimeInput = document.getElementById('startTime');
+  var cycleLengthInput = document.getElementById('cycleLength');
+  var bleedLengthInput = document.getElementById('bleedLength');
+  var sunsetInfo = document.getElementById('sunsetInfo');
+
+  function syncSettingsInputs(){
+    startDateInput.value = state.startDate;
+    startTimeInput.value = state.startTime;
+    cycleLengthInput.value = state.cycleLength;
+    bleedLengthInput.value = state.bleedLength;
+    regionSelect.value = state.region;
+    updateSunsetInfo();
+  }
+
+  function updateSunsetInfo(){
+    var parts = startDateInput.value.split('-');
+    if (parts.length!==3){ sunsetInfo.textContent=''; return; }
+    var y=parseInt(parts[0],10), m=parseInt(parts[1],10), d=parseInt(parts[2],10);
+    var region = REGIONS[regionSelect.value];
+    var sunsetUtc = calcSunsetUTC(y,m,d,region.lat,region.lon);
+    if (!sunsetUtc){ sunsetInfo.textContent='לא ניתן לחשב שקיעה עבור תאריך זה באזור זה.'; return; }
+    var timeStr = formatIsraelTime(sunsetUtc);
+    var tparts = startTimeInput.value.split(':');
+    var msg = 'שקיעה ב-'+region.label+' ביום שנבחר: בסביבות השעה '+timeStr+'.';
+    if (tparts.length===2){
+      var hh=parseInt(tparts[0],10), mm=parseInt(tparts[1],10);
+      var sunsetLocalStr = sunsetUtc.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Jerusalem'});
+      var sp = sunsetLocalStr.split(':');
+      var sunsetMinutes = parseInt(sp[0],10)*60+parseInt(sp[1],10);
+      var enteredMinutes = hh*60+mm;
+      if (enteredMinutes > sunsetMinutes){
+        msg += ' השעה שהוזנה היא לאחר השקיעה — היום המעשי הראשון של המחזור ייחשב ליום העברי הבא (מהלילה שלאחר מכן).';
+        sunsetInfo.className = 'warn-note';
+      } else {
+        sunsetInfo.className = 'sunset-note';
+      }
+    }
+    sunsetInfo.textContent = msg;
+  }
+
+  regionSelect.addEventListener('change', function(){ updateSunsetInfo(); });
+  startDateInput.addEventListener('change', updateSunsetInfo);
+  startTimeInput.addEventListener('change', updateSunsetInfo);
+
+  document.getElementById('saveSettings').addEventListener('click', function(){
+    state.startDate = startDateInput.value || state.startDate;
+    state.startTime = startTimeInput.value || state.startTime;
+    state.region = regionSelect.value;
+    state.cycleLength = Math.max(20, Math.min(45, parseInt(cycleLengthInput.value,10) || 28));
+    state.bleedLength = Math.max(3, Math.min(10, parseInt(bleedLengthInput.value,10) || 5));
+    saveState();
+    renderAll();
+    renderRaiyotList();
+    renderVeset();
+    renderOursCalendar();
+    document.getElementById('settingsPanel').removeAttribute('open');
+  });
+
+  /* ============================================================
+     6. CALENDAR TOGGLE
+     ============================================================ */
+  var calToggleBtn = document.getElementById('calToggleBtn');
+  calToggleBtn.addEventListener('click', function(){
+    if (state.calendarView === 'gregorian'){
+      // switch to hebrew, anchor on currently viewed gregorian month's 1st (or selected date)
+      var anchorAbs = state.selectedAbs || gregorianToAbsolute(state.viewYear, state.viewMonth, 1);
+      var hd = absoluteToHebrew(anchorAbs);
+      state.viewHYear = hd.year; state.viewHMonth = hd.month;
+      state.calendarView = 'hebrew';
+      calToggleBtn.textContent = 'לוח שנה: עברי';
+      calToggleBtn.setAttribute('aria-pressed','true');
+    } else {
+      var anchorAbs2 = hebrewToAbsolute(state.viewHYear, state.viewHMonth, 1);
+      var gd = absoluteToGregorian(anchorAbs2);
+      state.viewYear = gd.year; state.viewMonth = gd.month;
+      state.calendarView = 'gregorian';
+      calToggleBtn.textContent = 'לוח שנה: לועזי';
+      calToggleBtn.setAttribute('aria-pressed','false');
+    }
+    saveState();
+    renderCalendar();
+  });
+
+  document.getElementById('prevMonth').addEventListener('click', function(){
+    if (state.calendarView === 'gregorian'){
+      state.viewMonth -= 1;
+      if (state.viewMonth < 1){ state.viewMonth = 12; state.viewYear -= 1; }
+    } else {
+      var p = prevHebrewMonth(state.viewHYear, state.viewHMonth);
+      state.viewHYear = p.year; state.viewHMonth = p.month;
+    }
+    saveState(); renderCalendar();
+  });
+  document.getElementById('nextMonth').addEventListener('click', function(){
+    if (state.calendarView === 'gregorian'){
+      state.viewMonth += 1;
+      if (state.viewMonth > 12){ state.viewMonth = 1; state.viewYear += 1; }
+    } else {
+      var n = nextHebrewMonth(state.viewHYear, state.viewHMonth);
+      state.viewHYear = n.year; state.viewHMonth = n.month;
+    }
+    saveState(); renderCalendar();
+  });
+
+  /* ============================================================
+     7. RENDER: CALENDAR GRID
+     ============================================================ */
+  var monthLabel = document.getElementById('monthLabel');
+  var daysGrid = document.getElementById('daysGrid');
+
+  function statusColorClass(status){
+    return 'status-'+status;
+  }
+
+  var HEART_COUPLE_HTML = '<span class="heart-couple"><span class="hc-heart">❤️</span>'+
+    '<span class="hc-face hc-male">👨</span><span class="hc-face hc-female">👩</span></span>';
+
+  function magnifierHTML(sizePx, color){
+    return '<svg class="magnifier-svg" width="'+sizePx+'" height="'+sizePx+'" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'+
+      '<circle cx="10" cy="10" r="7" fill="none" stroke="'+color+'" stroke-width="2.6"/>'+
+      '<line x1="15.2" y1="15.2" x2="21" y2="21" stroke="'+color+'" stroke-width="2.8" stroke-linecap="round"/>'+
+      '</svg>';
+  }
+
+  function setEmojiInto(el, h){
+    var html = '';
+    if (h.composite){
+      html += HEART_COUPLE_HTML;
+    } else {
+      var mainCritical = (h.status === 'nekiim' && h.bedikaCritical);
+      html += mainCritical ? magnifierHTML(18, '#D9515F') : h.emoji;
+    }
+    if (h.showBedikaAddon){
+      var addonCritical = h.bedikaCritical;
+      html += '<span class="addon-badge">' + (addonCritical ? magnifierHTML(12, '#D9515F') : '🔍') + '</span>';
+    }
+    if (h.showSeparationMini){
+      html += '<span class="addon-badge">👨❤️👩</span>';
+    }
+    el.innerHTML = html;
+  }
+
+  function renderCalendar(){
+    daysGrid.innerHTML = '';
+    var cells = []; // {abs, inMonth}
+    var ovIdx = ovulationDayIndex();
+
+    if (state.calendarView === 'gregorian'){
+      monthLabel.textContent = GREG_MONTH_NAMES[state.viewMonth-1] + ' ' + state.viewYear;
+      var firstAbs = gregorianToAbsolute(state.viewYear, state.viewMonth, 1);
+      var leading = weekdayOf(firstAbs);
+      var dim = daysInGregorianMonth(state.viewYear, state.viewMonth);
+      for (var i=0;i<leading;i++) cells.push(null);
+      for (var d=1; d<=dim; d++) cells.push(firstAbs + d - 1);
+    } else {
+      monthLabel.textContent = hebMonthName(state.viewHYear, state.viewHMonth) + ' ה׳' + hebrewNumeral(state.viewHYear % 1000);
+      var firstAbsH = hebrewToAbsolute(state.viewHYear, state.viewHMonth, 1);
+      var leadingH = weekdayOf(firstAbsH);
+      var dimH = hebrewMonthDays(state.viewHYear, state.viewHMonth);
+      for (var j=0;j<leadingH;j++) cells.push(null);
+      for (var d2=1; d2<=dimH; d2++) cells.push(firstAbsH + d2 - 1);
+    }
+
+    cells.forEach(function(abs){
+      var cell = document.createElement('div');
+      if (abs === null){
+        cell.className = 'daycell empty';
+        daysGrid.appendChild(cell);
+        return;
+      }
+      var idx = cycleDayIndex(abs);
+      var h = classifyHalacha(idx);
+      var isOvulation = (idx === ovIdx);
+      cell.className = 'daycell ' + statusColorClass(h.status) + (isOvulation ? ' ovulation' : '');
+      if (abs === jsDateToAbs(todayJs)) cell.classList.add('today');
+      if (abs === state.selectedAbs) cell.classList.add('selected');
+
+      var numText;
+      if (state.calendarView === 'gregorian'){
+        numText = absoluteToGregorian(abs).day;
+      } else {
+        numText = hebrewNumeral(absoluteToHebrew(abs).day);
+      }
+
+      var dotsHtml = '';
+      if (h.bedikaCritical){ dotsHtml += '<span style="background:#D9515F"></span>'; }
+      if (isOvulation){ dotsHtml += '<span style="background:#9B7FCB"></span>'; }
+
+      cell.innerHTML = '<div class="num">'+numText+'</div>' +
+        (dotsHtml ? '<div class="cal-dots">'+dotsHtml+'</div>' : '');
+
+      cell.addEventListener('click', function(){
+        state.selectedAbs = abs;
+        saveState();
+        renderAll();
+      });
+
+      daysGrid.appendChild(cell);
+    });
+  }
+
+  /* ============================================================
+     8. RENDER: WHEEL
+     ============================================================ */
+  var wheelHolder = document.getElementById('wheelHolder');
+  var wheelDayCount = document.getElementById('wheelDayCount');
+
+  var STATUS_COLORS = {
+    bleeding:'#C97C6D', nekiim:'#B5546B', tevilah:'#5C93B0', tahara:'#4FB3C9'
+  };
+  var OVULATION_COLOR = '#9B7FCB';
+
+  function polarToCartesian(cx, cy, r, angleDeg){
+    var a = (angleDeg-90) * Math.PI/180;
+    return { x: cx + r*Math.cos(a), y: cy + r*Math.sin(a) };
+  }
+  function heartCoupleSVG(cx, cy, heartSize){
+    var faceSize = heartSize*0.42;
+    var dx = heartSize*0.17;
+    var dy = heartSize*0.06;
+    return '<text x="'+cx+'" y="'+cy+'" text-anchor="middle" dominant-baseline="middle" font-size="'+heartSize+'">❤️</text>'+
+      '<text x="'+(cx-dx)+'" y="'+(cy+dy)+'" text-anchor="middle" dominant-baseline="middle" font-size="'+faceSize+'">👨</text>'+
+      '<text x="'+(cx+dx)+'" y="'+(cy+dy)+'" text-anchor="middle" dominant-baseline="middle" font-size="'+faceSize+'">👩</text>';
+  }
+  function svgMagnifier(cx, cy, r, color){
+    var hx1 = cx + r*0.72, hy1 = cy + r*0.72;
+    var hx2 = cx + r*1.5, hy2 = cy + r*1.5;
+    return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="'+(r*0.26)+'"/>'+
+      '<line x1="'+hx1+'" y1="'+hy1+'" x2="'+hx2+'" y2="'+hy2+'" stroke="'+color+'" stroke-width="'+(r*0.3)+'" stroke-linecap="round"/>';
+  }
+  function arcPath(cx, cy, rOuter, rInner, startAngle, endAngle){
+    var p1 = polarToCartesian(cx, cy, rOuter, endAngle);
+    var p2 = polarToCartesian(cx, cy, rOuter, startAngle);
+    var p3 = polarToCartesian(cx, cy, rInner, startAngle);
+    var p4 = polarToCartesian(cx, cy, rInner, endAngle);
+    var largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
+    return [
+      'M', p1.x, p1.y,
+      'A', rOuter, rOuter, 0, largeArc, 0, p2.x, p2.y,
+      'L', p3.x, p3.y,
+      'A', rInner, rInner, 0, largeArc, 1, p4.x, p4.y,
+      'Z'
+    ].join(' ');
+  }
+
+  function renderWheel(){
+    var cl = state.cycleLength;
+    var startAbs = computeEffectiveStartAbs();
+    var selectedIdx = cycleDayIndex(state.selectedAbs);
+    var selectedH = classifyHalacha(selectedIdx);
+
+    var size = 300;
+    var cx = size/2, cy = size/2;
+    var rOuter = 130, rInner = 78;
+    var anglePer = 360/cl;
+
+    var svgParts = [];
+    svgParts.push('<svg viewBox="0 0 '+size+' '+size+'" class="wheel-svg" role="img" aria-label="מעגל המחזור">');
+
+    var ovIdx = ovulationDayIndex();
+    var ovMarkerParts = [];
+    for (var i=1;i<=cl;i++){
+      var abs = startAbs + (i-1);
+      var h = classifyHalacha(i);
+      var startAngle = (i-1)*anglePer;
+      var endAngle = i*anglePer;
+      var path = arcPath(cx, cy, rOuter, rInner, startAngle+0.6, endAngle-0.6);
+      var isSelected = (i === selectedIdx);
+      var isDim = (h.status !== selectedH.status) && !isSelected;
+      var isOv = (i === ovIdx);
+      var cls = 'wheel-seg' + (isSelected?' selected':'') + (isDim?' dim':'') + (isOv?' ovulation':'');
+      var fillColor = isOv ? OVULATION_COLOR : STATUS_COLORS[h.status];
+      svgParts.push('<path d="'+path+'" fill="'+fillColor+'" class="'+cls+'" data-abs="'+abs+'"'+(isOv?' stroke="var(--navy)" stroke-width="2.5"':'')+'></path>');
+      if (isOv){
+        var mid = polarToCartesian(cx, cy, rOuter+16, (startAngle+endAngle)/2);
+        ovMarkerParts.push('<text x="'+mid.x+'" y="'+mid.y+'" text-anchor="middle" dominant-baseline="middle" font-size="16">⚡</text>');
+      }
+    }
+
+    // center label
+    var g = absoluteToGregorian(state.selectedAbs);
+    svgParts.push('<circle cx="'+cx+'" cy="'+cy+'" r="'+(rInner-6)+'" fill="var(--card)"></circle>');
+    if (selectedH.composite){
+      svgParts.push(heartCoupleSVG(cx, cy-6, 32));
+    } else {
+      var mainCritical = (selectedH.status === 'nekiim' && selectedH.bedikaCritical);
+      if (mainCritical){
+        svgParts.push(svgMagnifier(cx, cy-6, 13, '#D9515F'));
+      } else {
+        svgParts.push('<text x="'+cx+'" y="'+(cy-6)+'" text-anchor="middle" class="wheel-center-label" font-size="26" fill="var(--navy)" dominant-baseline="middle">'+selectedH.emoji+'</text>');
+      }
+      if (selectedH.showBedikaAddon || selectedH.showSeparationMini){
+        var ax = cx+22, ay = cy-24;
+        if (selectedH.showBedikaAddon && selectedH.bedikaCritical){
+          svgParts.push(svgMagnifier(ax, ay, 6, '#D9515F'));
+        } else {
+          var addonGlyph = selectedH.showBedikaAddon ? '🔍' : '👨❤️👩';
+          svgParts.push('<text x="'+ax+'" y="'+ay+'" text-anchor="middle" dominant-baseline="middle" font-size="12">'+addonGlyph+'</text>');
+        }
+      }
+    }
+    svgParts.push('<text x="'+cx+'" y="'+(cy+22)+'" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="Heebo">יום '+selectedIdx+' למחזור</text>');
+    svgParts.push('<text x="'+cx+'" y="'+(cy+40)+'" text-anchor="middle" font-size="11" fill="var(--gold)" font-family="Heebo" font-weight="700">'+selectedH.title+(selectedIdx===ovIdx?' · יום ביוץ ⚡':'')+'</text>');
+    svgParts.push(ovMarkerParts.join(''));
+
+    svgParts.push('</svg>');
+    wheelHolder.innerHTML = svgParts.join('');
+
+    wheelDayCount.textContent = 'מחזור של '+cl+' יום · '+state.bleedLength+' ימי דימום';
+
+    var segs = wheelHolder.querySelectorAll('.wheel-seg');
+    segs.forEach(function(seg){
+      seg.addEventListener('click', function(){
+        state.selectedAbs = parseInt(seg.getAttribute('data-abs'),10);
+        saveState();
+        renderAll();
+      });
+    });
+  }
+
+  /* ============================================================
+     9. RENDER: DETAIL CARD
+     ============================================================ */
+  var detailTitle = document.getElementById('detailTitle');
+  var detailDate = document.getElementById('detailDate');
+  var detailHalachaEmo = document.getElementById('detailHalachaEmo');
+  var detailHalachaText = document.getElementById('detailHalachaText');
+  var detailBioEmo = document.getElementById('detailBioEmo');
+  var detailBioText = document.getElementById('detailBioText');
+
+  var WEEKDAY_NAMES = ['יום ראשון','יום שני','יום שלישי','יום רביעי','יום חמישי','יום שישי','שבת'];
+
+  function renderDetail(){
+    var abs = state.selectedAbs;
+    var idx = cycleDayIndex(abs);
+    var h = classifyHalacha(idx);
+    var b = classifyBiology(idx);
+    var g = absoluteToGregorian(abs);
+    var hd = absoluteToHebrew(abs);
+    var wd = WEEKDAY_NAMES[weekdayOf(abs)];
+
+    detailTitle.textContent = h.title;
+    detailDate.textContent = wd + ', ' + g.day + ' ב' + GREG_MONTH_NAMES[g.month-1] + ' ' + g.year +
+      ' · ' + hebrewNumeral(hd.day) + ' ב' + hebMonthName(hd.year, hd.month) + ' ה\'' + hebrewNumeral(hd.year%1000);
+    setEmojiInto(detailHalachaEmo, h);
+    detailHalachaText.textContent = h.text;
+    detailBioEmo.textContent = b.emoji;
+    detailBioText.textContent = b.text;
+  }
+
+  /* ============================================================
+     9b. RENDER: OVULATION CARD
+     ============================================================ */
+  var ovulationDateText = document.getElementById('ovulationDateText');
+  var ovulationNote = document.getElementById('ovulationNote');
+
+  function renderOvulation(){
+    var ovIdx = ovulationDayIndex();
+    var ovAbs = ovulationAbsForAbs(state.selectedAbs);
+    var g = absoluteToGregorian(ovAbs);
+    var hd = absoluteToHebrew(ovAbs);
+    var wd = WEEKDAY_NAMES[weekdayOf(ovAbs)];
+    var selectedIdx = cycleDayIndex(state.selectedAbs);
+
+    ovulationDateText.textContent = wd + ', ' + g.day + ' ב' + GREG_MONTH_NAMES[g.month-1] + ' ' + g.year +
+      ' (' + hebrewNumeral(hd.day) + ' ב' + hebMonthName(hd.year, hd.month) + ')';
+
+    var baseNote = 'החישוב מניח שהביוץ מתרחש כ-14 יום לפני תחילת המחזור הבא (אורך קבוע של השלב הלוטאלי). זהו יום משוער בלבד — הוא אינו מבוסס על מדדים אישיים בפועל (כגון חום גוף בסיסי, ריר צוואר הרחם או בדיקות ביוץ), ואינו קשור לדיני הפסק טהרה ושבעה נקיים.';
+    if (selectedIdx === ovIdx){
+      ovulationNote.textContent = 'היום הנבחר הוא יום הביוץ המשוער של המחזור הנוכחי. ' + baseNote;
+      ovulationNote.className = 'ovulation-note selected-today';
+    } else {
+      ovulationNote.textContent = baseNote;
+      ovulationNote.className = 'ovulation-note';
+    }
+  }
+
+  /* ============================================================
+     9c. OUR CIRCLE: RA'IYA HISTORY + VESET PREDICTIONS
+     ============================================================ */
+  var MAX_RAIYOT = 50;
+
+  var tabMain = document.getElementById('tabMain');
+  var tabOurs = document.getElementById('tabOurs');
+  var screenMain = document.getElementById('screenMain');
+  var screenOurs = document.getElementById('screenOurs');
+
+  function switchTab(which){
+    if (which === 'main'){
+      screenMain.style.display = '';
+      screenOurs.style.display = 'none';
+      tabMain.classList.add('active'); tabOurs.classList.remove('active');
+      tabMain.setAttribute('aria-selected','true'); tabOurs.setAttribute('aria-selected','false');
+    } else {
+      screenMain.style.display = 'none';
+      screenOurs.style.display = '';
+      tabOurs.classList.add('active'); tabMain.classList.remove('active');
+      tabOurs.setAttribute('aria-selected','true'); tabMain.setAttribute('aria-selected','false');
+      renderRaiyotList();
+      renderVeset();
+      renderOursCalendar();
+    }
+  }
+  tabMain.addEventListener('click', function(){ switchTab('main'); });
+  tabOurs.addEventListener('click', function(){ switchTab('ours'); });
+
+  function initVideoIntro(){
+    var params = new URLSearchParams(window.location.search);
+    var topic = params.get('topic') === 'vesatot' ? 'vesatot' : 'cycle';
+
+    var videoFiles = {
+      cycle: '../media/videos/tahara-cycle.mp4',
+      vesatot: '../media/videos/vesatot.mp4'
+    };
+
+    var introEl = document.getElementById('videoIntro');
+    var videoEl = document.getElementById('introVideo');
+    var skipBtn = document.getElementById('introSkip');
+    var mainWrap = document.getElementById('mainWrap');
+
+    function finishIntro(){
+      if (!introEl || introEl.style.display === 'none') return;
+      introEl.style.display = 'none';
+      mainWrap.style.display = '';
+      switchTab(topic === 'vesatot' ? 'ours' : 'main');
+    }
+
+    if (!videoEl || !introEl) {
+      if (mainWrap) mainWrap.style.display = '';
+      switchTab(topic === 'vesatot' ? 'ours' : 'main');
+      return;
+    }
+
+    var source = document.createElement('source');
+    source.src = videoFiles[topic];
+    source.type = 'video/mp4';
+    videoEl.appendChild(source);
+    videoEl.controls = true;
+
+    videoEl.addEventListener('ended', finishIntro);
+    videoEl.addEventListener('error', finishIntro);
+    skipBtn.addEventListener('click', finishIntro);
+
+    videoEl.play().catch(function(){ /* autoplay blocked - controls stay visible, user taps play */ });
+  }
+
+  // legend composite icons
+  document.getElementById('legendMagRed').innerHTML = magnifierHTML(14, '#D9515F');
+  document.getElementById('legendHeartCouple').innerHTML = HEART_COUPLE_HTML;
+
+  // ---- Hebrew date fields for the ra'iya form ----
+  var dateModeGreg = document.getElementById('dateModeGreg');
+  var dateModeHeb = document.getElementById('dateModeHeb');
+  var gregDateFields = document.getElementById('gregDateFields');
+  var hebDateFields = document.getElementById('hebDateFields');
+  var raiyaYearInput = document.getElementById('raiyaYear');
+  var raiyaMonthSelect = document.getElementById('raiyaMonth');
+  var raiyaDaySelect = document.getElementById('raiyaDay');
+  var raiyaDateMode = 'greg';
+
+  dateModeGreg.addEventListener('click', function(){
+    raiyaDateMode = 'greg';
+    dateModeGreg.classList.add('active'); dateModeHeb.classList.remove('active');
+    gregDateFields.style.display = ''; hebDateFields.style.display = 'none';
+  });
+  dateModeHeb.addEventListener('click', function(){
+    raiyaDateMode = 'heb';
+    dateModeHeb.classList.add('active'); dateModeGreg.classList.remove('active');
+    hebDateFields.style.display = ''; gregDateFields.style.display = 'none';
+    populateRaiyaMonthOptions();
+  });
+
+  function hebrewMonthChronOrder(year){
+    var months = [];
+    var cur = {year:year, month:7};
+    var total = hebrewLeapYear(year) ? 13 : 12;
+    for (var i=0; i<total; i++){
+      months.push(cur.month);
+      cur = nextHebrewMonth(cur.year, cur.month);
+    }
+    return months;
+  }
+  function populateRaiyaMonthOptions(){
+    var year = parseInt(raiyaYearInput.value,10);
+    if (!year) return;
+    var order = hebrewMonthChronOrder(year);
+    var prevVal = raiyaMonthSelect.value;
+    raiyaMonthSelect.innerHTML = '';
+    order.forEach(function(m){
+      var opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = hebMonthName(year, m);
+      raiyaMonthSelect.appendChild(opt);
+    });
+    if (order.indexOf(parseInt(prevVal,10)) !== -1) raiyaMonthSelect.value = prevVal;
+    populateRaiyaDayOptions();
+  }
+  function populateRaiyaDayOptions(){
+    var year = parseInt(raiyaYearInput.value,10);
+    var month = parseInt(raiyaMonthSelect.value,10);
+    if (!year || !month) return;
+    var len = hebrewMonthDays(year, month);
+    var prevVal = raiyaDaySelect.value;
+    raiyaDaySelect.innerHTML = '';
+    for (var d=1; d<=len; d++){
+      var opt = document.createElement('option');
+      opt.value = d; opt.textContent = hebrewNumeral(d);
+      raiyaDaySelect.appendChild(opt);
+    }
+    if (prevVal && parseInt(prevVal,10) <= len) raiyaDaySelect.value = prevVal;
+  }
+  raiyaYearInput.addEventListener('change', populateRaiyaMonthOptions);
+  raiyaMonthSelect.addEventListener('change', populateRaiyaDayOptions);
+
+  (function initRaiyaHebFields(){
+    var initHd = absoluteToHebrew(jsDateToAbs(new Date()));
+    raiyaYearInput.value = initHd.year;
+    populateRaiyaMonthOptions();
+    raiyaMonthSelect.value = initHd.month;
+    populateRaiyaDayOptions();
+    raiyaDaySelect.value = initHd.day;
+  })();
+
+  // ---- add / delete ra'iya entries ----
+  var raiyaFormMsg = document.getElementById('raiyaFormMsg');
+  function showRaiyaMsg(msg){
+    raiyaFormMsg.textContent = msg;
+    raiyaFormMsg.style.display = 'block';
+  }
+
+  document.getElementById('addRaiyaBtn').addEventListener('click', function(){
+    raiyaFormMsg.style.display = 'none';
+    var dateStr;
+    if (raiyaDateMode === 'greg'){
+      dateStr = document.getElementById('raiyaDateGreg').value;
+      if (!dateStr){ showRaiyaMsg('נא לבחור תאריך.'); return; }
+    } else {
+      var y = parseInt(raiyaYearInput.value,10);
+      var m = parseInt(raiyaMonthSelect.value,10);
+      var d = parseInt(raiyaDaySelect.value,10);
+      if (!y || !m || !d){ showRaiyaMsg('נא למלא תאריך עברי מלא.'); return; }
+      var abs = hebrewToAbsolute(y,m,d);
+      var g = absoluteToGregorian(abs);
+      dateStr = g.year+'-'+pad2(g.month)+'-'+pad2(g.day);
+    }
+    var time = document.getElementById('raiyaTime').value;
+    if (!time){ showRaiyaMsg('נא להזין שעה.'); return; }
+    var bleed = parseInt(document.getElementById('raiyaBleed').value,10) || 5;
+    var hasSensation = document.getElementById('raiyaSensation').checked;
+
+    if (state.raiyot.length >= MAX_RAIYOT){
+      showRaiyaMsg('הגעתם למכסה של '+MAX_RAIYOT+' רשומות. יש למחוק רשומה ישנה כדי להוסיף חדשה.');
+      return;
+    }
+
+    state.raiyot.push({
+      id: Date.now()+'_'+Math.random().toString(36).slice(2,7),
+      dateGreg: dateStr, time: time, bleedLength: bleed, hasSensation: hasSensation
+    });
+
+    // jump the mini-calendar to show the month of the entry just added, so it's
+    // immediately visible instead of possibly sitting outside the current 3-month window
+    var jp = dateStr.split('-');
+    var jy = parseInt(jp[0],10), jm = parseInt(jp[1],10), jd = parseInt(jp[2],10);
+    if (state.oursCalView === 'gregorian'){
+      state.oursViewYear = jy; state.oursViewMonth = jm;
+    } else {
+      var jhd = absoluteToHebrew(gregorianToAbsolute(jy,jm,jd));
+      state.oursViewHYear = jhd.year; state.oursViewHMonth = jhd.month;
+    }
+
+    saveState();
+
+    document.getElementById('raiyaDateGreg').value = '';
+    document.getElementById('raiyaTime').value = '';
+    document.getElementById('raiyaBleed').value = 5;
+    document.getElementById('raiyaSensation').checked = false;
+
+    renderRaiyotList();
+    renderVeset();
+    renderOursCalendar();
+  });
+
+  function renderRaiyotList(){
+    var container = document.getElementById('raiyotList');
+    if (!state.raiyot.length){
+      container.innerHTML = '<div class="raiyot-empty">עדיין לא נוספו תאריכי ראייה.</div>';
+      return;
+    }
+    var items = state.raiyot.map(function(r){
+      var res = resolveOnah(r.dateGreg, r.time, state.region);
+      return {r:r, abs:res.abs, isDay:res.isDay};
+    });
+    items.sort(function(a,b){ return b.abs - a.abs; }); // most recent first
+
+    container.innerHTML = items.map(function(item){
+      var r = item.r;
+      var gParts = r.dateGreg.split('-');
+      var gy = parseInt(gParts[0],10), gm = parseInt(gParts[1],10), gd = parseInt(gParts[2],10);
+      var absOriginal = gregorianToAbsolute(gy,gm,gd);
+      var hd = absoluteToHebrew(absOriginal);
+      return '<div class="raiyot-item" data-jump="'+r.dateGreg+'">'+
+        '<div>'+
+          '<div class="ri-main">'+gd+' ב'+GREG_MONTH_NAMES[gm-1]+' '+gy+' · '+hebrewNumeral(hd.day)+' ב'+hebMonthName(hd.year,hd.month)+'</div>'+
+          '<div class="ri-sub">שעה '+r.time+' · '+r.bleedLength+' ימי דימום</div>'+
+          '<div class="ri-tags">'+
+            '<span class="ri-tag">'+(item.isDay ? 'עונת יום' : 'עונת לילה')+'</span>'+
+            (r.hasSensation ? '<span class="ri-tag">הרגשות גוף</span>' : '')+
+          '</div>'+
+        '</div>'+
+        '<button class="ri-del" data-id="'+r.id+'" aria-label="מחיקת רשומה">✕</button>'+
+      '</div>';
+    }).join('');
+
+    container.querySelectorAll('.raiyot-item').forEach(function(itemEl){
+      itemEl.addEventListener('click', function(e){
+        if (e.target.closest('.ri-del')) return;
+        var dateStr = itemEl.getAttribute('data-jump');
+        var jp = dateStr.split('-');
+        var jy = parseInt(jp[0],10), jm = parseInt(jp[1],10), jd = parseInt(jp[2],10);
+        if (state.oursCalView === 'gregorian'){
+          state.oursViewYear = jy; state.oursViewMonth = jm;
+        } else {
+          var jhd = absoluteToHebrew(gregorianToAbsolute(jy,jm,jd));
+          state.oursViewHYear = jhd.year; state.oursViewHMonth = jhd.month;
+        }
+        saveState();
+        renderOursCalendar();
+        var calSection = document.querySelector('.ours-cal-card');
+        if (calSection) calSection.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    container.querySelectorAll('.ri-del').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.getAttribute('data-id');
+        state.raiyot = state.raiyot.filter(function(x){ return String(x.id) !== String(id); });
+        saveState();
+        renderRaiyotList();
+        renderVeset();
+        renderOursCalendar();
+      });
+    });
+  }
+
+  // ---- veset predictions ----
+  function computeVesetPredictions(){
+    if (!state.raiyot.length) return null;
+    var withAbs = state.raiyot.map(function(r){
+      var res = resolveOnah(r.dateGreg, r.time, state.region);
+      return {r:r, abs:res.abs, isDay:res.isDay};
+    });
+    withAbs.sort(function(a,b){ return a.abs - b.abs; });
+    var last = withAbs[withAbs.length-1];
+    var secondLast = withAbs.length >= 2 ? withAbs[withAbs.length-2] : null;
+
+    var result = { hasSensation: !!last.r.hasSensation, hachodesh:null, beinoni:null, haflagah:null };
+
+    // veset ha-chodesh: same Hebrew day next Hebrew month
+    var hd = absoluteToHebrew(last.abs);
+    var nextM = nextHebrewMonth(hd.year, hd.month);
+    var targetDay = hd.day;
+    var targetLen = hebrewMonthDays(nextM.year, nextM.month);
+    var overflowed = false;
+    if (targetDay > targetLen){ targetDay = targetLen; overflowed = true; }
+    result.hachodesh = { abs: hebrewToAbsolute(nextM.year, nextM.month, targetDay), isDay:last.isDay, overflowed:overflowed };
+
+    // veset beinoni: day 30 counted inclusively = +29 days, same onah
+    result.beinoni = { abs: last.abs + 29, isDay:last.isDay };
+
+    // veset haflagah: interval between the two most recent ra'iyot, projected forward
+    if (secondLast){
+      var interval = last.abs - secondLast.abs;
+      if (interval > 0){
+        result.haflagah = { abs: last.abs + interval, isDay:last.isDay, interval:interval };
+      }
+    }
+    return result;
+  }
+
+  // Historical perisha predictions for EVERY recorded ra'iya (for the mini-calendar's
+  // full-history view). Unlike computeVesetPredictions (which only reflects the latest
+  // ra'iya), this walks the whole chronological list.
+  function computeHistoricalPredictions(){
+    if (!state.raiyot.length) return [];
+    var withAbs = state.raiyot.map(function(r){
+      var res = resolveOnah(r.dateGreg, r.time, state.region);
+      return {r:r, abs:res.abs, isDay:res.isDay};
+    });
+    withAbs.sort(function(a,b){ return a.abs - b.abs; });
+
+    var predictions = [];
+    for (var i=0; i<withAbs.length; i++){
+      var cur = withAbs[i];
+
+      // veset ha-chodesh
+      var hd = absoluteToHebrew(cur.abs);
+      var nextM = nextHebrewMonth(hd.year, hd.month);
+      var targetDay = hd.day;
+      var targetLen = hebrewMonthDays(nextM.year, nextM.month);
+      if (targetDay > targetLen) targetDay = targetLen;
+      predictions.push({ abs: hebrewToAbsolute(nextM.year, nextM.month, targetDay), type:'hachodesh', isDay:cur.isDay });
+
+      // veset beinoni
+      predictions.push({ abs: cur.abs + 29, type:'beinoni', isDay:cur.isDay });
+
+      // veset haflagah — only if there's a previous ra'iya to measure the interval from,
+      // and only if no LATER actual ra'iya already happened on/before the predicted date
+      // (once reality supersedes the prediction, it's no longer meaningful to show it).
+      if (i > 0){
+        var prev = withAbs[i-1];
+        var interval = cur.abs - prev.abs;
+        if (interval > 0){
+          var haflagahAbs = cur.abs + interval;
+          var superseded = false;
+          for (var j=i+1; j<withAbs.length; j++){
+            if (withAbs[j].abs <= haflagahAbs){ superseded = true; break; }
+          }
+          if (!superseded){
+            predictions.push({ abs: haflagahAbs, type:'haflagah', isDay:cur.isDay });
+          }
+        }
+      }
+    }
+    return predictions;
+  }
+
+  function buildGCalLink(title, abs, details){
+    var g1 = absoluteToGregorian(abs);
+    var g2 = absoluteToGregorian(abs+1);
+    var startStr = g1.year + pad2(g1.month) + pad2(g1.day);
+    var endStr = g2.year + pad2(g2.month) + pad2(g2.day);
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent(title)
+      + '&dates=' + startStr + '/' + endStr
+      + '&details=' + encodeURIComponent(details);
+  }
+
+  function buildVesetBlock(title, data, note){
+    if (!data) return '';
+    var g = absoluteToGregorian(data.abs);
+    var hd = absoluteToHebrew(data.abs);
+    var wd = WEEKDAY_NAMES[weekdayOf(data.abs)];
+    var onahLabel = data.isDay ? 'ביום' : 'בלילה';
+    var gcalTitle = 'פרישה סמוכה לוסת — ' + title;
+    var gcalDetails = 'תזכורת פרישה סמוכה לוסת (' + title + '), ' + onahLabel + '. חושב אוטומטית באפליקציית "מעגל הטהרה" — יש לוודא מול המציאות בפועל ולפנות לרב או לרבנית בכל שאלה.';
+    var gcalUrl = buildGCalLink(gcalTitle, data.abs, gcalDetails);
+    return '<div class="veset-block">'+
+      '<div class="vb-title">'+title+'</div>'+
+      '<div class="vb-date">'+wd+', '+g.day+' ב'+GREG_MONTH_NAMES[g.month-1]+' '+g.year+' ('+hebrewNumeral(hd.day)+' ב'+hebMonthName(hd.year,hd.month)+') — '+onahLabel+'</div>'+
+      (note ? '<div class="vb-note">'+note+'</div>' : '')+
+      '<a class="vb-gcal" href="'+gcalUrl+'" target="_blank" rel="noopener noreferrer">📅 הוספה ליומן Google</a>'+
+    '</div>';
+  }
+
+  // ---- veset kavua (established veset) detection ----
+  function checkVesetKavua(){
+    if (state.raiyot.length < 3) return [];
+    var withAbs = state.raiyot.map(function(r){
+      var res = resolveOnah(r.dateGreg, r.time, state.region);
+      return {r:r, abs:res.abs, isDay:res.isDay};
+    });
+    withAbs.sort(function(a,b){ return a.abs - b.abs; });
+    var last3 = withAbs.slice(-3);
+    var sameOnah = (last3[0].isDay === last3[1].isDay) && (last3[1].isDay === last3[2].isDay);
+    var alerts = [];
+
+    if (last3[0].r.hasSensation && last3[1].r.hasSensation && last3[2].r.hasSensation){
+      alerts.push('היו הרגשות גוף לפני הראייה בשלוש הפעמים האחרונות ברציפות — ייתכן שנקבע וסת גוף.');
+    }
+
+    var hebDays = last3.map(function(x){ return absoluteToHebrew(x.abs).day; });
+    if (sameOnah && hebDays[0] === hebDays[1] && hebDays[1] === hebDays[2]){
+      alerts.push('שלוש הראיות האחרונות חלות באותו יום עברי בחודש ('+hebrewNumeral(hebDays[0])+') ובאותה עונה — ייתכן שנקבע וסת החודש.');
+    }
+
+    var int1 = last3[1].abs - last3[0].abs;
+    var int2 = last3[2].abs - last3[1].abs;
+    if (sameOnah && int1 === 29 && int2 === 29){
+      alerts.push('שלוש הראיות האחרונות חלות במרווח קבוע של 30 יום ובאותה עונה — ייתכן שנקבע וסת בינוני.');
+    }
+    if (sameOnah && int1 === int2 && int1 !== 29){
+      alerts.push('שלוש הראיות האחרונות חלות במרווח קבוע של '+int1+' יום ובאותה עונה — ייתכן שנקבע וסת הפלגה.');
+    }
+
+    return alerts;
+  }
+
+  function renderVeset(){
+    var vc = document.getElementById('vesetContent');
+    var res = computeVesetPredictions();
+    var kavuaAlerts = checkVesetKavua();
+    var tabDot = document.getElementById('tabOursDot');
+    tabDot.style.display = kavuaAlerts.length ? 'inline-block' : 'none';
+
+    if (!res){
+      vc.innerHTML = '<div class="raiyot-empty">הוסיפו לפחות תאריך ראייה אחד כדי לקבל חיזוי פרישה.</div>';
+      return;
+    }
+    var html = '';
+    if (kavuaAlerts.length){
+      html += '<div class="kavua-alert">'+
+        '<div class="ka-title">⚠️ ייתכן שנקבע וסת</div>'+
+        '<ul>'+ kavuaAlerts.map(function(a){ return '<li>'+a+'</li>'; }).join('') +'</ul>'+
+        '<div class="ka-cta">יש לפנות לרב או לרבנית מוסמכים לצורך קביעת הוסת באופן הלכתי מחייב.</div>'+
+      '</div>';
+    }
+    if (res.hasSensation){
+      html += '<div class="veset-sensation-note">לפי הרשומה האחרונה שנוספה, היו הרגשות גוף לפני הראייה. במקרה כזה הפרישה הסמוכה לוסת מתחילה עם הופעת ההרגשות עצמן, ולא רק בתאריך מחושב מראש. יש לשים לב להרגשות המוכרות (כגון פיהוק, עיטוש, חמימות בגוף, כאבי בטן קלים וכדומה) ולנהוג בהתאם.</div>';
+      html += '<p class="veset-secondary-label">לשם השוואה — התאריכים המחושבים על פי הוסתות:</p>';
+    }
+    html += buildVesetBlock('וסת החודש', res.hachodesh, res.hachodesh && res.hachodesh.overflowed ? 'החודש היעד קצר מהיום שנרשם — הותאם ליום האחרון בחודש.' : '');
+    html += buildVesetBlock('וסת בינוני (יום ל׳)', res.beinoni, '');
+    if (res.haflagah){
+      html += buildVesetBlock('וסת הפלגה ('+res.haflagah.interval+' יום)', res.haflagah, '');
+    } else {
+      html += '<div class="veset-block"><div class="vb-title">וסת הפלגה</div><div class="vb-note">דרושות לפחות שתי רשומות ראייה כדי לחשב וסת הפלגה.</div></div>';
+    }
+    vc.innerHTML = html;
+  }
+
+  // ---- mini 3-month calendar with ra'iya + prediction markers ----
+  var MARKER_COLORS = { raiya:'#C97C6D', hachodesh:'#C9A227', beinoni:'#5C93B0', haflagah:'#9B7FCB' };
+  var RAIYA_COLOR = '#D9515F';
+  var MARKER_NAMES = { hachodesh:'וסת החודש', beinoni:'וסת בינוני', haflagah:'וסת הפלגה' };
+
+  function buildOursMarkers(){
+    var markers = {}; // abs -> {raiya:bool, perisha:[{type,isDay}]}
+    function ensure(abs){ if (!markers[abs]) markers[abs] = {raiya:false, perisha:[]}; return markers[abs]; }
+    state.raiyot.forEach(function(r){
+      var gp = r.dateGreg.split('-');
+      var abs = gregorianToAbsolute(parseInt(gp[0],10), parseInt(gp[1],10), parseInt(gp[2],10));
+      ensure(abs).raiya = true;
+    });
+    var preds = computeHistoricalPredictions();
+    preds.forEach(function(p){
+      ensure(p.abs).perisha.push({ type:p.type, isDay:p.isDay });
+    });
+    return markers;
+  }
+
+  function showOursDayDetail(abs, m){
+    var panel = document.getElementById('oursDayDetail');
+    if (!panel) return;
+    var g = absoluteToGregorian(abs);
+    var hd = absoluteToHebrew(abs);
+    var wd = WEEKDAY_NAMES[weekdayOf(abs)];
+    var rows = m.perisha.map(function(p){
+      return '<div class="odd-row"><span class="odd-dot" style="background:'+MARKER_COLORS[p.type]+'"></span>'+MARKER_NAMES[p.type]+' — '+(p.isDay?'בוקר':'ערב')+'</div>';
+    }).join('');
+    panel.innerHTML = '<div class="odd-title">'+wd+', '+g.day+' ב'+GREG_MONTH_NAMES[g.month-1]+' '+g.year+' · '+hebrewNumeral(hd.day)+' ב'+hebMonthName(hd.year,hd.month)+'</div>'+
+      rows +
+      '<div class="odd-note">'+magnifierHTML(13,'#B5546B')+'<span>יום פרישה סמוך לוסת — יש לבצע בדיקה פנימית.</span></div>';
+    panel.style.display = 'block';
+  }
+
+  function renderOursCalendar(){
+    var container = document.getElementById('oursMiniMonths');
+    var markers = buildOursMarkers();
+    var months = [];
+    var detailPanel = document.getElementById('oursDayDetail');
+    if (detailPanel){ detailPanel.style.display = 'none'; detailPanel.innerHTML = ''; }
+
+    if (state.oursCalView === 'gregorian'){
+      var y = state.oursViewYear, m = state.oursViewMonth;
+      for (var i=0;i<3;i++){
+        var firstAbs = gregorianToAbsolute(y,m,1);
+        var leading = weekdayOf(firstAbs);
+        var dim = daysInGregorianMonth(y,m);
+        var cells = [];
+        for (var k=0;k<leading;k++) cells.push(null);
+        for (var d=1; d<=dim; d++) cells.push(firstAbs+d-1);
+        months.push({ label: GREG_MONTH_NAMES[m-1]+' '+y, cells:cells });
+        m++; if (m>12){ m=1; y++; }
+      }
+    } else {
+      var hy = state.oursViewHYear, hm = state.oursViewHMonth;
+      for (var i2=0;i2<3;i2++){
+        var firstAbsH = hebrewToAbsolute(hy,hm,1);
+        var leadingH = weekdayOf(firstAbsH);
+        var dimH = hebrewMonthDays(hy,hm);
+        var cellsH = [];
+        for (var k2=0;k2<leadingH;k2++) cellsH.push(null);
+        for (var d2=1; d2<=dimH; d2++) cellsH.push(firstAbsH+d2-1);
+        months.push({ label: hebMonthName(hy,hm)+' ה׳'+hebrewNumeral(hy%1000), cells:cellsH });
+        var nx = nextHebrewMonth(hy,hm); hy=nx.year; hm=nx.month;
+      }
+    }
+
+    document.getElementById('oursMonthLabel').textContent = months[0].label + ' – ' + months[2].label;
+
+    container.innerHTML = '';
+    months.forEach(function(mo){
+      var monthDiv = document.createElement('div');
+      monthDiv.className = 'mini-month';
+      var h4 = document.createElement('h4'); h4.textContent = mo.label;
+      monthDiv.appendChild(h4);
+      var wd = document.createElement('div'); wd.className = 'mini-weekdays';
+      wd.innerHTML = '<div>א</div><div>ב</div><div>ג</div><div>ד</div><div>ה</div><div>ו</div><div>ש</div>';
+      monthDiv.appendChild(wd);
+      var grid = document.createElement('div'); grid.className = 'mini-days';
+      mo.cells.forEach(function(abs){
+        var cell = document.createElement('div');
+        if (abs === null){
+          cell.className = 'mini-day empty';
+          grid.appendChild(cell);
+          return;
+        }
+        var dayNumText = state.oursCalView === 'gregorian' ? String(absoluteToGregorian(abs).day) : hebrewNumeral(absoluteToHebrew(abs).day);
+        var m = markers[abs];
+        var isToday = (abs === jsDateToAbs(todayJs));
+
+        if (m && m.raiya){
+          // actual ra'iya day — full solid red cell, most prominent marking on the calendar
+          cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
+          cell.style.background = RAIYA_COLOR;
+          var hasAlsoPerisha = m.perisha.length > 0;
+          cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
+            '<div class="md-onah">ראייה</div>' +
+            (hasAlsoPerisha ? '<div class="md-dots"><span style="background:#ffffff"></span></div>' : '');
+          if (hasAlsoPerisha){
+            cell.addEventListener('click', function(clickedAbs, clickedM){
+              return function(){ showOursDayDetail(clickedAbs, clickedM); };
+            }(abs, m));
+          }
+        } else if (m && m.perisha.length){
+          cell.className = 'mini-day perisha-day' + (isToday ? ' today' : '');
+          cell.style.background = MARKER_COLORS[m.perisha[0].type];
+          var onahLabel = m.perisha[0].isDay ? 'בוקר' : 'ערב';
+          cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
+            '<div class="md-mag">'+magnifierHTML(9,'#ffffff')+'</div>'+
+            '<div class="md-onah">'+onahLabel+'</div>';
+          cell.addEventListener('click', function(clickedAbs, clickedM){
+            return function(){ showOursDayDetail(clickedAbs, clickedM); };
+          }(abs, m));
+        } else {
+          cell.className = 'mini-day' + (isToday ? ' today' : '');
+          var num = document.createElement('div'); num.className = 'md-num';
+          num.textContent = dayNumText;
+          cell.appendChild(num);
+        }
+        grid.appendChild(cell);
+      });
+      monthDiv.appendChild(grid);
+      container.appendChild(monthDiv);
+    });
+  }
+
+  document.getElementById('oursPrevMonth').addEventListener('click', function(){
+    if (state.oursCalView === 'gregorian'){
+      state.oursViewMonth -= 1;
+      if (state.oursViewMonth < 1){ state.oursViewMonth = 12; state.oursViewYear -= 1; }
+    } else {
+      var p = prevHebrewMonth(state.oursViewHYear, state.oursViewHMonth);
+      state.oursViewHYear = p.year; state.oursViewHMonth = p.month;
+    }
+    saveState(); renderOursCalendar();
+  });
+  document.getElementById('oursNextMonth').addEventListener('click', function(){
+    if (state.oursCalView === 'gregorian'){
+      state.oursViewMonth += 1;
+      if (state.oursViewMonth > 12){ state.oursViewMonth = 1; state.oursViewYear += 1; }
+    } else {
+      var n = nextHebrewMonth(state.oursViewHYear, state.oursViewHMonth);
+      state.oursViewHYear = n.year; state.oursViewHMonth = n.month;
+    }
+    saveState(); renderOursCalendar();
+  });
+  var oursCalToggleBtn = document.getElementById('oursCalToggleBtn');
+  oursCalToggleBtn.addEventListener('click', function(){
+    if (state.oursCalView === 'gregorian'){
+      var anchorAbs = gregorianToAbsolute(state.oursViewYear, state.oursViewMonth, 1);
+      var hd = absoluteToHebrew(anchorAbs);
+      state.oursViewHYear = hd.year; state.oursViewHMonth = hd.month;
+      state.oursCalView = 'hebrew';
+      oursCalToggleBtn.textContent = 'לוח: עברי';
+    } else {
+      var anchorAbs2 = hebrewToAbsolute(state.oursViewHYear, state.oursViewHMonth, 1);
+      var gd = absoluteToGregorian(anchorAbs2);
+      state.oursViewYear = gd.year; state.oursViewMonth = gd.month;
+      state.oursCalView = 'gregorian';
+      oursCalToggleBtn.textContent = 'לוח: לועזי';
+    }
+    saveState(); renderOursCalendar();
+  });
+  (function initOursCal(){
+    if (state.oursCalView === 'hebrew' && (state.oursViewHYear===null || state.oursViewHMonth===null)){
+      var hd0 = absoluteToHebrew(gregorianToAbsolute(state.oursViewYear, state.oursViewMonth, 1));
+      state.oursViewHYear = hd0.year; state.oursViewHMonth = hd0.month;
+    }
+    oursCalToggleBtn.textContent = state.oursCalView === 'hebrew' ? 'לוח: עברי' : 'לוח: לועזי';
+  })();
+
+  /* ============================================================
+     10. MASTER RENDER
+     ============================================================ */
+  function renderAll(){
+    renderCalendar();
+    renderWheel();
+    renderDetail();
+    renderOvulation();
+  }
+
+  // init view state from selectedAbs if hebrew view needs it
+  (function initView(){
+    if (state.calendarView === 'hebrew' && (state.viewHYear===null || state.viewHMonth===null)){
+      var hd = absoluteToHebrew(state.selectedAbs);
+      state.viewHYear = hd.year; state.viewHMonth = hd.month;
+    }
+    calToggleBtn.textContent = state.calendarView === 'hebrew' ? 'לוח שנה: עברי' : 'לוח שנה: לועזי';
+    calToggleBtn.setAttribute('aria-pressed', state.calendarView==='hebrew' ? 'true':'false');
+  })();
+
+  syncSettingsInputs();
+  renderAll();
+  renderRaiyotList();
+  renderVeset();
+  renderOursCalendar();
+
+  // enhance the WhatsApp footer link with a pre-filled thank-you message
+  (function initFooterWhatsapp(){
+    var link = document.getElementById('footerWhatsapp');
+    if (!link) return;
+    var msg = 'תודה על האפליקציה "מעגל הטהרה"! 🙏';
+    link.href = 'https://wa.me/972528990131?text=' + encodeURIComponent(msg);
+  })();
+
+  initVideoIntro();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>המדריך לחתן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img{max-width:100%; display:block;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+  }
+  h1,h2,.display{ font-family:'Frank Ruhl Libre', serif; }
+
+  .wrap{
+    max-width:560px;
+    margin:0 auto;
+    padding:28px 16px 8px;
+  }
+
+  header.app-header{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding:6px 4px 30px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--gold);
+    font-weight:600;
+  }
+  header.app-header h1{
+    font-size:32px;
+    margin:0;
+    color:var(--navy);
+    font-weight:700;
+  }
+  header.app-header p.sub{
+    margin:0;
+    color:var(--muted);
+    font-size:14.5px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  a.topic-card{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  a.topic-card:active{ transform:scale(0.97); }
+
+  .topic-card .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    background:var(--bg-alt);
+  }
+  .topic-card .label{
+    padding:12px 10px 14px;
+    text-align:center;
+    font-weight:600;
+    font-size:15px;
+    color:var(--navy);
+    line-height:1.35;
+  }
+
+  .topic-card.soon{
+    opacity:0.55;
+    pointer-events:none;
+    position:relative;
+  }
+  .topic-card.soon .soon-badge{
+    position:absolute;
+    top:8px;
+    left:8px;
+    background:var(--navy);
+    color:#fff;
+    font-size:11px;
+    padding:3px 9px;
+    border-radius:999px;
+    font-weight:600;
+  }
+
+  footer.app-footer{
+    text-align:center;
+    margin-top:32px;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  footer.app-footer a{
+    color:var(--navy-soft);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app-header">
+    <div class="eyebrow">הדרכת חתנים</div>
+    <h1>המדריך לחתן</h1>
+    <p class="sub">בחרו נושא כדי להתחיל</p>
+  </header>
+
+  <div class="grid">
+
+    <a class="topic-card" href="pages/tahara-cycle.html?topic=cycle">
+      <img class="thumb" src="media/images/home-tahara-cycle.jpeg" alt="מעגל הטהרה">
+      <div class="label">מעגל הטהרה</div>
+    </a>
+
+    <a class="topic-card" href="pages/ketamim.html">
+      <img class="thumb" src="media/images/home-ketamim.jpeg" alt="הלכות כתמים">
+      <div class="label">הלכות כתמים</div>
+    </a>
+
+    <a class="topic-card soon" href="#" tabindex="-1" aria-disabled="true">
+      <span class="soon-badge">בקרוב</span>
+      <div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:40px;">⏳</div>
+      <div class="label">תהליך הטהרה</div>
+    </a>
+
+    <a class="topic-card" href="pages/tahara-cycle.html?topic=vesatot">
+      <img class="thumb" src="media/images/home-vesatot.jpeg" alt="הלכות וסתות">
+      <div class="label">הלכות וסתות</div>
+    </a>
+
+    <a class="topic-card" href="pages/harchakot.html">
+      <img class="thumb" src="media/images/home-harchakot.jpeg" alt="דיני הרחקות">
+      <div class="label">דיני הרחקות</div>
+    </a>
+
+  </div>
+
+  <footer class="app-footer">
+    שאלות? <a href="https://wa.me/972528990131" target="_blank" rel="noopener noreferrer">כתבו לנו בוואטסאפ</a>
+  </footer>
+
+</div>
+</body>
+</html>

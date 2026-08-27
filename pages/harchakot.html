@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>דיני הרחקות — המדריך לחתן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img,video{max-width:100%;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:520px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link{
+    display:inline-block;
+    color:var(--navy-soft);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  a.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{
+    display:flex; flex-direction:column; gap:8px;
+    padding:6px 4px 20px; text-align:center;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600;
+  }
+  header.app-header h1{ font-size:28px; margin:0; color:var(--navy); font-weight:700; }
+
+  .video-frame{
+    background:#000;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+  }
+  video{ width:100%; display:block; }
+
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px 18px;
+    text-align:center;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .card .icon{ font-size:36px; margin-bottom:8px; }
+  .card h2{ color:var(--navy); font-size:19px; margin:0 0 8px; }
+  .card p{ color:var(--muted); font-size:14.5px; line-height:1.6; margin:0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="../index.html">→ חזרה לדף הבית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">הדרכת חתנים</div>
+    <h1>דיני הרחקות</h1>
+  </header>
+
+  <div class="video-frame">
+    <video controls preload="metadata" playsinline>
+      <source src="../media/videos/harchakot.mp4" type="video/mp4">
+      הדפדפן שלכם לא תומך בהצגת וידאו מוטמע.
+    </video>
+  </div>
+
+  <div class="card">
+    <div class="icon">📝</div>
+    <h2>התוכן ההלכתי בדרך</h2>
+    <p>יחידות הלימוד בנושא זה יתווספו כאן בקרוב. בינתיים אפשר לצפות בסרטון למעלה.</p>
+  </div>
+
+</div>
+</body>
+</html>
