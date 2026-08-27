@@ -79,6 +79,24 @@
     grid-template-columns:1fr 1fr;
     gap:16px;
   }
+  a.topic-card.featured{
+    grid-column:1 / -1;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    border:1px solid rgba(201,162,39,0.35);
+  }
+  a.topic-card.featured .thumb{
+    width:120px;
+    aspect-ratio:1/1;
+    flex:none;
+  }
+  a.topic-card.featured .label{
+    flex:1;
+    text-align:right;
+    padding:0 14px 0 0;
+    font-size:17px;
+  }
 
   a.topic-card{
     display:block;
@@ -155,6 +173,11 @@
   </header>
 
   <div class="grid">
+
+    <a class="topic-card featured" href="pages/hadracha.html">
+      <img class="thumb" src="media/images/home-hadracha.jpeg" alt="הדרכת חתנים">
+      <div class="label">הדרכת חתנים</div>
+    </a>
 
     <a class="topic-card" href="pages/tahara-cycle.html?topic=cycle">
       <img class="thumb" src="media/images/home-tahara-cycle.jpeg" alt="מעגל הטהרה">
