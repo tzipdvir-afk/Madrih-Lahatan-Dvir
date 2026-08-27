@@ -15,6 +15,7 @@
     --navy:#1F2A44;
     --navy-soft:#3A4766;
     --gold:#C9A227;
+    --gold-soft:#E4C878;
     --text:#2B2620;
     --muted:#8a8272;
     --line:#E3D9C4;
@@ -33,9 +34,10 @@
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
     padding-bottom:40px;
+    line-height:1.7;
   }
   h1,h2{ font-family:'Frank Ruhl Libre', serif; }
-  .wrap{ max-width:520px; margin:0 auto; padding:18px 16px 8px; }
+  .wrap{ max-width:560px; margin:0 auto; padding:18px 16px 8px; }
 
   a.back-link{
     display:inline-block;
@@ -64,17 +66,143 @@
   }
   video{ width:100%; display:block; }
 
-  .card{
+  /* DISCLAIMER */
+  .disclaimer{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:12px;
+    padding:14px 16px;
+    margin:0 0 20px;
+    font-size:.9rem;
+    color:var(--text);
+  }
+  .disclaimer .d-icon{ flex:none; font-size:1.3rem; line-height:1; }
+  .disclaimer strong{ display:block; margin-bottom:2px; }
+
+  /* INTRO */
+  .intro{
     background:var(--card);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    padding:22px 18px;
+    padding:18px 20px;
+    margin:0 0 26px;
     text-align:center;
+    color:var(--muted);
+    font-size:.96rem;
     border:1px solid rgba(43,38,32,0.05);
   }
-  .card .icon{ font-size:36px; margin-bottom:8px; }
-  .card h2{ color:var(--navy); font-size:19px; margin:0 0 8px; }
-  .card p{ color:var(--muted); font-size:14.5px; line-height:1.6; margin:0; }
+
+  /* SECTION LABEL */
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-label .num{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    flex:none;
+    box-shadow:0 4px 10px rgba(31,42,68,.3);
+  }
+  .section-label h2{ margin:0; font-size:1.15rem; color:var(--navy); }
+
+  /* ACCORDION */
+  .unit{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .unit-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .unit-header .icon{
+    flex:none;
+    width:42px;height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .unit-header .title{
+    flex:1;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1.02rem;
+  }
+  .unit-header .title small{
+    display:block;
+    font-weight:400;
+    color:var(--muted);
+    font-size:.82rem;
+    margin-top:2px;
+  }
+  .unit-header .chevron{
+    flex:none;
+    width:22px;height:22px;
+    transition:transform .35s ease;
+    color:var(--gold);
+  }
+  .unit.open .unit-header .chevron{ transform:rotate(180deg); }
+  .unit-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .unit-inner{
+    padding:0 22px 22px;
+    color:var(--text);
+    font-size:.96rem;
+  }
+  .unit-inner p{ margin:0 0 12px; }
+  .unit-inner h4{
+    margin:16px 0 6px;
+    color:var(--navy-soft);
+    font-size:.96rem;
+  }
+  .unit-inner h4:first-child{ margin-top:0; }
+  .unit-inner ul{ margin:0 0 14px; padding-inline-start:1.3em; }
+  .unit-inner li{ margin-bottom:6px; }
+
+  .callout{
+    background:var(--bg);
+    border-right:4px solid var(--navy);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.92rem;
+  }
+  .callout.gold{
+    background:var(--gold-soft);
+    border-right-color:var(--gold);
+  }
+  .callout strong{ color:var(--navy); }
+
+  footer.page-footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:20px 12px 0;
+  }
+
+  @media (max-width:520px){
+    header.app-header h1{ font-size:24px; }
+  }
 </style>
 </head>
 <body>
@@ -94,12 +222,184 @@
     </video>
   </div>
 
-  <div class="card">
-    <div class="icon">📝</div>
-    <h2>התוכן ההלכתי בדרך</h2>
-    <p>יחידות הלימוד בנושא זה יתווספו כאן בקרוב. בינתיים אפשר לצפות בסרטון למעלה.</p>
+  <div class="disclaimer">
+    <span class="d-icon">⚠️</span>
+    <div>
+      <strong>לתשומת לבכם</strong>
+      כל האמור במדריך זה נועד לשמש תזכורת בלבד לחתן שלמד את ההלכות כראוי, ואינו מהווה פסיקת הלכה. בכל שאלה מעשית — יש להתייעץ עם פוסק.
+    </div>
   </div>
 
+  <div class="intro">
+    לפניכם ריכוז הלכות ההרחקות הנהוגות בין בני זוג בתקופה שבה האישה אסורה. עברו על היחידות לפי הסדר, או קפצו ישירות לנושא שמעניין אתכם.
+  </div>
+
+  <div class="section-label"><span class="num">1</span><h2>יחידות לימוד</h2></div>
+
+  <div id="units"></div>
+
+  <footer class="page-footer">
+    המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד, ואינו מהווה פסיקת הלכה. בכל שאלה או מקרה קונקרטי — יש לפנות לרב מוסמך.
+  </footer>
+
 </div>
+
+<script>
+const UNITS = [
+  {
+    icon:"💎",
+    title:"1. הסיבות להלכות הרחקות",
+    subtitle:"למה בכלל יש הרחקות",
+    mascot:"",
+    html:`
+      <p>לפני שנכנסים לפרטי הדינים, כדאי להבין <strong>למה</strong> קבעו חז"ל ימי הרחקה בין בני הזוג. שלוש סיבות עיקריות עומדות בבסיס ההלכות הללו.</p>
+
+      <h4>מניעת שחיקה ויצירת געגוע והתחדשות</h4>
+      <p>חז"ל מסבירים כי מטרת הימים הללו היא לרענן את הקשר הזוגי ולמנוע שחיקה. רבי מאיר אמר: "מפני מה אמרה תורה נידה לסוף שבעה? מפני שרגיל בה וקץ בה, אמרה תורה תהיה אסורה עליו כדי שתהיה חביבה עליו כבשעת כניסתה לחופה". תהליך זה פועל כמעין "ריסטארט" חודשי לזוגיות, ומחדש את הגעגוע והתשוקה — וכן את שאר צלעות משולש האהבה (מחויבות ואינטימיות נפשית). זהו כלי חזק במיוחד להתמודדות עם תופעת השחיקה הזוגית.</p>
+
+      <h4>יצירת מרחב של קדושה</h4>
+      <p>בניגוד לגישות אחרות הרואות במיניות דבר בהמי או "רע הכרחי", היהדות רואה בחיבור הגופני בין איש לאשתו דבר קדוש ועליון. הקדושה אינה נמדדת בנזירות, אלא בשאלה מי שולט במי — האם האדם שולט ביצרו, או שהיצר שולט בו. היכולת לפרוש כשצריך ולהתחבר כשמותר היא שמקדשת את הקשר ומביאה את השכינה לתוך הבית.</p>
+
+      <h4>קדושת קיום דבר ה'</h4>
+      <p>הסיבה הבסיסית להרחקות היא קבלת עול מלכות שמיים וקיום "גזירת מלך". כפי שמסביר ספר הכוזרי, דיני טומאה וטהרה הם מעבר להשגה השכלית האנושית, ומכוונים ישירות לרצון ה'. החיבור בין הציות למצווה לבין הבנת התועלת הזוגית יוצר הרמוניה של קודש וחול. ענייני קדושה וטהרה הם המשך עמוק של הלכות בית המקדש — וכך זוג השומר טהרת הבית בונה, במידה מסוימת, אבן מחורבות ירושלים.</p>
+    `
+  },
+  {
+    icon:"🌹",
+    title:"2. הלכות כלליות",
+    subtitle:"העיקרון המנחה את כל הפרטים — סוגה בשושנים",
+    mascot:"",
+    html:`
+      <p>הכלל היסודי קובע כי על בני הזוג להימנע מכל דבר שעלול להביא לידי <strong>"הרגל עבירה"</strong> או לעורר את היצר בתקופה שבה הם אסורים זה לזה.</p>
+      <div class="callout gold">
+        <strong>סוגה בשושנים:</strong> כך מכונים דיני ההרחקות — גדר עדינה וסמלית שמזכירה לבני הזוג היכן הם עומדים, לא חומה קשוחה אלא תזכורת מתמדת.
+      </div>
+      <ul>
+        <li>הכלל משתנה ואינדיבידואלי לכל זוג, וכולל הימנעות ממצבים המזמינים מגע, או מדיבורים המקשים על ההתמודדות (כמו שיחות ממושכות על הרצון להתחבק, או פעילות סוערת כמו מלחמת כריות).</li>
+        <li>הרב אליהו מציין: אם ישנו דבר שמותר מבחינה הלכתית יבשה, אך בני הזוג מרגישים שהוא מקשה עליהם מאוד להימנע ממגע — עליהם להימנע ממנו.</li>
+      </ul>
+      <p>כל דיני ההרחקות חלים מרגע שהאישה נאסרת (עקב קבלת וסת, בדיקה פנימית, או כתם האוסר) ועד לטבילתה בפועל במקווה. <strong>אין כל הבדל הלכתי</strong> בין שיא המחזור, ימי השבעה הנקיים, או דקות ספורות לפני הטבילה — כל הזמן הזה כפוף לאותם דינים.</p>
+    `
+  },
+  {
+    icon:"🍽️",
+    title:"3. הלכות הנוגעות לאכילה",
+    subtitle:"כלים משותפים, שיירי מאכל ומזיגה",
+    mascot:"",
+    html:`
+      <p>אכילה ושתייה הן פעולות המקרבות בין אנשים ("לגימה שמקרבת"), ולכן חלות בהן כמה הגבלות.</p>
+
+      <h4>איסור אכילה מכלי אחד</h4>
+      <p>אין לאכול מאותה צלחת או מאותו כלי ישירות. למשל, אין לשתות מילקשייק משותף בשתי קשיות, או לשתות מאותו בקבוק בתורות — אלא יש למזוג לכוסות נפרדות.</p>
+
+      <h4>איסור אכילת שיירי האישה</h4>
+      <p>לבעל אסור לאכול או לשתות את שיירי המאכל והמשקה שהשאירה אשתו בצלחתה או בכוסה. איסור זה חל <strong>רק על הבעל</strong> (מכיוון שהיצר הגברי נחשב לאקטיבי יותר). אם מעבירים את האוכל לצלחת אחרת, או אם האישה אינה נוכחת בחדר — הדבר מותר.</p>
+
+      <h4>סימן באכילה משותפת</h4>
+      <p>כאשר בני הזוג אוכלים לבדם על שולחן אחד, עליהם להניח חפץ מסוים כ"סימן" ויזואלי שיזכיר להם שהם אסורים — למשל שעון שהוסר, מפתחות רכב, או כל חפץ אחר שאינו מונח שם בדרך כלל. אם אוכלים יחד עם אנשים נוספים בשולחן, אין צורך בסימן.</p>
+
+      <h4>מזיגת משקאות חריפים</h4>
+      <p>אסור לבני הזוג למזוג זה לזו משקאות חריפים (ובפרט יין בקידוש ובהבדלה) באופן ישיר. המקדש לא ימסור את הכוס ישירות ליד אשתו, אלא יניח אותה על השולחן והיא תיקח. כל שינוי סמלי — כמו מזיגה ביד שמאל או הנחת הכוס במרחק — מספיק כדי להתיר.</p>
+    `
+  },
+  {
+    icon:"🛋️",
+    title:"4. הלכות הנוגעות למרחב משותף",
+    subtitle:"ישיבה, העברת חפצים וטיולים",
+    mascot:"",
+    html:`
+      <h4>ספסל מתנדנד וישיבה משותפת</h4>
+      <p>אסור לשבת יחד על מושב לא יציב או רך שבו מרגישים את תנועות הגוף של השני (כמו נדנדה או ספה רכה מאוד). על ספה יציבה וקשיחה מותר לשבת, כל עוד לא מרגישים את תנועות השני. בשעת הדחק (כמו ישיבה צפופה ברכב) מותר לשבת יחד אם מניחים חפץ חוצץ ביניהם (כמו תיק) כדי למנוע מגע ישיר.</p>
+      <div class="callout">
+        <strong>שימו לב:</strong> דין זה חל לפי מנהג האשכנזים, בעוד שהספרדים מקלים בו.
+      </div>
+
+      <h4>איסור העברה מיד ליד</h4>
+      <p>אסור להושיט או להעביר חפצים ישירות מיד ליד, כדי למנוע נגיעה מקרית ולשמש כתזכורת מתמדת. בבית יש להקפיד על כך מאוד, אך במרחב הציבורי (כמו תור בסופר), אם הדבר עלול לגרום למבוכה רבה בפני זרים — יש פוסקים המקלים להעביר בשינוי קל (למשל ביד שמאל) כדי למנוע בושה.</p>
+
+      <h4>יציאה לטיולים</h4>
+      <p>מומלץ מאוד לתכנן טיולים הכוללים לינה (בצימר או במלון) רק לימים שבהם בני הזוג מותרים, שכן מרחבים אלו מזמינים אינטימיות, וההרחקה בהם פוגעת בהנאת הנופש. ניתן להיעזר בגלולות כדי לסדר את זמני המחזור בהתאם לחופשות מתוכננות.</p>
+
+      <h4>פרטים נוספים</h4>
+      <p>מוזכרים בפוסקים גם איסור על הבעל לשמוע קול זמרה של אשתו (יש המקלים בשירי שבת וקודש), הימנעות מלהריח את הבושם שלה, וההמלצה לייחד בגד מיוחד לימי הנידה (מנהג שפחות נהוג כיום).</p>
+    `
+  },
+  {
+    icon:"🛏️",
+    title:"5. הלכות הנוגעות לחדר השינה",
+    subtitle:"מיטות נפרדות וגבולות הצניעות",
+    mascot:"",
+    html:`
+      <h4>הפרדת מיטות</h4>
+      <p>בזמן שהם אסורים, יש להפריד בין מיטות בני הזוג. מעיקר הדין מספיק להפריד במרחק קטן, אך למעשה מומלץ להפריד לפחות במרחק שימנע נגיעה מקרית של הושטת יד בלילה. אם מתארחים במקום שאין בו מיטות נפרדות, הבעל צריך לישון על ספה.</p>
+
+      <h4>ישיבה ושכיבה על המיטות</h4>
+      <p>אסור לבעל לשבת או לשכב על מיטת אשתו, ואסור לאישה לשבת או לשכב על מיטת בעלה, בשל האופי האינטימי והאישי של המיטה.</p>
+
+      <h4>הצעת המיטה</h4>
+      <p>אסור לאישה להציע (לסדר) את מיטת בעלה בפניו, וכן אסור לבעל להציע את מיטת אשתו בפניה — שכן זוהי מלאכה שיש בה ממד אינטימי ומקרב.</p>
+
+      <h4>לבוש וצניעות בבית</h4>
+      <p>לבעל אסור לראות את אשתו במצב של חוסר צניעות (כמו בזמן החלפת בגדים). בעניין זה יש מחלוקת בין הפוסקים: הרב מרדכי אליהו מחמיר וסובר שעליה להיות מכוסה בבית לחלוטין כמו ברחוב (כולל כיסוי ראש ושרוולים ארוכים), ואילו האגרות משה והרב עובדיה יוסף מקלים וסוברים שמותר לה להסתובב בבית בלבוש ביתי רגיל (כמו שרוולים קצרים ובלי כיסוי ראש), מכיוון שמראה זה רגיל ואינו מביא את הבעל לידי הרהור אסור.</p>
+    `
+  },
+  {
+    icon:"💑",
+    title:"6. הלכות התנהגות כאשר מותרים",
+    subtitle:"גבולות בפני אחרים, גם כשהכול מותר",
+    mascot:"",
+    html:`
+      <p>כאשר בני הזוג מותרים, החיבור והקרבה ביניהם הם רצויים, חיוביים ומקודשים. עם זאת, ישנם גבולות ברורים להתנהגותם בפני אחרים.</p>
+
+      <h4>איסור הפגנת אינטימיות בפני אחרים</h4>
+      <p>אסור לחלוטין לבני זוג להפגין גילויי חיבה אינטימיים (כמו חיבוק או נשיקה) בפני אנשים אחרים, גם כשהם מותרים. הפגנת אהבה בפרהסיה מוזילה את ערכה של האהבה, ומעבירה את הפוקוס למה שאחרים חושבים.</p>
+
+      <h4>המקור ההלכתי</h4>
+      <p>המקור ההלכתי לדין זה הוא הסיפור בגמרא על רבי בנאה, שראה את אברהם ושרה במערת המכפלה בסיטואציה אינטימית — אברהם שוכב בחיקה של שרה, והיא מסדרת את שערותיו. משם למדו שסיטואציה כזו אסורה מול אנשים חיים שיש להם יצר הרע.</p>
+
+      <h4>החזקת ידיים בציבור</h4>
+      <p>קיימת מחלוקת בין הפוסקים: יש האוסרים זאת לחלוטין (כמו הרב יצחק יוסף). מנגד, יש הסוברים שהחזקת ידיים אינה נחשבת למעשה אינטימי מובהק אלא להבעת חברות, ולכן מותר להחזיק ידיים בעת הליכה משותפת או בטיול בטבע. עם זאת, הדבר תלוי מאוד בהקשר החברתי — במקום שבו הדבר ייחשב לחריג ויביך את בני הזוג או את הסביבה (כמו ביציאה מישיבה), יש להימנע מכך ללא קשר לשאלה ההלכתית היבשה.</p>
+
+      <h4>צילומים זוגיים בחתונה</h4>
+      <p>על בני הזוג לתאם מראש ציפיות לגבי צילומי החתונה. לעיתים צלמים מנסים לדחוף לתנוחות אינטימיות או מביכות, וחשוב להגדיר מראש מה מתאים ומה לא, כדי למנוע אי־נעימות או הפתעות ברגע האמת.</p>
+    `
+  }
+];
+
+const unitsEl = document.getElementById('units');
+UNITS.forEach((u,i)=>{
+  const div = document.createElement('div');
+  div.className = 'unit';
+  div.innerHTML = `
+    <div class="unit-header" data-i="${i}">
+      <span class="icon">${u.icon}</span>
+      <span class="title">${u.title}<small>${u.subtitle}</small></span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="unit-body"><div class="unit-inner">${u.html}</div></div>
+  `;
+  unitsEl.appendChild(div);
+});
+
+unitsEl.addEventListener('click', (e)=>{
+  const header = e.target.closest('.unit-header');
+  if(!header) return;
+  const unit = header.closest('.unit');
+  const body = unit.querySelector('.unit-body');
+  const isOpen = unit.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(()=>{ body.style.maxHeight = '0px'; });
+    unit.classList.remove('open');
+  } else {
+    unit.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function te(){
+      if(unit.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', te);
+    });
+  }
+});
+</script>
 </body>
 </html>
