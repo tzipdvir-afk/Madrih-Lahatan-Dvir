@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>חמש שפות האהבה — המדריך לחתן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img{max-width:100%; display:block;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    line-height:1.7;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:600px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link{
+    display:inline-block;
+    color:var(--navy-soft);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  a.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{
+    display:flex; flex-direction:column; gap:8px;
+    padding:6px 4px 20px; text-align:center;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600;
+  }
+  header.app-header h1{ font-size:28px; margin:0; color:var(--navy); font-weight:700; }
+  header.app-header p.sub{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  .intro{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px 22px;
+    margin:0 0 26px;
+    color:var(--text);
+    font-size:.97rem;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .intro p{ margin:0 0 14px; }
+  .intro p:last-child{ margin-bottom:0; color:var(--muted); font-size:.9rem; }
+
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-label .num{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    flex:none;
+    box-shadow:0 4px 10px rgba(31,42,68,.3);
+  }
+  .section-label h2{ margin:0; font-size:1.15rem; color:var(--navy); }
+
+  /* ACCORDION */
+  .unit{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .unit-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .unit-header .icon{
+    flex:none;
+    width:42px;height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .unit-header .title{
+    flex:1;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1.0rem;
+  }
+  .unit-header .title small{
+    display:block;
+    font-weight:400;
+    color:var(--muted);
+    font-size:.8rem;
+    margin-top:2px;
+  }
+  .unit-header .chevron{
+    flex:none;
+    width:22px;height:22px;
+    transition:transform .35s ease;
+    color:var(--gold);
+  }
+  .unit.open .unit-header .chevron{ transform:rotate(180deg); }
+  .unit-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .unit-inner{
+    padding:0 22px 22px;
+    color:var(--text);
+    font-size:.95rem;
+  }
+  .unit-inner p{ margin:0 0 12px; }
+  .unit-inner h4{
+    margin:16px 0 6px;
+    color:var(--navy-soft);
+    font-size:.92rem;
+  }
+  .unit-inner ul{ margin:0 0 14px; padding-inline-start:1.3em; }
+  .unit-inner li{ margin-bottom:6px; }
+
+  .lang-photo{
+    width:100%;
+    border-radius:14px;
+    overflow:hidden;
+    margin:0 0 16px;
+    background:var(--bg-alt);
+  }
+  .lang-photo img{ width:100%; }
+
+  .callout{
+    background:var(--bg);
+    border-right:4px solid var(--navy);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.9rem;
+  }
+  .callout.warn{
+    background:#FBEFE9;
+    border-right-color:#B4534A;
+  }
+  .callout strong{ color:var(--navy); }
+  .callout.warn strong{ color:#B4534A; }
+
+  /* GAME BOX */
+  .game-box{
+    margin-top:18px;
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    border-radius:16px;
+    padding:18px;
+    text-align:center;
+  }
+  .game-box .game-label{
+    color:var(--gold-soft);
+    font-weight:700;
+    font-size:.9rem;
+    margin-bottom:10px;
+  }
+  .game-box .game-question{
+    background:var(--card);
+    border-radius:12px;
+    padding:14px 16px;
+    color:var(--text);
+    font-size:.96rem;
+    font-weight:600;
+    margin-bottom:10px;
+    min-height:24px;
+    display:none;
+  }
+  .game-box .game-tip{
+    background:var(--gold-soft);
+    border-radius:12px;
+    padding:12px 14px;
+    color:var(--navy);
+    font-size:.85rem;
+    margin-bottom:12px;
+    display:none;
+  }
+  .game-box .game-tip b{ display:block; margin-bottom:3px; }
+  .game-box button{
+    background:var(--gold);
+    color:var(--navy);
+    border:none;
+    border-radius:12px;
+    padding:11px 20px;
+    font-weight:700;
+    font-size:.9rem;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .game-box button:active{ transform:scale(.98); }
+  .game-box .game-count{
+    color:var(--gold-soft);
+    font-size:.75rem;
+    margin-top:8px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="tikshoret.html">→ חזרה לכלים לתקשורת זוגית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">כלים לתקשורת זוגית</div>
+    <h1>חמש שפות האהבה</h1>
+    <p class="sub">להכיר את השפה שלכם — ושל בן/בת הזוג</p>
+  </header>
+
+  <div class="intro">
+    <p>לכל אחד מאיתנו יש "שפת אם" רגשית — הדרך שדרכה אנחנו הכי מרגישים אהובים. הבעיה היא שבני זוג לפעמים לא מדברים באותה שפה: אחד מהם משקיע המון אהבה, אבל השני בקושי "שומע" אותה — כי היא מגיעה בשפה הלא נכונה. זה כמו לצעוק "אני אוהב אותך!" ברוסית למישהו שמבין רק עברית — הכוונה אמיתית, אבל המסר לא עובר.</p>
+    <p>ד"ר גארי צ'פמן זיהה שכל האהבה הזוגית מתבטאת בעיקר דרך חמישה "ערוצים". רוב האנשים "מדברים" בכל החמישה, אבל לכל אחד יש אחת או שתיים ששם באמת מרגישים אהובים בעוצמה. להכיר את השפה של עצמכם — ושל בן/בת הזוג — זה אחד הכלים הפשוטים והיעילים ביותר לזוגיות בריאה.</p>
+    <p>המתודולוגיה של חמש שפות האהבה היא מכלי התקשורת הזוגית המוכרים והיעילים ביותר. אם אתם מעוניינים להרחיב יותר על כך — ברשת תמצאו המון מידע ותרגולים.</p>
+  </div>
+
+  <div class="section-label"><span class="num">1</span><h2>חמש השפות</h2></div>
+
+  <div id="units"></div>
+
+</div>
+
+<script>
+const LANGUAGES = [
+  {
+    icon:"💬",
+    title:"שפת האהבה 1 - מילות חיזוק",
+    subtitle:"Words of Affirmation",
+    photo:"../media/images/love-lang-words.jpeg",
+    intro:`
+      <p>לאנשים ששפת האהבה שלהם היא מילים, מילה טובה שווה יותר מכל מחווה אחרת. זה לא מחמאות סתמיות — זה משפטים שנאמרים בכוונה: "אני כל כך גאה בך על איך שהתמודדת עם זה היום", "אתה נראה מדהים", "תודה שאתה תמיד שם בשבילי". אצל אדם כזה, משפט אחד כזה יכול "להחזיק" אותו כל השבוע — ולהיפך: ביקורת, אירוניה, או פשוט שתיקה כרונית פוגעים בו הרבה יותר מאשר באדם עם שפה אחרת.</p>
+      <h4>איך זה נשמע בפועל</h4>
+      <p>"וואו, ראיתי איך דיברת עם אמא שלי — היית כל כך רגיש", פתק קטן שמחכה על הכרית, הודעת וואטסאפ באמצע היום "חשבתי עלייך", מילה טובה מול ההורים או החברים ולא רק ביניכם.</p>
+      <div class="callout warn">
+        <strong>מה קורה כשמפספסים:</strong> בן/בת זוג שקטים "מטבעם" עלולים בכלל לא להבין שהצד השני זקוק למילים — הם הרי אוהבים אותו/ה בפעולות, אז "למה צריך גם לומר?". אבל בלי המילים, האדם הזה עלול להרגיש בודד גם בתוך זוגיות טובה.
+      </div>
+    `,
+    questions:[
+      {q:"מהי מילת עידוד אחת ששמעת ממני שבאמת נשארה איתך?", tip:"שתפו למה דווקא המשפט הזה נחרט — לפעמים זה התזמון, לא רק המילים."},
+      {q:"באיזו מילה או משפט היית רוצה לשמוע ממני יותר?", tip:"נסו לנסח יחד משפט קצר וקונקרטי שתוכלו להשתמש בו החל מהיום."},
+      {q:"ההורים שלך נהגו לומר \"אני אוהב/ת אותך\" או להחמיא לך? באיזו תדירות?", tip:"שימו לב איך הבית שגדלתם בו עיצב את הציפייה שלכם למילים היום."},
+      {q:"קל לך יותר לתת מחמאות או לקבל אותן?", tip:"אם קשה לקבל מחמאה, זה שווה שיחה בפני עצמה — למה?"},
+      {q:"איזו מחמאה ששמעת מאדם אחר (לא ממני) עשתה לך את היום?", tip:"זה יכול ללמד הרבה על סוג המילים שבאמת \"פוגעות במטרה\" אצלך."},
+      {q:"יש נושא שהיית שמח/ה לקבל עליו יותר הכרה או עידוד — בעבודה, בבית, כהורה?", tip:"לפעמים אנחנו שוכחים לחזק דווקא בתחומים שהכי חשובים לצד השני."},
+      {q:"מתי לאחרונה ביקורת (גם בונה) ממני פגעה בך יותר משהתכוונתי?", tip:"דברו על הדרך העדינה ביותר להעביר הערה בלי לפגוע."},
+      {q:"איזה סוג הודעת טקסט ממני היה משמח אותך באמצע יום עבודה?", tip:"נסו ליישם את זה בפועל השבוע — הודעה קצרה, בלי סיבה מיוחדת."},
+      {q:"יש הבדל אצלך בין מחמאה פרטית לבין מחמאה בנוכחות אחרים?", tip:"אם כן — שימו לב לזה, כי מה שמרגש בפרטי עלול להביך בציבור, ולהיפך."},
+      {q:"זוכר/ת רגע שבו שתיקה שלי (כשציפית למילה) הרגישה קשה?", tip:"שתיקה לא תמיד אומרת חוסר אכפתיות — שווה לברר מה עמד מאחוריה."},
+      {q:"איך היית רוצה שאני אעודד אותך לפני אתגר גדול (ריאיון, בחינה, שיחה קשה)?", tip:"נסו לגבש \"משפט קסם\" קבוע שישמש אתכם בדיוק ברגעים כאלה."},
+      {q:"יש לך זיכרון מהילדות של מילה שפגעה בך ונשארה איתך שנים?", tip:"זה מזכיר כמה כוח יש למילים — גם השליליות נשארות הרבה זמן."},
+      {q:"מה ההבדל בעינייך בין \"כל הכבוד\" לבין \"אני גאה בך\"?", tip:"לפעמים ניסוח דומה לכאורה נשמע שונה לגמרי לכל אחד."},
+      {q:"יש איזור בחיים שלך שבו אתה/את הכי צריך/ה חיזוק עכשיו?", tip:"זו הזדמנות טובה לתת את המילה הזו ממש היום, לא רק לדבר עליה."},
+      {q:"איך אתה/את בדרך כלל אומר/ת \"אני אוהב/ת אותך\" — במילים האלה ממש, או בניסוחים אחרים?", tip:"שימו לב שיש הרבה דרכים לומר את זה — לא רק המשפט הקלאסי."}
+    ]
+  },
+  {
+    icon:"⏳",
+    title:"שפת האהבה 2 - זמן איכות",
+    subtitle:"Quality Time",
+    photo:"../media/images/love-lang-time.jpeg",
+    intro:`
+      <p>כאן המתנה היא תשומת לב מלאה, בלי תחרות מול הפלאפון. לא סתם "להיות באותו חדר" — אלא לשבת פנים אל פנים, לדבר, לשתף, או לעשות משהו יחד באמת. זוג שיושב זה ליד זה, כל אחד מסתכל במסך, לא "עושה זמן איכות" — גם אם הם "ביחד".</p>
+      <h4>איך זה נשמע בפועל</h4>
+      <p>שיחה של עשרים דקות בלי טלפונים ליד, טיול קצר בלי סדר יום, לבשל ביחד בשבת, לשבת ולשמוע איך עבר היום שלה/שלו עד הסוף בלי לקטוע.</p>
+      <div class="callout warn">
+        <strong>מה קורה כשמפספסים:</strong> אחרי יום עמוס, קל להסתפק ב"בילינו ביחד בסלון" בזמן שכל אחד בטלפון שלו. מי ששפתו זמן איכות ירגיש בדיוק את הפער — לא בגלל שקרה משהו רע, אלא בגלל שבאמת לא היה שם רגע של חיבור אמיתי.
+      </div>
+    `,
+    questions:[
+      {q:"מהו הזיכרון האהוב עליך מזמן ששיתפנו יחד?", tip:"נסו לזהות מה בדיוק הפך את הרגע הזה למיוחד — זה רמז למה שאתם צריכים יותר."},
+      {q:"כש\"בואי נבלה ביחד\" — למה זה נראה בעינייך בפועל?", tip:"לעיתים קרובות לכל אחד יש תמונה שונה לגמרי בראש — כדאי להסכים על הגדרה משותפת."},
+      {q:"איך נראה \"זמן משפחה\" בבית שגדלת בו?", tip:"המנהגים מהבית שלכם משפיעים בלי משים על הציפיות שלכם היום."},
+      {q:"מה הכי מפריע לזמן איכות אצלכם היום?", tip:"בחרו יחד צעד קטן אחד להתמודד עם ההפרעה הזו השבוע."},
+      {q:"היית מעדיף/ה שיחה עמוקה, פעילות משותפת, או פשוט שקט משותף?", tip:"כל אחת מהאפשרויות היא \"זמן איכות\" לגיטימי — השאלה היא מה מתאים לך."},
+      {q:"מתי לאחרונה הרגשת שאני \"שם\" איתך רק פיזית, אבל לא באמת נוכח/ת?", tip:"דברו על מה עוזר לכם להישאר נוכחים באמת, בלי לחשוב על המטלה הבאה."},
+      {q:"יש פעילות שהיית רוצה שנעשה יחד ולא עשינו כבר הרבה זמן?", tip:"קבעו תאריך קונקרטי ביומן — כוונה בלי תאריך נוטה להישאר כוונה."},
+      {q:"מה דעתך על מסכים בזמן ששנינו יחד בבית?", tip:"אולי כדאי לקבוע \"אזור נטול מסכים\" קבוע — למשל בזמן הארוחה."},
+      {q:"כילד/ה, ההורים שלך פינו לך זמן אישי, רק אתכם? איך זה הרגיש?", tip:"זה יכול להסביר הרבה על מידת החשיבות של \"זמן פנוי רק בשבילי\" אצלך היום."},
+      {q:"יש הבדל אצלך בין \"לעשות משהו יחד\" לבין \"לדבר יחד\"?", tip:"שני הדברים חשובים, אבל לא לכולם באותה מידה — שווה לדעת מה מרכזי יותר אצל כל אחד."},
+      {q:"מה היית רוצה שיקרה בדייט השבועי הבא שלנו?", tip:"נסו להפתיע קצת — לפעמים שינוי קטן בשגרה מרענן את כל החוויה."},
+      {q:"מתי הרגשת הכי מחובר/ת אליי בזמן האחרון?", tip:"זהו יחד מה יצר את החיבור הזה, ונסו לשחזר את התנאים."},
+      {q:"יש הבדל אצלך בין חופשה עמוסה בטיולים לבין חופשה \"עצלה\" בבית מלון?", tip:"שווה לדבר על זה לפני שמתכננים את הנופש השנתי הבא."},
+      {q:"מה גורם לך להרגיש שאני \"מקשיב/ה באמת\" ולא רק שומע/ת?", tip:"נסו לזהות סימנים קונקרטיים — קשר עין, שאלות המשך, בלי לענות מיד בעצה."},
+      {q:"יש רגע ביום שהיית רוצה שנקדיש רק אחד לשני, גם אם קצר?", tip:"אפילו חמש דקות קבועות ביום יכולות לעשות הבדל גדול לאורך זמן."}
+    ]
+  },
+  {
+    icon:"🎁",
+    title:"שפת האהבה 3 - קבלת מתנות",
+    subtitle:"Receiving Gifts",
+    photo:"../media/images/love-lang-gifts.jpeg",
+    intro:`
+      <p>זו לא "חומרנות" — זו סמל מוחשי. מתנה, גם הכי קטנה, אומרת "חשבתי עלייך כשלא היית לידי". פרח שנקטף בדרך הביתה, חטיף שהוא/היא אוהבים, משהו קטן שקנית "כי זה הזכיר לי אותך" — כל אלה נושאים משמעות עצומה לאדם ששפתו מתנות, בלי קשר למחיר.</p>
+      <h4>איך זה נשמע בפועל</h4>
+      <p>להביא את המשקה האהוב עליה בלי שביקשה, לשמור כרטיס מההצגה הראשונה שלכם, פתק קטן עם לב מצויר, מתנת יום נישואין שקנית שבועות מראש.</p>
+      <div class="callout warn">
+        <strong>מה קורה כשמפספסים:</strong> לשכוח תאריך משמעותי, או לומר "אני לא צריך/ה מתנות, זה בזבוז כסף" — עלול להיתפס לא כחיסכון אלא כחוסר תשומת לב, גם אם זו לא הכוונה.
+      </div>
+    `,
+    questions:[
+      {q:"איזו מתנה קטנה שקיבלת ממני נשארה איתך הכי הרבה?", tip:"שימו לב אם מה שנשאר איתך זה החפץ עצמו, או הרגע שסביבו."},
+      {q:"חשוב לך יותר המתנה עצמה, או ההפתעה שמאחוריה?", tip:"זה יכול לשנות איך כדאי \"לתכנן\" מתנות אחד לשני בעתיד."},
+      {q:"חגגו לך ימי הולדת בילדות? קיבלת מתנות? איך זה הרגיש?", tip:"לפעמים היחס למתנות היום קשור ישירות לאיך זה נראה בבית ההורים."},
+      {q:"יש הבדל אצלך בין \"מתנה יקרה\" ל\"מתנה קטנה אבל אישית\"?", tip:"לרוב האנשים ששפתם מתנות, המחשבה שמאחורי המתנה שווה יותר מהמחיר."},
+      {q:"יש מתנה שקיבלת בעבר (לא ממני) שממש פגעה בך, כי הרגישה חסרת מחשבה?", tip:"זו הזדמנות טובה להבין מה הופך מתנה ל\"פגיעה\" ולא רק ל\"החמצה\"."},
+      {q:"יש הזדמנות (לא יום הולדת) שהיית שמח/ה לקבל בה מתנה קטנה סתם ככה?", tip:"מתנות \"בלי סיבה\" הן לעיתים המשמעותיות ביותר, כי הן אומרות \"חשבתי עלייך\"."},
+      {q:"יש חפץ קטן שהיית רוצה לשמור לתמיד כי הוא מזכיר לך אותי?", tip:"זה יכול לתת רמז טוב לסוג המתנות הבא בפעם הבאה."},
+      {q:"מה דעתך על מתנות שאני מכין/ה בעצמי, לעומת קניות?", tip:"לרוב יש כאן תשובה מפתיעה — שווה לגלות אותה לפני יום הנישואין הבא."},
+      {q:"יש תאריך משמעותי שהיית רוצה שנקפיד עליו יחד כל שנה (לא רק יום הנישואין)?", tip:"קבעו תזכורת ביומן כבר עכשיו — כך זה לא ייפול בין הכיסאות."},
+      {q:"מתי לאחרונה מתנה קטנה שקיבלת ממישהו הפתיעה אותך לטובה?", tip:"נסו לזהות מה בדיוק הפתיע — זה עשוי לרמז על מה שיעבוד גם בינינו."},
+      {q:"יש הבדל אצלך בין מתנה שנקנתה במיוחד למתנה עם משמעות אישית?", tip:"לרוב, המשמעות האישית מנצחת את המקוריות של הקנייה."},
+      {q:"איך היית רוצה שנחגוג יחד יום נישואין — עם מתנות, חוויה, או שילוב?", tip:"כדאי לתאם ציפיות מראש, כדי שאף אחד לא יופתע לרעה ביום עצמו."}
+    ]
+  },
+  {
+    icon:"🤲",
+    title:"שפת האהבה 4 - מעשי שירות",
+    subtitle:"Acts of Service",
+    photo:"../media/images/love-lang-service.jpeg",
+    intro:`
+      <p>"תני לי לעשות לך את זה" — זו האהבה שמדברת בפעולות. מילוי מים לרכב, הכנת קפה בלי שביקשו, סידור הבית לפני שהיא/הוא חוזר/ת עייף/ה מהעבודה. זו לא "עבודה", זו מחווה — כל פעולה כזו אומרת "ראיתי אותך, וזה חשוב לי להקל עלייך".</p>
+      <h4>איך זה נשמע בפועל</h4>
+      <p>למלא את מיכל הדלק בלי שיבקשו, לקפל כביסה שהצטברה, לתאם תור לרופא בשביל בן/בת הזוג, להכין לו/לה משהו לאכול כי "ידעת שהוא/היא לא הספיק/ה".</p>
+      <div class="callout warn">
+        <strong>מה קורה כשמפספסים:</strong> בקשה לעזרה שמתקבלת בתלונה ("שוב אני צריך לעשות הכל?") פוגעת קשות באדם ששפתו שירות — כי בעיניו, זו לא "עוד מטלה", זו הוכחה לאהבה שנעדרת.
+      </div>
+    `,
+    questions:[
+      {q:"איזו פעולה קטנה שעשיתי בשבילך גרמה לך להרגיש הכי אהוב/ה?", tip:"שימו לב אם זו הייתה פעולה גדולה או קטנה — לפעמים הקטנות מדברות הכי חזק."},
+      {q:"יש משהו שהיית שמח/ה שאעשה בלי שתצטרך/י לבקש?", tip:"זה בדיוק הרגע לומר את זה בקול — במקום לחכות שהצד השני \"יידע\"."},
+      {q:"מי בבית שלך היה \"עושה הכל\" בשביל המשפחה כשגדלת?", tip:"זה יכול להסביר הרבה על התפקידים שאתם \"לוקחים\" בבית בלי לדבר עליהם."},
+      {q:"קל לך לבקש עזרה, או שאתה/את מעדיפ/ה לעשות הכל לבד?", tip:"אם קשה לבקש — זה שווה תשומת לב, כי זה יכול לגרום לתחושת עומס בלי שהצד השני ידע."},
+      {q:"יש מטלה שבעיניך מרגישה \"שירות של אהבה\" יותר מאחרות?", tip:"זה יכול לעזור לזהות איפה כדאי להשקיע מאמץ תחילה."},
+      {q:"מתי הרגשת שעזרה שביקשת \"התקבלה בתלונה\"? איך זה הרגיש?", tip:"דברו על ההבדל בין \"לעשות\" משהו ברצון לבין \"לעשות\" מתוך חובה."},
+      {q:"יש תחום בבית שהיית רוצה שאני אקח יותר אחריות עליו?", tip:"נסו לחלק תפקידים בצורה מפורשת, לא להניח שזה \"מובן מאליו\"."},
+      {q:"מה הפעולה הכי \"לא סקסית\" שאני יכול/ה לעשות שתגרום לך להרגיש הכי אהוב/ה?", tip:"לרוב מדובר במשהו יומיומי לגמרי — שטיפת כלים, קיפול כביסה, מילוי דלק."},
+      {q:"כילד/ה, זכרת מישהו בבית שעשה משהו קטן בשבילך שנחרט בזיכרון?", tip:"פעולות קטנות שנעשות באהבה נשארות בזיכרון הרבה יותר משנדמה לנו."},
+      {q:"יש הבדל אצלך בין עזרה שנעשית \"כי ביקשתי\" לבין עזרה שנעשית ביוזמה שלי?", tip:"לרוב היוזמה מרגישה משמעותית יותר — כי היא אומרת \"שמתי לב לבד\"."},
+      {q:"מה היית רוצה שאעשה בבוקר עמוס במיוחד, בלי שתצטרך/י לבקש?", tip:"נסו לבחור פעולה אחת קטנה וקבועה ליישם השבוע."},
+      {q:"יש משהו שאני עושה, וזה בכלל לא מגיע אליך כ\"שירות של אהבה\"?", tip:"זו הזדמנות טובה להבין את הפער בין הכוונה לבין איך זה מתקבל."},
+      {q:"איך אתה/את מעדיפ/ה שנחלק תפקידים בבית — קבוע לפי תחומים, או גמיש לפי מי שפנוי?", tip:"אין תשובה נכונה — העיקר שתהיה הסכמה ברורה בין שניכם."}
+    ]
+  },
+  {
+    icon:"🤝",
+    title:"שפת האהבה 5 - מגע פיזי",
+    subtitle:"Physical Touch",
+    photo:"../media/images/love-lang-touch.jpeg",
+    intro:`
+      <p>לא מדובר כאן (רק) באינטימיות — אלא בקרבה גופנית פשוטה: יד על הכתף בזמן שעוברים ליד, חיבוק כשנכנסים הביתה, לשבת צמודים בזמן שיחה. אצל אדם ששפתו מגע, המגע עצמו הוא ה"שפה" — לפעמים הרבה יותר ממה שנאמר במילים.</p>
+      <h4>איך זה נשמע בפועל</h4>
+      <p>חיבוק של כמה שניות (לא "טפיחה על הגב" חטופה), יד ביד בהליכה, לשבת קרוב על הספה ולא בקצוות הנגדיים, נגיעה קלה בגב כשעוברים אחד ליד השני במטבח.</p>
+      <div class="callout warn">
+        <strong>מה קורה כשמפספסים:</strong> בתקופות של הרחקה (או סתם עומס וריחוק) אדם כזה עלול להרגיש מנותק במיוחד — ולכן חשוב במיוחד לדעת שיש עוד דרכים "לגעת בלב" גם כשאי אפשר לגעת בגוף.
+      </div>
+    `,
+    questions:[
+      {q:"איזה סוג מגע (לא בהכרח אינטימי) גורם לך להרגיש הכי בטוח/ה ואהוב/ה?", tip:"שתפו דוגמה קונקרטית — יד על הכתף, חיבוק, ראש על הכתף."},
+      {q:"יש רגע ביום שהיית שמח/ה לקבל בו יותר מגע?", tip:"נסו ליישם את זה כבר היום — בבוקר, בכניסה הביתה, או לפני השינה."},
+      {q:"כילד/ה, חיבקו אותך הרבה בבית? זה היה טבעי או נדיר?", tip:"הרגלי המגע מהילדות משפיעים בלי משים על מה שמרגיש \"טבעי\" היום."},
+      {q:"יש הבדל אצלך בין מגע יומיומי (לא אינטימי) למגע בזמן הרחקות?", tip:"זה זמן טוב לחשוב יחד על דרכים אחרות \"לגעת בלב\" כשאי אפשר לגעת בגוף."},
+      {q:"איזה חיבוק היית רוצה לקבל יותר — חיבוק \"מהיר\" בדרך החוצה, או חיבוק ארוך שנעצרים בשבילו?", tip:"שימו לב שגם משך המגע משנה, לא רק סוגו."},
+      {q:"יש מקום ציבורי שבו נעים לך מגע (יד ביד), ומקום שבו זה פחות?", tip:"שווה לתאם ציפיות, כי לכל אחד יש רף נוחות אחר בפומבי."},
+      {q:"מתי לאחרונה הרגשת מנותק/ת פיזית ממני, גם בלי סיבה ברורה?", tip:"לפעמים עומס ולחץ יוצרים ריחוק פיזי בלי כוונה — שווה לשים לב לזה מוקדם."},
+      {q:"יש סוג מגע שדווקא מרגיש לא נעים לך, גם אם הוא נחשב \"רגיל\"?", tip:"חשוב לכבד גם את הגבולות, לא רק את הרצונות."},
+      {q:"מה היית רוצה שנעשה יחד בזמן שאי אפשר לגעת (בהרחקות) שעדיין מרגיש קרוב?", tip:"זה בדיוק המקום לגלות שיש עוד שפות אהבה שיכולות \"לפצות\" בתקופה הזו."},
+      {q:"איך אתה/את מעדיפ/ה שנתעורר בבוקר — עם מגע, או שצריך/ה רגע לבד קודם?", tip:"אין תשובה \"נכונה\" — חשוב שכל אחד יידע מה מתאים לשני."},
+      {q:"יש רגע שבו מגע קטן (יד על הגב, למשל) עזר לך להירגע בזמן לחץ?", tip:"זכרו את זה לפעם הבאה שהצד השני נראה מתוח."},
+      {q:"מה בעינייך ההבדל בין \"מגע של שגרה\" לבין \"מגע שמכוון להראות אהבה\"?", tip:"לפעמים דווקא המגע הכי פשוט, כשהוא מכוון, אומר הכי הרבה."}
+    ]
+  }
+];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+const unitsEl = document.getElementById('units');
+LANGUAGES.forEach((lang,i)=>{
+  const div = document.createElement('div');
+  div.className = 'unit';
+  div.innerHTML = `
+    <div class="unit-header" data-i="${i}">
+      <span class="icon">${lang.icon}</span>
+      <span class="title">${lang.title}<small>${lang.subtitle}</small></span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="unit-body"><div class="unit-inner">
+      <div class="lang-photo"><img src="${lang.photo}" alt="${lang.title}"></div>
+      ${lang.intro}
+      <div class="game-box" data-i="${i}">
+        <div class="game-label">🎲 משחק זוגי — שאלה לדיון</div>
+        <div class="game-question"></div>
+        <div class="game-tip"><b>דגש לדיון:</b><span></span></div>
+        <button type="button" class="game-btn">הגרילו שאלה</button>
+        <div class="game-count"></div>
+      </div>
+    </div></div>
+  `;
+  unitsEl.appendChild(div);
+});
+
+// per-language shuffled deck state
+const decks = LANGUAGES.map(lang => ({ pool: shuffle(lang.questions), drawn: 0, total: lang.questions.length }));
+
+unitsEl.addEventListener('click', (e)=>{
+  const gameBtn = e.target.closest('.game-btn');
+  if(gameBtn){
+    const box = gameBtn.closest('.game-box');
+    const i = parseInt(box.dataset.i, 10);
+    const deck = decks[i];
+    if(deck.pool.length === 0){
+      deck.pool = shuffle(LANGUAGES[i].questions);
+      deck.drawn = 0;
+    }
+    const item = deck.pool.pop();
+    deck.drawn++;
+    box.querySelector('.game-question').textContent = item.q;
+    box.querySelector('.game-question').style.display = 'block';
+    box.querySelector('.game-tip span').textContent = item.tip;
+    box.querySelector('.game-tip').style.display = 'block';
+    box.querySelector('.game-count').textContent = `שאלה ${deck.drawn} מתוך ${deck.total}`;
+    gameBtn.textContent = 'שאלה הבאה';
+    return;
+  }
+  const header = e.target.closest('.unit-header');
+  if(!header) return;
+  const unit = header.closest('.unit');
+  const body = unit.querySelector('.unit-body');
+  const isOpen = unit.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(()=>{ body.style.maxHeight = '0px'; });
+    unit.classList.remove('open');
+  } else {
+    unit.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function te(){
+      if(unit.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', te);
+    });
+  }
+});
+</script>
+</body>
+</html>
