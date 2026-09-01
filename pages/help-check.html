@@ -16,6 +16,7 @@
     --shadow: 0 8px 24px rgba(43,38,32,0.10);
     --radius: 22px;
     --warn-bg:#F7E2DD; --warn-border:#E3A79A; --warn-text:#7A2E22;
+    --good:#3F9463; --mid:#C9A227; --bad:#B4534A;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
@@ -69,6 +70,17 @@
   }
   button.btn-primary:active{ transform:scale(.98); }
   button.btn-primary:disabled{ opacity:.45; cursor:default; }
+  a.btn-secondary{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:#25D366; color:#fff; text-decoration:none;
+    border-radius:14px; padding:12px 20px; font-weight:700; font-size:.9rem;
+  }
+  a.btn-secondary svg{ width:18px; height:18px; flex:none; }
+  .time-estimate{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--bg-alt); color:var(--navy-soft); border-radius:999px;
+    padding:6px 14px; font-size:.82rem; font-weight:600; margin:0 0 14px;
+  }
   a.btn-back-text, button.btn-back-text{
     display:block; text-align:center; color:var(--muted); font-size:.85rem;
     text-decoration:none; margin-top:12px; cursor:pointer; background:none; border:none; font-family:inherit;
@@ -95,7 +107,7 @@
 
   .score-meter{ margin:16px 0 8px; }
   .meter-track{ height:14px; background:var(--line); border-radius:8px; position:relative; overflow:hidden; }
-  .meter-fill{ height:100%; border-radius:8px; background:linear-gradient(90deg,#B4534A,var(--gold),var(--navy)); }
+  .meter-fill{ height:100%; border-radius:8px; transition:width .3s ease; }
   .meter-cutoff{ position:absolute; top:-3px; width:2px; height:20px; background:var(--warn-text); }
   .meter-label{ display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); margin-top:5px; }
 
@@ -297,9 +309,19 @@ function renderIntro(){
       '<div class="wb-title">⚠️ חשוב לדעת</div>'+
       'הכלי הזה הוא כלי עזר לזוגות בלבד. הוא אינו כלי טיפולי או אבחוני, אינו מחליף הערכה של איש/ת מקצוע, ואינו יכול לקבוע האם זוג זקוק לטיפול. מטרתו היא לעזור לכם להתבונן במצב הזוגיות, ולבדוק האם ייתכן שכדאי לשקול קבלת עזרה מקצועית.'+
     '</div>'+
-    '<p class="body-text">בכל זוגיות יש תקופות טובות יותר וטובות פחות. השאלון הקצר הזה נועד לעזור לכם לעצור לרגע ולהתבונן בזוגיות שלכם.</p>'+
-    '<p class="body-text">אין כאן תשובות "נכונות" או "לא נכונות" — ענו לפי התחושה שלכם בתקופה האחרונה. מומלץ שכל אחד מבני הזוג ימלא את השאלון בנפרד ובכנות.</p>'+
-    '<div class="btn-row"><button class="btn-primary" id="nextBtn">מתחילים</button></div>'+
+    '<div class="time-estimate">⏱️ לוקח כחמש דקות</div>'+
+    '<p class="body-text">בכל זוגיות יש תקופות טובות יותר וטובות פחות. השאלון הקצר הזה נועד לעזור לכם לעצור לרגע ולהתבונן בזוגיות שלכם. אנא פנו לו זמן ומלאו אותו ביישוב הדעת.</p>'+
+    '<p class="body-text">אין כאן תשובות "נכונות" או "לא נכונות" — ענו לפי התחושה שלכם בתקופה האחרונה.</p>'+
+    '<div class="result-block" style="margin-top:0;">'+
+      '<strong>ממלאים בנפרד:</strong> כל אחד מבני הזוג עונה לבד ובכנות, במכשיר שלו. בסוף כל אחד רואה את הציון האישי שלו — ואפשר להזין את שני הציונים באחד המכשירים כדי להשוות. אף אחד לא רואה את תשובות בן/בת הזוג תוך כדי מילוי.'+
+    '</div>'+
+    '<div class="btn-row">'+
+      '<button class="btn-primary" id="nextBtn">מתחילים</button>'+
+      '<a class="btn-secondary" id="shareBtn" href="#" target="_blank" rel="noopener noreferrer">'+
+        '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.001 3C9.107 3 3.5 8.607 3.5 15.5c0 2.3.62 4.46 1.7 6.32L3 29l7.36-2.15a12.44 12.44 0 0 0 5.64 1.36h.005C22.9 28.21 28.5 22.6 28.5 15.71 28.5 8.82 22.9 3.21 16.001 3zm0 22.7h-.004a10.4 10.4 0 0 1-5.3-1.46l-.38-.23-3.94 1.15 1.08-3.84-.25-.4a10.35 10.35 0 0 1-1.58-5.42c0-5.75 4.68-10.43 10.43-10.43 2.79 0 5.4 1.09 7.37 3.06a10.33 10.33 0 0 1 3.05 7.35c0 5.75-4.68 10.22-10.42 10.22zm5.72-7.62c-.31-.16-1.85-.91-2.14-1.02-.29-.1-.5-.16-.71.16-.21.31-.81 1.02-1 1.23-.18.21-.37.23-.68.08-.31-.16-1.32-.49-2.51-1.56-.93-.83-1.56-1.85-1.74-2.16-.18-.31-.02-.48.14-.63.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.72-.97-2.35-.26-.62-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39s-1.1 1.08-1.1 2.63 1.13 3.05 1.29 3.26c.16.21 2.22 3.4 5.39 4.77.75.32 1.34.52 1.8.66.76.24 1.45.21 1.99.13.61-.09 1.85-.76 2.11-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37z"/></svg>'+
+        'שלחו לבן/בת הזוג למילוי בנפרד'+
+      '</a>'+
+    '</div>'+
     '<a class="btn-back-text" id="sourcesLink">מקורות מחקריים</a>'+
   '</div>';
 }
@@ -457,7 +479,18 @@ function fillScore(target){
 /* D. ADDITIONAL AREAS (domain map) — informational only.
    These answers are NEVER summed into, averaged with, or otherwise
    allowed to influence the CSI-16 score computed above. */
-function levelWord(p){ return p<=1 ? 'נמוך' : (p===2 ? 'בינוני' : 'גבוה'); }
+
+function meterColor(pct){
+  if (pct >= 65) return 'var(--good)';
+  if (pct >= 40) return 'var(--mid)';
+  return 'var(--bad)';
+}
+function domainState(p){
+  var pct = Math.max(6, (3-p)/3*100);
+  if (p <= 1) return { pct:pct, color:'var(--good)', label: p===0 ? 'מצוין' : 'טוב' };
+  if (p === 2) return { pct:pct, color:'var(--mid)', label:'כדאי לשים לב' };
+  return { pct:pct, color:'var(--bad)', label:'מומלץ לבירור מקצועי' };
+}
 
 function renderResults(){
   updateProgress(null);
@@ -473,11 +506,11 @@ function renderResults(){
 
   var domainRows = DOMAIN_ITEMS.map(function(it,i){
     var p = domainAnswers[i];
-    var pct2 = (p/3*100);
+    var st = domainState(p);
     return '<div class="domain-row">'+
       '<div class="domain-name">'+it.key+'</div>'+
-      '<div class="domain-bar-track"><div class="domain-bar-fill" style="width:'+pct2+'%;"></div></div>'+
-      '<div class="domain-level">'+levelWord(p)+'</div>'+
+      '<div class="domain-bar-track"><div class="domain-bar-fill" style="width:'+st.pct+'%;background:'+st.color+';"></div></div>'+
+      '<div class="domain-level" style="color:'+st.color+';">'+st.label+'</div>'+
     '</div>';
   }).join('');
 
@@ -490,19 +523,21 @@ function renderResults(){
     '</div>'+
     '<h2>התוצאה שלך</h2>'+
     '<p class="tagline">רמת שביעות הרצון הזוגית</p>'+
+    '<div style="font-size:2.1rem;font-weight:700;color:var(--navy);margin:6px 0 2px;">'+score+' <span style="font-size:1rem;color:var(--muted);font-weight:400;">מתוך 81</span></div>'+
     '<div class="score-meter">'+
-      '<div class="meter-track"><div class="meter-fill" style="width:'+pct+'%;"></div><div class="meter-cutoff" style="right:'+cutoffPct+'%;"></div></div>'+
+      '<div class="meter-track"><div class="meter-fill" style="width:'+pct+'%;background:'+meterColor(pct)+';"></div><div class="meter-cutoff" style="right:'+cutoffPct+'%;"></div></div>'+
       '<div class="meter-label"><span>נמוכה</span><span>גבוהה</span></div>'+
     '</div>'+
     '<div class="result-block"><strong>'+(below?'נמצאה אינדיקציה למצוקה זוגית משמעותית':'לא נמצאה אינדיקציה למצוקה משמעותית לפי המדד')+'</strong><br>'+mainMsg+'</div>'+
     concernBlock+
     '<h2 style="margin-top:20px;">התמונה הזוגית שלכם</h2>'+
-    '<p class="tagline">תחומים שכדאי להתבונן בהם</p>'+
+    '<p class="tagline">המצב הזוגי בתחומים הבאים:</p>'+
     '<div class="domain-map">'+domainRows+'</div>'+
     '<p class="body-text center" style="font-size:.8rem;color:var(--muted);">מפת התחומים היא כלי עזר להתבוננות ואינה מהווה אבחנה.</p>'+
     '<div class="partner-input">'+
-      '<label>יש לכם גם את התוצאה של בן/בת הזוג? (0–81, אם ברשותכם)</label>'+
-      '<input type="number" id="partnerScore" min="0" max="81" placeholder="לדוגמה: 58">'+
+      '<label>משווים תוצאות עם בן/בת הזוג?</label>'+
+      '<p style="font-size:.82rem;color:var(--muted);margin:0 0 8px;">כל אחד ממלא את השאלון בנפרד, במכשיר שלו. כשגם לבן/בת הזוג יש ציון משלהם (מוצג למעלה במסך התוצאות שלהם), הזינו אותו כאן להשוואה.</p>'+
+      '<input type="number" id="partnerScore" min="0" max="81" placeholder="ציון בן/בת הזוג, לדוגמה: 58">'+
       '<button type="button" class="btn-primary" style="width:100%;margin-top:10px;" id="compareBtn">השוואת תוצאות</button>'+
     '</div>'+
     '<div id="compareResult"></div>'+
@@ -532,6 +567,11 @@ function wire(){
 
   if (screen === 'intro'){
     nextBtn.addEventListener('click', function(){ go('safety'); });
+    var shareBtn = document.getElementById('shareBtn');
+    if (shareBtn){
+      var shareText = 'רוצה שנעצור לרגע ונבדוק ביחד את הזוגיות שלנו? זה שאלון קצר (כ-5 דקות), כל אחד ממלא בנפרד: ' + window.location.href;
+      shareBtn.href = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+    }
   }
   else if (screen === 'safety'){
     document.querySelectorAll('.yn-btn').forEach(function(btn){
