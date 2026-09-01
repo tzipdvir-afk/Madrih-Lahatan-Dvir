@@ -240,6 +240,18 @@
     cursor:pointer;
   }
   .checkbox-field input{ width:17px; height:17px; }
+  .glula-toggle{
+    background:var(--gold-soft);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:16px;
+  }
+  .glula-note{
+    font-size:12px;
+    color:var(--navy);
+    margin:6px 0 0;
+    line-height:1.5;
+  }
 
   .raiyot-list{ display:grid; gap:8px; }
   .raiyot-empty{ font-size:13px; color:var(--muted); text-align:center; padding:10px 0; }
@@ -426,11 +438,19 @@
   .mini-day.perisha-day .md-mag{ margin-top:1px; line-height:0; }
   .mini-day.perisha-day .md-mag svg{ display:block; }
   .mini-day.perisha-day .md-onah{
-    font-size:6.5px;
+    font-size:7.5px;
     color:#fff;
-    line-height:1;
+    line-height:1.3;
     margin-top:1px;
-    font-weight:600;
+    font-weight:700;
+    text-align:center;
+  }
+  .mini-day.perisha-day .md-onah .oh-icon{
+    display:block;
+    font-size:11px;
+    line-height:1;
+    margin-bottom:1px;
+    filter:drop-shadow(0 0 1px rgba(0,0,0,.35));
   }
   .mini-day.perisha-day .md-dots{ position:absolute; bottom:2px; }
   .mini-day.perisha-day.today{ box-shadow: inset 0 0 0 2px var(--navy); }
@@ -949,6 +969,14 @@
       <h2 class="section-title">היסטוריית ראיות</h2>
       <p class="section-sub">הוסיפו כאן תאריכי ראייה בפועל. המערכת תשמור אותם ותחשב מהם את תאריכי הפרישה הסמוכה לוסת הצפויה.</p>
 
+      <div class="glula-toggle">
+        <label class="checkbox-field" style="margin-top:0;">
+          <input type="checkbox" id="onGlula">
+          <span><strong>נוטלת גלולות משולבות?</strong></span>
+        </label>
+        <p class="glula-note">כל עוד נוטלים גלולות משולבות ברציפות, אין וסתות צפויות — ולכן אין פרישה סמוכה לוסת. סימון התיבה יעצור את חיזויי הפרישה בלוח ובכרטיס שלמטה.</p>
+      </div>
+
       <div class="controls-row" style="justify-content:flex-start; margin-bottom:12px;">
         <button class="btn active" id="dateModeGreg" type="button">תאריך לועזי</button>
         <button class="btn" id="dateModeHeb" type="button">תאריך עברי</button>
@@ -1256,6 +1284,7 @@
       viewHMonth: null,
       selectedAbs: jsDateToAbs(now),
       raiyot: [], // {id, dateGreg:'YYYY-MM-DD', time:'HH:MM', bleedLength, hasSensation}
+      onGloolot: false,
       oursCalView: 'gregorian',
       oursViewYear: now.getFullYear(),
       oursViewMonth: now.getMonth()+1,
@@ -1938,6 +1967,16 @@
     raiyaDaySelect.value = initHd.day;
   })();
 
+  // ---- combined-pills toggle: suppresses veset predictions while checked ----
+  var onGlulaCheckbox = document.getElementById('onGlula');
+  onGlulaCheckbox.checked = !!state.onGloolot;
+  onGlulaCheckbox.addEventListener('change', function(){
+    state.onGloolot = onGlulaCheckbox.checked;
+    saveState();
+    renderVeset();
+    renderOursCalendar();
+  });
+
   // ---- add / delete ra'iya entries ----
   var raiyaFormMsg = document.getElementById('raiyaFormMsg');
   function showRaiyaMsg(msg){
@@ -2099,7 +2138,7 @@
   // full-history view). Unlike computeVesetPredictions (which only reflects the latest
   // ra'iya), this walks the whole chronological list.
   function computeHistoricalPredictions(){
-    if (!state.raiyot.length) return [];
+    if (!state.raiyot.length || state.onGloolot) return [];
     var withAbs = state.raiyot.map(function(r){
       var res = resolveOnah(r.dateGreg, r.time, state.region);
       return {r:r, abs:res.abs, isDay:res.isDay};
@@ -2205,9 +2244,16 @@
 
   function renderVeset(){
     var vc = document.getElementById('vesetContent');
+    var tabDot = document.getElementById('tabOursDot');
+
+    if (state.onGloolot){
+      tabDot.style.display = 'none';
+      vc.innerHTML = '<div class="veset-sensation-note">האישה נוטלת גלולות משולבות — כל עוד הן נלקחות ברציפות, אין וסתות צפויות ולכן אין פרישה סמוכה לוסת. חיזויי הפרישה יחזרו להופיע כאשר תבטלו את הסימון.</div>';
+      return;
+    }
+
     var res = computeVesetPredictions();
     var kavuaAlerts = checkVesetKavua();
-    var tabDot = document.getElementById('tabOursDot');
     tabDot.style.display = kavuaAlerts.length ? 'inline-block' : 'none';
 
     if (!res){
@@ -2234,6 +2280,20 @@
       html += '<div class="veset-block"><div class="vb-title">וסת הפלגה</div><div class="vb-note">דרושות לפחות שתי רשומות ראייה כדי לחשב וסת הפלגה.</div></div>';
     }
     vc.innerHTML = html;
+  }
+
+  // Builds a hard-split multi-band CSS background: one solid color per veset type
+  // that coincides on the same day (e.g. two colors = two equal halves).
+  function multiColorBackground(colors){
+    if (colors.length <= 1) return colors[0] || 'transparent';
+    var n = colors.length, stops = [];
+    for (var i=0; i<n; i++){
+      var p1 = (i/n*100).toFixed(2)+'%';
+      var p2 = ((i+1)/n*100).toFixed(2)+'%';
+      stops.push(colors[i]+' '+p1);
+      stops.push(colors[i]+' '+p2);
+    }
+    return 'linear-gradient(90deg, '+stops.join(', ')+')';
   }
 
   // ---- mini 3-month calendar with ra'iya + prediction markers ----
@@ -2263,7 +2323,7 @@
     var hd = absoluteToHebrew(abs);
     var wd = WEEKDAY_NAMES[weekdayOf(abs)];
     var rows = m.perisha.map(function(p){
-      return '<div class="odd-row"><span class="odd-dot" style="background:'+MARKER_COLORS[p.type]+'"></span>'+MARKER_NAMES[p.type]+' — '+(p.isDay?'בוקר':'ערב')+'</div>';
+      return '<div class="odd-row"><span class="odd-dot" style="background:'+MARKER_COLORS[p.type]+'"></span>'+MARKER_NAMES[p.type]+' — '+(p.isDay?'☀️ יום':'✨ לילה')+'</div>';
     }).join('');
     panel.innerHTML = '<div class="odd-title">'+wd+', '+g.day+' ב'+GREG_MONTH_NAMES[g.month-1]+' '+g.year+' · '+hebrewNumeral(hd.day)+' ב'+hebMonthName(hd.year,hd.month)+'</div>'+
       rows +
@@ -2342,11 +2402,14 @@
           }
         } else if (m && m.perisha.length){
           cell.className = 'mini-day perisha-day' + (isToday ? ' today' : '');
-          cell.style.background = MARKER_COLORS[m.perisha[0].type];
-          var onahLabel = m.perisha[0].isDay ? 'בוקר' : 'ערב';
+          var perishaColors = m.perisha.map(function(p){ return MARKER_COLORS[p.type]; });
+          cell.style.background = multiColorBackground(perishaColors);
+          var onahIsDay = m.perisha[0].isDay;
+          var onahIcon = onahIsDay ? '☀️' : '✨';
+          var onahWord = onahIsDay ? 'יום' : 'לילה';
           cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
             '<div class="md-mag">'+magnifierHTML(9,'#ffffff')+'</div>'+
-            '<div class="md-onah">'+onahLabel+'</div>';
+            '<div class="md-onah"><span class="oh-icon">'+onahIcon+'</span>'+onahWord+'</div>';
           cell.addEventListener('click', function(clickedAbs, clickedM){
             return function(){ showOursDayDetail(clickedAbs, clickedM); };
           }(abs, m));
