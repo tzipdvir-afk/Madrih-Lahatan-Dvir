@@ -15,6 +15,7 @@
     --navy:#1F2A44;
     --navy-soft:#3A4766;
     --gold:#C9A227;
+    --gold-soft:#E4C878;
     --text:#2B2620;
     --muted:#8a8272;
     --line:#E3D9C4;
@@ -33,9 +34,10 @@
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
     padding-bottom:40px;
+    line-height:1.7;
   }
   h1,h2{ font-family:'Frank Ruhl Libre', serif; }
-  .wrap{ max-width:520px; margin:0 auto; padding:18px 16px 8px; }
+  .wrap{ max-width:560px; margin:0 auto; padding:18px 16px 8px; }
 
   a.back-link{
     display:inline-block;
@@ -64,17 +66,155 @@
   }
   video{ width:100%; display:block; }
 
-  .card{
+  /* DISCLAIMER */
+  .disclaimer{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:12px;
+    padding:14px 16px;
+    margin:0 0 20px;
+    font-size:.9rem;
+    color:var(--text);
+  }
+  .disclaimer .d-icon{ flex:none; font-size:1.3rem; line-height:1; }
+  .disclaimer strong{ display:block; margin-bottom:2px; }
+
+  /* INTRO */
+  .intro{
     background:var(--card);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    padding:22px 18px;
+    padding:18px 20px;
+    margin:0 0 26px;
     text-align:center;
+    color:var(--muted);
+    font-size:.96rem;
     border:1px solid rgba(43,38,32,0.05);
   }
-  .card .icon{ font-size:36px; margin-bottom:8px; }
-  .card h2{ color:var(--navy); font-size:19px; margin:0 0 8px; }
-  .card p{ color:var(--muted); font-size:14.5px; line-height:1.6; margin:0; }
+
+  /* SECTION LABEL */
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-label .num{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    flex:none;
+    box-shadow:0 4px 10px rgba(31,42,68,.3);
+  }
+  .section-label h2{ margin:0; font-size:1.15rem; color:var(--navy); }
+
+  /* ACCORDION */
+  .unit{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .unit-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .unit-header .icon{
+    flex:none;
+    width:42px;height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .unit-header .title{
+    flex:1;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1.02rem;
+  }
+  .unit-header .title small{
+    display:block;
+    font-weight:400;
+    color:var(--muted);
+    font-size:.82rem;
+    margin-top:2px;
+  }
+  .unit-header .chevron{
+    flex:none;
+    width:22px;height:22px;
+    transition:transform .35s ease;
+    color:var(--gold);
+  }
+  .unit.open .unit-header .chevron{ transform:rotate(180deg); }
+  .unit-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .unit-inner{
+    padding:0 22px 22px;
+    color:var(--text);
+    font-size:.96rem;
+  }
+  .unit-inner p{ margin:0 0 12px; }
+  .unit-inner h4{
+    margin:16px 0 6px;
+    color:var(--navy-soft);
+    font-size:.96rem;
+  }
+  .unit-inner h4:first-child{ margin-top:0; }
+  .unit-inner ul{ margin:0 0 14px; padding-inline-start:1.3em; }
+  .unit-inner li{ margin-bottom:6px; }
+
+  .callout{
+    background:var(--bg);
+    border-right:4px solid var(--navy);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.92rem;
+  }
+  .callout.gold{
+    background:var(--gold-soft);
+    border-right-color:var(--gold);
+  }
+  .callout.warn{
+    background:#FBEFE9;
+    border-right-color:#B4534A;
+  }
+  .callout strong{ color:var(--navy); }
+  .callout.warn strong{ color:#B4534A; }
+
+  .closing-note{
+    background:var(--gold-soft);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px;
+    margin:8px 0 26px;
+    font-size:.92rem;
+    color:var(--navy);
+    text-align:center;
+  }
+
+  footer.page-footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:0 12px 0;
+  }
 </style>
 </head>
 <body>
@@ -94,12 +234,160 @@
     </video>
   </div>
 
-  <div class="card">
-    <div class="icon">📝</div>
-    <h2>התוכן ההלכתי בדרך</h2>
-    <p>יחידות הלימוד בנושא זה יתווספו כאן בקרוב. בינתיים אפשר לצפות בסרטון למעלה.</p>
+  <div class="disclaimer">
+    <span class="d-icon">⚠️</span>
+    <div>
+      <strong>לתשומת לבכם</strong>
+      כל האמור במדריך זה נועד לשמש תזכורת בלבד לחתן שלמד את ההלכות כראוי, ואינו מהווה פסיקת הלכה. בכל שאלה מעשית — יש להתייעץ עם פוסק.
+    </div>
   </div>
 
+  <div class="intro">
+    תהליך הטהרה הוא הדרך המשותפת שאתם עושים יחד בבניית טהרה בביתכם. אמנם את החלקים המעשיים של התהליך האישה מבצעת, אך ליווי רגשי והלכתי של הבעל הופך את התהליך לזוגי, מקרב ומחזק קשר.
+  </div>
+
+  <div class="section-label"><span class="num">1</span><h2>יחידות לימוד</h2></div>
+
+  <div id="units"></div>
+
+  <div class="closing-note">
+    <strong>זכרו:</strong> ההלכה נועדה לחיים. בכל מקרה של ספק, אל תהססו לשאול. הרב הוא כתובת שתפקידה לא פעם למצוא את הדרך להתיר ולהקל, כדי שהטהרה תהיה מקור של שמחה והתחדשות בביתכם, ולא מקור של לחץ. באהבה ובהערכה רבה.
+  </div>
+
+  <footer class="page-footer">
+    המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד, ואינו מהווה פסיקת הלכה. בכל שאלה או מקרה קונקרטי — יש לפנות לרב מוסמך.
+  </footer>
+
 </div>
+
+<script>
+const UNITS = [
+  {
+    icon:"📅",
+    title:"1. ימי ראיית הדם ותקופת ההמתנה",
+    subtitle:"השלב הראשון בדרך לטהרה",
+    html:`
+      <p>ימי הראייה הם השלב הראשון בתהליך הטהרה. זוהי תקופת "המתנה" המאפשרת למערכת הפיזיולוגית והזוגית להיערך לבניית שבעת הנקיים.</p>
+
+      <h4>ההבדל בין אשכנזים לספרדים</h4>
+      <ul>
+        <li><strong>השיטה הספרדית (4 ימים):</strong> מבוססת על ההבנה ששכבת זרע נשארת חיונית בגוף כ-72 שעות (שלוש יממות). לכן, לספרדים ניתן לבצע "הפסק טהרה" ביום הרביעי מרגע קיום היחסים האחרון.</li>
+        <li><strong>השיטה האשכנזית (5 ימים):</strong> פוסקת כשיטת ה"תרומת הדשן", שקבע "גדר" קבוע של חמישה ימים מרגע שנאסרה (ללא קשר לזמן היחסים), מחשש לטעויות בחישוב השקיעה.</li>
+      </ul>
+
+      <p><strong>דין "פולטת שכבת זרע" והשטיפה הפנימית:</strong> המנגנון ההלכתי המפריד בין השיטות הוא יעילות השטיפה. בעוד שמרן השולחן ערוך פוסק ששטיפה פנימית יסודית מוציאה את הזרע ומאפשרת להקדים את הטהרה, הרמ"א (ולפיכך האשכנזים) אינו סומך על מומחיות השטיפה בזמננו ומחייב המתנה מלאה של חמישה ימים.</p>
+
+      <div class="callout gold">
+        <strong>חישוב מעשי:</strong> אם אשתך נאסרה ביום שלישי (אפילו דקה לפני השקיעה), יום שלישי נספר כיום הראשון. יום רביעי (2), חמישי (3), שישי (4) ושבת (5). לאשכנזים, היא תוכל לבצע "הפסק" רק בשבת לפני השקיעה. לספרדים — כבר ביום שישי, ואפילו לפני כן אם תעשה שטיפה פנימית.
+      </div>
+
+      <p><strong>שעת הדחק:</strong> במקרים של מילואים, קושי משמעותי בכניסה להריון (ביוץ מוקדם) או מצוקה רגשית גדולה, ניתן להיוועץ ברב — וייתכן שיתיר לאשכנזים לנהוג כשיטת הספרדים ולהסתפק ב-4 ימים ובשטיפה.</p>
+    `
+  },
+  {
+    icon:"⏸️",
+    title:"2. הפסק הטהרה",
+    subtitle:"המעבר מחזקת טומאה לנקיות",
+    html:`
+      <p>ה"הפסק" הוא נקודת המפנה הדרמטית ביותר. זהו הרגע שבו אשתך עוברת מחזקת "רואה" לחזקת "נקייה". כאן, התפקיד שלך הוא להשרות רוגע ולמנוע מתח מיותר.</p>
+      <div class="callout warn">
+        <strong>חשוב:</strong> לא ניתן לעבור תהליך טהרה ללא הפסק! לכן יש לעשותו כנדרש.
+      </div>
+
+      <h4>סדר הפעולות והעוגן</h4>
+      <ul>
+        <li><strong>המלצה ליום לחוץ:</strong> אם יום ההפסק חל ביום שישי או ביום עמוס, כדאי להציע לה לבצע בדיקת "עוגן" כבר בבוקר. אם היא תשכח לבדוק לפני השקיעה בגלל הלחץ, בדיקת הבוקר תוכל לשמש בסיס הלכתי להתיר את המצב בדיעבד.</li>
+        <li><strong>הבדיקה המרכזית:</strong> כ-15 דקות לפני הבדיקה מומלץ לבצע שטיפה פנימית. רצוי מקלחת מלאה, אך אם לא ניתן — אפשר רק ניקוי נקודתי. הבדיקה עצמה צריכה להיות לכתחילה סמוך לשקיעה (כ-45 דקות לפני).</li>
+      </ul>
+
+      <p><strong>בדיעבד וזמנים:</strong> אם היא פספסה את השקיעה בדקות ספורות, דע כי לפי הרב עובדיה יוסף ניתן להקל עד 13.5 דקות לאחר השקיעה, ויש פוסקים נוספים המקלים מספר דקות אחרי השקיעה — אך בכל מקרה כזה יש לשאול רב.</p>
+
+      <p><strong>עומק הבדיקה לכלות:</strong> בתחילת הדרך הגוף עשוי להיות צר ומתוח. ההנחיה היא לבדוק "עד מקום שידה מגעת" בנחת. אין צורך לפצוע או לגרום לכאב; התורה לא ניתנה למלאכי השרת.</p>
+
+      <h4>צבעים — שפה של דיוק</h4>
+      <ul>
+        <li><strong>מותר:</strong> לבן, או כל צבע שאינו דומה לאדום כלל.</li>
+        <li><strong>אוסר:</strong> אדום "קוקה קולה" או ורוד ודאי.</li>
+        <li><strong>שאלת רב:</strong> חום הנוטה לאדום (אדמדם, לדוגמה). אם יש ספק — שואלים.</li>
+      </ul>
+
+      <p><strong>מוך דחוק</strong> — הנחת עד בדיקה מהבדיקה או מהשקיעה ועד צאת הכוכבים היא מצווה. כבעל, אתה ה"רב של הבית": אם אתה רואה שהמוך גורם לה למצוקה, לכאב פיזי או לחרדה — חשוב לדעת שיש מקום להקל בהנחתו, וכדאי לשאול רב על כך.</p>
+    `
+  },
+  {
+    icon:"🤍",
+    title:"3. שבעה נקיים",
+    subtitle:"בונים את הטהרה בנחת",
+    html:`
+      <p>ימים אלו הם זמן של "ליבון" — בירור שהמעיין סגור, לקראת ההתחדשות.</p>
+
+      <div class="callout gold">
+        <strong>כלל הברזל:</strong> "אותו יום בשבוע" — הפסק בראשון לפני שקיעה, הטבילה תהיה בראשון הבא אחרי שקיעה.
+      </div>
+
+      <h4>מערך הבדיקות</h4>
+      <p>לכתחילה מבצעים שתיים ביום (בוקר ולפני שקיעה). המינימום המעכב הוא יום ראשון ויום שביעי — פחות מכך יש לעשות שאלת רב, משום שזה עשוי לפסול את כל שבעת הנקיים.</p>
+
+      <p><strong>העוגן של היום הרביעי:</strong> מומלץ מאוד לבצע בדיקה אחת ביום הרביעי. בדיקה זו מהווה "רשת ביטחון" הלכתית; אם היא תשכח את בדיקת היום השביעי, בדיקת היום הרביעי תאפשר לרב מרחב תמרון גדול בהרבה כדי להתיר את הטבילה בזמן.</p>
+
+      <h4>בגדים לבנים ("ימי ליבונך")</h4>
+      <p>לובשים בגד תחתון לבן. במקרים של חשש מכתמים או מתח, ניתן לסמוך על פסיקת הרב שלמה זלמן אוירבך ולהשתמש בתחבושת היגיינית (מגינית) לבנה, שאינה מקבלת טומאה ובכך "מצילה" את הספירה משאלות מיותרות. לפי שיטת הספרדים אין חובה ללבוש לבן, אך גם ספרדים רבים נהגו ללבוש לבן.</p>
+    `
+  },
+  {
+    icon:"💧",
+    title:"4. הטבילה",
+    subtitle:"התחדשות, געגוע וחיבור מחדש",
+    html:`
+      <p>הטבילה היא "חזרה לכבשן היצירה". זהו רגע שבו אתם בונים את הברית שלכם מחדש.</p>
+
+      <h4>הכנות בקצרה</h4>
+      <p>הסרת חציצות (לק שלם יש מקום להתיר, אך צריך לדעת בדיוק את המצב ולכן יש לשאול). הטבילה נעשית רק בלילה, מצאת הכוכבים.</p>
+
+      <h4>תפקידך בליל הטבילה</h4>
+      <p>זהו הלילה שלך להוביל. עליך להסיר ממנה את ה"עומס המנטלי": סדר את הבית, הכן ארוחה טובה, טפל בילדים (בעתיד) או בסידורים. היא צריכה להגיע למקווה רגועה, בידיעה שאתה מחכה לה כשותף אוהב.</p>
+
+      <div class="callout">
+        <strong>פער הגעגועים ("זמן ספה"):</strong> כאן טמון סוד זוגי חשוב. הגעגוע הגברי מתרגם את עצמו בדרך כלל לתשוקה פיזית מיידית. הגעגוע הנשי, לעומת זאת, מתרגם את עצמו לצורך בחיבור רגשי, בשיחה ובמגע עדין. החזרה מהמקווה זקוקה לגשר. אל תעברו מיד לחדר המיטות — הקדישו זמן ל"זמן ספה": שיחה נינוחה, שיתוף וקרבה. הדיבור הוא ה"משחק המקדים" הרוחני שמאפשר לאישה להרגיש בטוחה ואהובה, ומשם החיבור הפיזי יהיה עמוק ומשמעותי פי כמה.
+      </div>
+    `
+  }
+];
+
+const unitsEl = document.getElementById('units');
+UNITS.forEach((u,i)=>{
+  const div = document.createElement('div');
+  div.className = 'unit';
+  div.innerHTML = `
+    <div class="unit-header" data-i="${i}">
+      <span class="icon">${u.icon}</span>
+      <span class="title">${u.title}<small>${u.subtitle}</small></span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="unit-body"><div class="unit-inner">${u.html}</div></div>
+  `;
+  unitsEl.appendChild(div);
+});
+
+unitsEl.addEventListener('click', (e)=>{
+  const header = e.target.closest('.unit-header');
+  if(!header) return;
+  const unit = header.closest('.unit');
+  const body = unit.querySelector('.unit-body');
+  const isOpen = unit.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(()=>{ body.style.maxHeight = '0px'; });
+    unit.classList.remove('open');
+  } else {
+    unit.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function te(){
+      if(unit.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', te);
+    });
+  }
+});
+</script>
 </body>
 </html>
