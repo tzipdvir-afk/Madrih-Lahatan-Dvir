@@ -186,6 +186,17 @@
     padding:18px;
     text-align:center;
   }
+  #mixedGame{
+    margin-top:0;
+    margin-bottom:26px;
+  }
+  .game-box .game-lang-tag{
+    display:none;
+    color:var(--gold-soft);
+    font-size:.78rem;
+    font-weight:700;
+    margin-bottom:8px;
+  }
   .game-box .game-label{
     color:var(--gold-soft);
     font-weight:700;
@@ -247,6 +258,15 @@
     <p>לכל אחד מאיתנו יש "שפת אם" רגשית — הדרך שדרכה אנחנו הכי מרגישים אהובים. הבעיה היא שבני זוג לפעמים לא מדברים באותה שפה: אחד מהם משקיע המון אהבה, אבל השני בקושי "שומע" אותה — כי היא מגיעה בשפה הלא נכונה. זה כמו לצעוק "אני אוהב אותך!" ברוסית למישהו שמבין רק עברית — הכוונה אמיתית, אבל המסר לא עובר.</p>
     <p>ד"ר גארי צ'פמן זיהה שכל האהבה הזוגית מתבטאת בעיקר דרך חמישה "ערוצים". רוב האנשים "מדברים" בכל החמישה, אבל לכל אחד יש אחת או שתיים ששם באמת מרגישים אהובים בעוצמה. להכיר את השפה של עצמכם — ושל בן/בת הזוג — זה אחד הכלים הפשוטים והיעילים ביותר לזוגיות בריאה.</p>
     <p>המתודולוגיה של חמש שפות האהבה היא מכלי התקשורת הזוגית המוכרים והיעילים ביותר. אם אתם מעוניינים להרחיב יותר על כך — ברשת תמצאו המון מידע ותרגולים.</p>
+  </div>
+
+  <div class="game-box" id="mixedGame">
+    <div class="game-label">🎲 שאלה אקראית — מכל השפות</div>
+    <div class="game-lang-tag"></div>
+    <div class="game-question"></div>
+    <div class="game-tip"><b>דגש לדיון:</b><span></span></div>
+    <button type="button" class="game-btn">הגרילו שאלה</button>
+    <div class="game-count"></div>
   </div>
 
   <div class="section-label"><span class="num">1</span><h2>חמש השפות</h2></div>
@@ -393,7 +413,7 @@ const LANGUAGES = [
       {q:"איזה סוג מגע (לא בהכרח אינטימי) גורם לך להרגיש הכי בטוח/ה ואהוב/ה?", tip:"שתפו דוגמה קונקרטית — יד על הכתף, חיבוק, ראש על הכתף."},
       {q:"יש רגע ביום שהיית שמח/ה לקבל בו יותר מגע?", tip:"נסו ליישם את זה כבר היום — בבוקר, בכניסה הביתה, או לפני השינה."},
       {q:"כילד/ה, חיבקו אותך הרבה בבית? זה היה טבעי או נדיר?", tip:"הרגלי המגע מהילדות משפיעים בלי משים על מה שמרגיש \"טבעי\" היום."},
-      {q:"יש הבדל אצלך בין מגע יומיומי (לא אינטימי) למגע בזמן הרחקות?", tip:"זה זמן טוב לחשוב יחד על דרכים אחרות \"לגעת בלב\" כשאי אפשר לגעת בגוף."},
+      {q:"יש הבדל אצלך בין מגע ספונטני שקורה סתם, לבין מגע מכוון שנעשה בכוונה להראות אהבה?", tip:"שני הסוגים חשובים — שימו לב איזה מהם מרגיש לך יותר \"רואים אותי\"."},
       {q:"איזה חיבוק היית רוצה לקבל יותר — חיבוק \"מהיר\" בדרך החוצה, או חיבוק ארוך שנעצרים בשבילו?", tip:"שימו לב שגם משך המגע משנה, לא רק סוגו."},
       {q:"יש מקום ציבורי שבו נעים לך מגע (יד ביד), ומקום שבו זה פחות?", tip:"שווה לתאם ציפיות, כי לכל אחד יש רף נוחות אחר בפומבי."},
       {q:"מתי לאחרונה הרגשת מנותק/ת פיזית ממני, גם בלי סיבה ברורה?", tip:"לפעמים עומס ולחץ יוצרים ריחוק פיזי בלי כוונה — שווה לשים לב לזה מוקדם."},
@@ -442,6 +462,33 @@ LANGUAGES.forEach((lang,i)=>{
 
 // per-language shuffled deck state
 const decks = LANGUAGES.map(lang => ({ pool: shuffle(lang.questions), drawn: 0, total: lang.questions.length }));
+
+// mixed deck: every question from every language, tagged with its language
+const ALL_QUESTIONS = LANGUAGES.flatMap(lang => lang.questions.map(item => ({
+  ...item,
+  icon: lang.icon,
+  langName: lang.title.split(' - ')[1] || lang.title
+})));
+const mixedDeck = { pool: shuffle(ALL_QUESTIONS), drawn: 0, total: ALL_QUESTIONS.length };
+
+const mixedBox = document.getElementById('mixedGame');
+mixedBox.querySelector('.game-btn').addEventListener('click', ()=>{
+  if(mixedDeck.pool.length === 0){
+    mixedDeck.pool = shuffle(ALL_QUESTIONS);
+    mixedDeck.drawn = 0;
+  }
+  const item = mixedDeck.pool.pop();
+  mixedDeck.drawn++;
+  const tag = mixedBox.querySelector('.game-lang-tag');
+  tag.textContent = `${item.icon} ${item.langName}`;
+  tag.style.display = 'block';
+  mixedBox.querySelector('.game-question').textContent = item.q;
+  mixedBox.querySelector('.game-question').style.display = 'block';
+  mixedBox.querySelector('.game-tip span').textContent = item.tip;
+  mixedBox.querySelector('.game-tip').style.display = 'block';
+  mixedBox.querySelector('.game-count').textContent = `שאלה ${mixedDeck.drawn} מתוך ${mixedDeck.total}`;
+  mixedBox.querySelector('.game-btn').textContent = 'שאלה הבאה';
+});
 
 unitsEl.addEventListener('click', (e)=>{
   const gameBtn = e.target.closest('.game-btn');
