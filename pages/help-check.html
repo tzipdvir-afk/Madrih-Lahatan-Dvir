@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>האם כדאי לנו לקבל עזרה זוגית?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8; --bg-alt:#EFE7D8; --card:#FFFDF8;
+    --navy:#1F2A44; --navy-soft:#3A4766;
+    --gold:#C9A227; --gold-soft:#E4C878;
+    --text:#2B2620; --muted:#8a8272; --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 22px;
+    --warn-bg:#F7E2DD; --warn-border:#E3A79A; --warn-text:#7A2E22;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img{max-width:100%; display:block;}
+  body{
+    background: radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent), var(--bg);
+    color:var(--text); font-family:'Heebo',sans-serif;
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+    padding-bottom:40px; line-height:1.65;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:520px; margin:0 auto; padding:16px 16px 8px; }
+
+  a.back-link{ display:inline-block; color:var(--navy-soft); text-decoration:none; font-size:14px; margin-bottom:10px; }
+  a.back-link:hover{ text-decoration:underline; }
+
+  .progress-wrap{ margin-bottom:14px; display:none; }
+  .progress-wrap.show{ display:block; }
+  .progress-label{ display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:6px; }
+  .progress-bar{ height:6px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .progress-fill{ height:100%; background:linear-gradient(90deg,var(--navy),var(--gold)); border-radius:4px; transition:width .3s ease; }
+
+  .card-screen{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:26px 22px; text-align:center; border:1px solid rgba(43,38,32,0.05);
+  }
+  .card-screen .eyebrow{ font-size:12px; letter-spacing:0.12em; color:var(--gold); font-weight:700; margin-bottom:8px; }
+  .card-screen h1{ font-size:23px; margin:0 0 8px; color:var(--navy); }
+  .card-screen h2{ font-size:19px; margin:0 0 6px; color:var(--navy); }
+  .card-screen .tagline{ color:var(--muted); font-size:14px; margin:0 0 4px; }
+  .card-screen p.body-text{ text-align:right; font-size:.95rem; margin:14px 0; }
+  .card-screen p.body-text.center{ text-align:center; }
+
+  .photo-slot{
+    width:100%; aspect-ratio:16/10; border-radius:16px; overflow:hidden;
+    background:var(--bg-alt); margin:0 0 16px;
+  }
+  .photo-slot img{ width:100%; height:100%; object-fit:cover; }
+
+  .warn-banner{
+    background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:16px;
+    padding:16px 18px; text-align:right; color:var(--warn-text); margin-bottom:20px; font-size:.88rem;
+  }
+  .warn-banner .wb-title{ font-weight:700; margin-bottom:6px; display:flex; gap:8px; align-items:center; font-size:.95rem; }
+
+  .btn-row{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+  button.btn-primary{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft)); color:var(--gold-soft);
+    border:none; border-radius:14px; padding:14px 20px; font-weight:700; font-size:.98rem;
+    cursor:pointer; font-family:inherit;
+  }
+  button.btn-primary:active{ transform:scale(.98); }
+  button.btn-primary:disabled{ opacity:.45; cursor:default; }
+  a.btn-back-text, button.btn-back-text{
+    display:block; text-align:center; color:var(--muted); font-size:.85rem;
+    text-decoration:none; margin-top:12px; cursor:pointer; background:none; border:none; font-family:inherit;
+  }
+  a.btn-back-text:hover, button.btn-back-text:hover{ text-decoration:underline; }
+
+  .csi-question{ text-align:right; font-weight:700; color:var(--navy); font-size:1.02rem; margin:0 0 16px; }
+  .csi-options{ display:flex; flex-direction:column; gap:8px; }
+  .csi-opt{
+    text-align:right; background:var(--bg); border:1.5px solid var(--line); border-radius:12px;
+    padding:12px 14px; cursor:pointer; font-size:.9rem; font-family:inherit; color:var(--text);
+  }
+  .csi-opt:hover{ background:var(--bg-alt); }
+  .csi-opt.picked{ border-color:var(--gold); background:var(--gold-soft); font-weight:700; }
+
+  .safety-q{ text-align:right; margin-bottom:18px; }
+  .safety-q p{ font-weight:600; margin-bottom:8px; font-size:.92rem; }
+  .yn-row{ display:flex; gap:10px; }
+  .yn-btn{
+    flex:1; padding:10px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--bg); cursor:pointer; font-family:inherit; font-weight:700; font-size:.88rem;
+  }
+  .yn-btn.picked{ background:var(--navy); color:var(--gold-soft); border-color:var(--navy); }
+
+  .score-meter{ margin:16px 0 8px; }
+  .meter-track{ height:14px; background:var(--line); border-radius:8px; position:relative; overflow:hidden; }
+  .meter-fill{ height:100%; border-radius:8px; background:linear-gradient(90deg,#B4534A,var(--gold),var(--navy)); }
+  .meter-cutoff{ position:absolute; top:-3px; width:2px; height:20px; background:var(--warn-text); }
+  .meter-label{ display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); margin-top:5px; }
+
+  .domain-map{ margin:14px 0; text-align:right; }
+  .domain-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .domain-name{ width:88px; font-size:.82rem; font-weight:600; color:var(--navy); flex:none; }
+  .domain-bar-track{ flex:1; height:8px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .domain-bar-fill{ height:100%; background:var(--gold); border-radius:4px; }
+  .domain-level{ font-size:.72rem; color:var(--muted); width:44px; text-align:left; flex:none; }
+
+  .result-block{ background:var(--bg); border-radius:14px; padding:14px 16px; margin:14px 0; text-align:right; font-size:.9rem; }
+  .result-block.concern{ background:var(--warn-bg); color:var(--warn-text); }
+  .result-block strong{ color:var(--navy); }
+  .result-block.concern strong{ color:var(--warn-text); }
+
+  .partner-input{ margin:16px 0; text-align:right; }
+  .partner-input label{ display:block; font-size:.85rem; font-weight:600; color:var(--navy-soft); margin-bottom:6px; }
+  .partner-input input{
+    width:100%; border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+    font-family:inherit; font-size:.9rem; background:var(--bg); color:var(--text);
+  }
+
+  .safety-resource{
+    background:var(--navy); color:var(--gold-soft); border-radius:14px; padding:16px;
+    margin:16px 0; text-align:center;
+  }
+  .safety-resource a{ color:#fff; font-weight:700; text-decoration:none; display:block; margin-top:8px; font-size:1.1rem; }
+
+  .sources-overlay{
+    position:fixed; inset:0; background:rgba(31,42,68,.6); z-index:1000;
+    display:none; align-items:flex-start; justify-content:center; overflow-y:auto; padding:30px 16px;
+  }
+  .sources-overlay.show{ display:flex; }
+  .sources-panel{ background:var(--card); border-radius:20px; padding:24px 20px; max-width:500px; width:100%; text-align:right; }
+  .sources-panel h2{ margin-top:0; text-align:center; }
+  .src-item{ margin-bottom:16px; font-size:.86rem; }
+  .src-item .src-cite{ color:var(--muted); font-size:.8rem; display:block; margin-top:3px; }
+  .src-item a{ color:var(--navy-soft); }
+
+  @media (max-width:380px){
+    .csi-opt{ font-size:.85rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="tikshoret.html">→ חזרה לכלים לתקשורת זוגית</a>
+
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label"><span id="progressText"></span><span>🤝</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div id="screenContainer"></div>
+
+</div>
+
+<div class="sources-overlay" id="sourcesOverlay">
+  <div class="sources-panel">
+    <h2>הבסיס המחקרי של הכלי</h2>
+    <div class="src-item">
+      <strong>מדד שביעות הרצון הזוגית — Couples Satisfaction Index (CSI-16)</strong><br>
+      המדד המרכזי שבו נעשה שימוש בכלי זה. פותח על ידי Funk &amp; Rogge ופורסם ב-2007. המחקר בחן את המבנה הפסיכומטרי של מדדי שביעות רצון זוגית באמצעות Item Response Theory, והשווה בין מדדים מבוססים לשביעות רצון בקשר. ה-CSI-16 הוא מדד בן 16 פריטים, עם טווח ציונים של 0–81 (ציון גבוה יותר = שביעות רצון גבוהה יותר). במחקר ובחומרי המדד נקבע כי ציונים מתחת ל-51.5 מצביעים על אי-שביעות רצון זוגית משמעותית.
+      <span class="src-cite">Funk, J. L., &amp; Rogge, R. D. (2007). Testing the Ruler with Item Response Theory: Increasing Precision of Measurement for Relationship Satisfaction with the Couples Satisfaction Index. <em>Journal of Family Psychology, 21</em>(4), 572–583. <a href="https://doi.org/10.1037/0893-3200.21.4.572" target="_blank" rel="noopener">doi.org/10.1037/0893-3200.21.4.572</a></span>
+    </div>
+    <div class="src-item">
+      <strong>יעילות טיפול זוגי</strong><br>
+      מטה-אנליזה שכללה 58 מחקרים, 40 מדגמים ייחודיים ו-2,092 זוגות, שמצאה אפקט משמעותי של טיפול זוגי על שביעות רצון מהקשר, וכן השפעות משמעותיות בתחומים כגון תקשורת, אינטימיות והתנהגות בין בני הזוג.
+      <span class="src-cite">Roddy, M. K., Walsh, L. M., Rothman, K., Hatch, S. G., &amp; Doss, B. D. (2020). Meta-analysis of Couple Therapy: Effects Across Outcomes, Designs, Timeframes, and Other Moderators. <em>Journal of Consulting and Clinical Psychology, 88</em>(7), 583–596. <a href="https://pubmed.ncbi.nlm.nih.gov/32551734/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/32551734</a></span>
+    </div>
+    <div class="src-item">
+      <strong>מקור משלים — RDAS</strong><br>
+      מחקר שבחן כלי נוסף למדידת הסתגלות זוגית (Revised Dyadic Adjustment Scale) וקבע לו סף וסטטיסטיקת שינוי אמין משלו. אינו משמש לחישוב הציון המרכזי של כלי זה — מובא כמקור מחקרי משלים בלבד.
+      <span class="src-cite">Anderson, S. R., Tambling, R. B., Huff, S. C., Heafner, J., Johnson, L. N., &amp; Ketring, S. A. (2014). The Development of a Reliable Change Index and Cutoff for the Revised Dyadic Adjustment Scale. <em>Journal of Marital and Family Therapy, 40</em>(4), 525–534. <a href="https://pubmed.ncbi.nlm.nih.gov/25262619/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov/25262619</a></span>
+    </div>
+    <div class="warn-banner" style="margin-bottom:0;">
+      <div class="wb-title">⚠️ חשוב</div>
+      הכלי באפליקציה אינו מהווה תרגום קליני מוסמך או אבחון של המשתמש. הוא מיועד ככלי עזר להתבוננות ראשונית ולזיהוי אפשרי של מצוקה זוגית. תוצאה המצביעה על מצוקה אינה קובעת שהזוג "צריך טיפול", ואינה יכולה להחליף הערכה של איש/ת מקצוע. מטרת הכלי היא לעזור לזוג לזהות מתי ייתכן שכדאי לעצור, לדבר, ולשקול קבלת עזרה מקצועית.
+    </div>
+    <button type="button" class="btn-primary" style="width:100%;margin-top:16px;" id="closeSourcesBtn">סגירה</button>
+  </div>
+</div>
+
+<script>
+/* ================= CSI-16 — verified item text, scales & scoring ================= */
+/* Source: Funk, J.L. & Rogge, R.D. (2007), Journal of Family Psychology, 21(4), 572–583. */
+var CSI_ITEMS = [
+  { q:"אנא ציינו את מידת האושר שלכם, בסך הכול, בזוגיות.", opts:[
+    {t:"אומלל/ת מאוד",p:0},{t:"די לא מאושר/ת",p:1},{t:"קצת לא מאושר/ת",p:2},
+    {t:"מאושר/ת",p:3},{t:"מאושר/ת מאוד",p:4},{t:"מאושר/ת ביותר",p:5},{t:"מושלם",p:6}
+  ]},
+  { q:"באופן כללי, כמה פעמים אתם מרגישים שהדברים ביניכם מתנהלים היטב?", opts:[
+    {t:"כל הזמן",p:5},{t:"רוב הזמן",p:4},{t:"יותר משלא",p:3},
+    {t:"לפעמים",p:2},{t:"לעיתים רחוקות",p:1},{t:"אף פעם",p:0}
+  ]},
+  { q:"הזוגיות שלנו חזקה.", opts:null },
+  { q:"הזוגיות עם בן/בת הזוג גורמת לי לאושר.", opts:null },
+  { q:"יש לי זוגיות חמה ונעימה עם בן/בת הזוג.", opts:null },
+  { q:"אני ממש מרגיש/ה חלק מצוות עם בן/בת הזוג.", opts:null },
+  { q:"עד כמה הזוגיות שלך עם בן/בת הזוג מספקת ומתגמלת?", opts:"amount" },
+  { q:"עד כמה בן/בת הזוג עונה על הצרכים שלך?", opts:"amount" },
+  { q:"עד כמה הזוגיות שלכם עמדה בציפיות המקוריות שלך?", opts:"amount" },
+  { q:"באופן כללי, עד כמה את/ה מרוצה מהזוגיות שלך?", opts:"amount" },
+  { q:"איך היית מתאר/ת את הזוגיות שלך? — מעניינת מול משעממת", opts:[
+    {t:"מעניינת מאוד",p:5},{t:"מעניינת",p:4},{t:"נוטה להיות מעניינת",p:3},
+    {t:"נוטה להיות משעממת",p:2},{t:"משעממת",p:1},{t:"משעממת מאוד",p:0}
+  ]},
+  { q:"איך היית מתאר/ת את הזוגיות שלך? — טובה מול רעה", opts:[
+    {t:"טובה מאוד",p:5},{t:"טובה",p:4},{t:"נוטה להיות טובה",p:3},
+    {t:"נוטה להיות רעה",p:2},{t:"רעה",p:1},{t:"רעה מאוד",p:0}
+  ]},
+  { q:"איך היית מתאר/ת את הזוגיות שלך? — מלאה מול ריקה", opts:[
+    {t:"מלאה מאוד",p:5},{t:"מלאה",p:4},{t:"נוטה להיות מלאה",p:3},
+    {t:"נוטה להיות ריקה",p:2},{t:"ריקה",p:1},{t:"ריקה מאוד",p:0}
+  ]},
+  { q:"איך היית מתאר/ת את הזוגיות שלך? — יציבה מול שברירית", opts:[
+    {t:"יציבה מאוד",p:5},{t:"יציבה",p:4},{t:"נוטה להיות יציבה",p:3},
+    {t:"נוטה להיות שברירית",p:2},{t:"שברירית",p:1},{t:"שברירית מאוד",p:0}
+  ]},
+  { q:"איך היית מתאר/ת את הזוגיות שלך? — מלאת תקווה מול מייאשת", opts:[
+    {t:"מלאת תקווה מאוד",p:5},{t:"מלאת תקווה",p:4},{t:"נוטה לעורר תקווה",p:3},
+    {t:"נוטה לייאש",p:2},{t:"מייאשת",p:1},{t:"מייאשת מאוד",p:0}
+  ]},
+  { q:"איך היית מתאר/ת את הזוגיות שלך? — מהנה מול עגומה", opts:[
+    {t:"מהנה מאוד",p:5},{t:"מהנה",p:4},{t:"נוטה להיות מהנה",p:3},
+    {t:"נוטה להיות עגומה",p:2},{t:"עגומה",p:1},{t:"עגומה מאוד",p:0}
+  ]}
+];
+var TRUE_SCALE = [ {t:"לא נכון בכלל",p:0},{t:"נכון קצת",p:1},{t:"נכון במידה מסוימת",p:2},{t:"נכון ברובו",p:3},{t:"נכון כמעט לגמרי",p:4},{t:"נכון לגמרי",p:5} ];
+var AMOUNT_SCALE = [ {t:"בכלל לא",p:0},{t:"קצת",p:1},{t:"במידה מסוימת",p:2},{t:"ברובו",p:3},{t:"כמעט לגמרי",p:4},{t:"לגמרי",p:5} ];
+CSI_ITEMS.forEach(function(it){
+  if (it.opts === null) it.opts = TRUE_SCALE;
+  else if (it.opts === "amount") it.opts = AMOUNT_SCALE;
+});
+var CSI_MAX = 81;
+var CSI_CUTOFF = 51.5;
+
+/* Supplementary domain-mapping questions — NOT part of the CSI score, for reflection only */
+var DOMAIN_ITEMS = [
+  { key:"תקשורת", q:"קשה לנו לדבר על נושאים רגישים בלי שהשיחה תהפוך לריב." },
+  { key:"קונפליקטים", q:"אנחנו חוזרים שוב ושוב לאותם ויכוחים." },
+  { key:"חיבור רגשי", q:"אני מרגיש/ה לפעמים לבד בתוך הזוגיות." },
+  { key:"אינטימיות", q:"קשה לנו לדבר בפתיחות על האינטימיות בינינו." },
+  { key:"אמון", q:"יש בינינו פגיעה באמון שעדיין לא הצלחנו לפתור." },
+  { key:"פתרון בעיות", q:"כשמתעורר קושי בינינו, קשה לנו למצוא יחד פתרון." },
+  { key:"תחושת בדידות", q:"גם כשאנחנו ביחד, לפעמים אני מרגיש/ה בודד/ה." },
+  { key:"מחשבות על פרידה", q:"עלו לי מחשבות על כך שאולי לא נישאר יחד." }
+];
+var DOMAIN_SCALE = [ {t:"לא מתאר בכלל",p:0},{t:"קצת מתאר",p:1},{t:"מתאר במידה בינונית",p:2},{t:"מתאר מאוד",p:3} ];
+
+var SAFETY_QUESTIONS = [
+  "האם את/ה מפחד/ת מבן/בת הזוג?",
+  "האם קיימים ביניכם איומים, הפחדות או אלימות?",
+  "האם את/ה מרגיש/ה שאינך יכול/ה לענות על השאלון הזה בחופשיות?"
+];
+
+/* ================= state ================= */
+var screen = 'intro';
+var csiIndex = 0;
+var csiAnswers = []; // A. RAW RESPONSES — one raw point value (0-6 or 0-5) per CSI_ITEMS index, in order
+var domainIndex = 0, domainAnswers = []; // domain-map answers — separate array, never merged into csiAnswers
+var safetyAnswers = [null, null, null];
+var totalScore = 0;
+var container = document.getElementById('screenContainer');
+var progressWrap = document.getElementById('progressWrap');
+var progressText = document.getElementById('progressText');
+var progressFill = document.getElementById('progressFill');
+
+function updateProgress(text, pct){
+  if (text === null){ progressWrap.classList.remove('show'); return; }
+  progressWrap.classList.add('show');
+  progressText.textContent = text;
+  progressFill.style.width = pct + '%';
+}
+
+function go(next){ screen = next; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+
+function render(){
+  var html = '';
+  if (screen === 'intro') html = renderIntro();
+  else if (screen === 'safety') html = renderSafety();
+  else if (screen === 'safetyMsg') html = renderSafetyMsg();
+  else if (screen === 'csi') html = renderCsi();
+  else if (screen === 'supp') html = renderSupp();
+  else if (screen === 'results') html = renderResults();
+  else if (screen === 'closing') html = renderClosing();
+  container.innerHTML = html;
+  wire();
+}
+
+function renderIntro(){
+  updateProgress(null);
+  return '<div class="card-screen">'+
+    '<div class="eyebrow">כלים לתקשורת זוגית</div>'+
+    '<div class="photo-slot"><img src="../media/images/gottman-intro.jpeg" alt="בני זוג יחד"></div>'+
+    '<h1>האם כדאי לנו לקבל עזרה זוגית?</h1>'+
+    '<div class="warn-banner">'+
+      '<div class="wb-title">⚠️ חשוב לדעת</div>'+
+      'הכלי הזה הוא כלי עזר לזוגות בלבד. הוא אינו כלי טיפולי או אבחוני, אינו מחליף הערכה של איש/ת מקצוע, ואינו יכול לקבוע האם זוג זקוק לטיפול. מטרתו היא לעזור לכם להתבונן במצב הזוגיות, ולבדוק האם ייתכן שכדאי לשקול קבלת עזרה מקצועית.'+
+    '</div>'+
+    '<p class="body-text">בכל זוגיות יש תקופות טובות יותר וטובות פחות. השאלון הקצר הזה נועד לעזור לכם לעצור לרגע ולהתבונן בזוגיות שלכם.</p>'+
+    '<p class="body-text">אין כאן תשובות "נכונות" או "לא נכונות" — ענו לפי התחושה שלכם בתקופה האחרונה. מומלץ שכל אחד מבני הזוג ימלא את השאלון בנפרד ובכנות.</p>'+
+    '<div class="btn-row"><button class="btn-primary" id="nextBtn">מתחילים</button></div>'+
+    '<a class="btn-back-text" id="sourcesLink">מקורות מחקריים</a>'+
+  '</div>';
+}
+
+function renderSafety(){
+  updateProgress(null);
+  var rows = SAFETY_QUESTIONS.map(function(q,i){
+    return '<div class="safety-q"><p>'+q+'</p><div class="yn-row">'+
+      '<button type="button" class="yn-btn'+(safetyAnswers[i]===true?' picked':'')+'" data-i="'+i+'" data-v="yes">כן</button>'+
+      '<button type="button" class="yn-btn'+(safetyAnswers[i]===false?' picked':'')+'" data-i="'+i+'" data-v="no">לא</button>'+
+    '</div></div>';
+  }).join('');
+  var allAnswered = safetyAnswers.every(function(a){ return a !== null; });
+  return '<div class="card-screen">'+
+    '<div class="eyebrow">לפני שמתחילים</div>'+
+    '<h2>עוד שלוש שאלות קצרות</h2>'+
+    '<p class="body-text center">שאלות אלו אינן חלק מהציון — הן עוזרות לנו לוודא שהשאלון הזה מתאים למצב שלכם.</p>'+
+    rows+
+    '<div class="btn-row"><button class="btn-primary" id="nextBtn" '+(allAnswered?'':'disabled')+'>המשך</button></div>'+
+  '</div>';
+}
+
+function renderSafetyMsg(){
+  updateProgress(null);
+  return '<div class="card-screen">'+
+    '<div class="warn-banner">'+
+      '<div class="wb-title">⚠️ חשוב</div>'+
+      'השאלון הזה אינו מתאים להערכת מצבים שבהם קיימים פחד, אלימות או חוסר ביטחון בתוך הקשר. במצב כזה חשוב לפנות לעזרה מקצועית מתאימה באופן אישי ובטוח.'+
+    '</div>'+
+    '<div class="safety-resource">'+
+      'קו חם וסודי, זמין 24/7<br>למי שחווה אלימות או חשש בקשר הזוגי'+
+      '<a href="tel:118">118</a>'+
+      '<div style="font-size:.75rem;margin-top:4px;color:var(--gold-soft);">משרד הרווחה — קו חם לנפגעות ונפגעי אלימות במשפחה</div>'+
+    '</div>'+
+    '<div class="btn-row"><a href="../index.html" class="btn-primary" style="text-decoration:none;display:block;text-align:center;">חזרה לדף הבית</a></div>'+
+  '</div>';
+}
+
+function renderCsi(){
+  var it = CSI_ITEMS[csiIndex];
+  updateProgress('שאלה '+(csiIndex+1)+' מתוך '+CSI_ITEMS.length, (csiIndex+1)/CSI_ITEMS.length*100);
+  var picked = csiAnswers[csiIndex];
+  var optsHtml = it.opts.map(function(o,i){
+    return '<button type="button" class="csi-opt'+(picked===o.p?' picked':'')+'" data-p="'+o.p+'">'+o.t+'</button>';
+  }).join('');
+  return '<div class="card-screen">'+
+    '<div class="csi-question">'+it.q+'</div>'+
+    '<div class="csi-options">'+optsHtml+'</div>'+
+    (csiIndex>0 ? '<a class="btn-back-text" id="backBtn">→ שאלה קודמת</a>' : '')+
+  '</div>';
+}
+
+function renderSupp(){
+  var it = DOMAIN_ITEMS[domainIndex];
+  updateProgress('שאלות משלימות '+(domainIndex+1)+' מתוך '+DOMAIN_ITEMS.length, (domainIndex+1)/DOMAIN_ITEMS.length*100);
+  var picked = domainAnswers[domainIndex];
+  var optsHtml = DOMAIN_SCALE.map(function(o){
+    return '<button type="button" class="csi-opt'+(picked===o.p?' picked':'')+'" data-p="'+o.p+'">'+o.t+'</button>';
+  }).join('');
+  return '<div class="card-screen">'+
+    '<div class="eyebrow">עוד קצת להתבוננות</div>'+
+    '<div class="csi-question">'+it.q+'</div>'+
+    '<div class="csi-options">'+optsHtml+'</div>'+
+    (domainIndex>0 ? '<a class="btn-back-text" id="backBtn">→ שאלה קודמת</a>' : '')+
+  '</div>';
+}
+
+/* =========================================================
+   B. CSI SCORING ENGINE
+   CSI-16 scoring based on Funk & Rogge (2007), Journal of
+   Family Psychology, 21(4), 572-583. doi:10.1037/0893-3200.21.4.572
+   Total score range: 0-81. Higher scores = greater relationship
+   satisfaction. Research cutoff: 51.5 (scores below indicate
+   significant relationship dissatisfaction).
+   Do not modify item weights/scales without changing the
+   validated instrument itself — see CSI_ITEMS above.
+   This is the ONLY function that may compute a CSI-16 score.
+   ========================================================= */
+function calculateCSI16(responses){
+  if (responses.length !== CSI_ITEMS.length) return null;
+  var sum = 0;
+  for (var i=0; i<responses.length; i++){
+    var p = responses[i];
+    if (typeof p !== 'number') return null;
+    sum += p;
+  }
+  return sum;
+}
+
+/* C. CSI RESULT — score + cutoff comparison only, nothing else feeds in here */
+function getCsiResult(responses){
+  var score = calculateCSI16(responses);
+  if (score === null) return null;
+  return { score: score, belowCutoff: score < CSI_CUTOFF };
+}
+
+/* Automated sanity checks for the CSI-16 scoring engine — run once on load,
+   logged to console only (no UI impact). Not a substitute for a real test
+   runner, but this is a static HTML/JS site with no build/test tooling. */
+function runCsiSelfTests(){
+  var results = [];
+  function check(name, cond){ results.push({name:name, pass:!!cond}); }
+
+  // 1. all 16 items defined, each with an options array
+  check('16 items defined', CSI_ITEMS.length === 16);
+  check('every item has options', CSI_ITEMS.every(function(it){ return Array.isArray(it.opts) && it.opts.length >= 6; }));
+  check('item 1 has 7 options (0-6 scale)', CSI_ITEMS[0].opts.length === 7);
+  check('items 2-16 have 6 options (0-5 scale)', CSI_ITEMS.slice(1).every(function(it){ return it.opts.length === 6; }));
+
+  // 2. every option's point value is in range for its item
+  var inRange = CSI_ITEMS.every(function(it, idx){
+    var max = idx === 0 ? 6 : 5;
+    return it.opts.every(function(o){ return o.p >= 0 && o.p <= max; });
+  });
+  check('all option point values within their item\'s valid range', inRange);
+
+  // 3. minimum possible score is 0, maximum is 81
+  var minResponses = CSI_ITEMS.map(function(it){ return Math.min.apply(null, it.opts.map(function(o){return o.p;})); });
+  var maxResponses = CSI_ITEMS.map(function(it){ return Math.max.apply(null, it.opts.map(function(o){return o.p;})); });
+  check('minimum total score is 0', calculateCSI16(minResponses) === 0);
+  check('maximum total score is 81', calculateCSI16(maxResponses) === 81);
+
+  // 4/5/6. cutoff boundary behavior
+  check('score 51 is below cutoff', getCsiResult(fillScore(51)).belowCutoff === true);
+  check('score 52 is at/above cutoff (51.5 sits between 51 and 52)', getCsiResult(fillScore(52)).belowCutoff === false);
+
+  // 7. changing exactly one answer changes the score by exactly that answer's delta
+  var base = maxResponses.slice();
+  var changed = maxResponses.slice(); changed[0] = 0; // item 1 max is 6, drop to 0
+  check('changing one answer changes score by that answer\'s delta', calculateCSI16(base) - calculateCSI16(changed) === 6);
+
+  // 8. domain-map answers never touch CSI_SCORE (structural check: separate arrays/functions)
+  check('domain items are a separate array from CSI_ITEMS', DOMAIN_ITEMS !== CSI_ITEMS && DOMAIN_ITEMS.length !== CSI_ITEMS.length);
+
+  var failed = results.filter(function(r){ return !r.pass; });
+  if (failed.length){
+    console.error('CSI-16 self-tests FAILED:', failed.map(function(f){return f.name;}));
+  } else {
+    console.log('CSI-16 self-tests: all '+results.length+' checks passed.');
+  }
+  return results;
+}
+// helper for self-tests only: an array of 16 arbitrary raw responses summing to `target`
+function fillScore(target){
+  var r = new Array(16).fill(0);
+  var remaining = target;
+  for (var i=0; i<16 && remaining>0; i++){
+    var max = i===0?6:5;
+    var take = Math.min(max, remaining);
+    r[i] = take; remaining -= take;
+  }
+  return r;
+}
+
+/* D. ADDITIONAL AREAS (domain map) — informational only.
+   These answers are NEVER summed into, averaged with, or otherwise
+   allowed to influence the CSI-16 score computed above. */
+function levelWord(p){ return p<=1 ? 'נמוך' : (p===2 ? 'בינוני' : 'גבוה'); }
+
+function renderResults(){
+  updateProgress(null);
+  var csiResult = getCsiResult(csiAnswers);
+  var score = csiResult.score;
+  var below = csiResult.belowCutoff;
+  var pct = Math.max(0, Math.min(100, score/CSI_MAX*100));
+  var cutoffPct = CSI_CUTOFF/CSI_MAX*100;
+
+  var mainMsg = below
+    ? 'התשובות שלך מצביעות על רמה משמעותית של אי-שביעות רצון זוגית לפי המדד המחקרי שבו השתמשנו.<br><br>אין פירוש הדבר שהזוגיות שלכם "לא טובה", ואין פירוש הדבר שאתם חייבים טיפול. עם זאת, ייתכן שכדאי לשקול שיחה עם איש/ת מקצוע בתחום הזוגיות — במיוחד אם התחושות האלה נמשכות לאורך זמן או משפיעות על חיי היום־יום.'
+    : 'התשובות שלך אינן נמצאות בטווח שהמדד המחקרי מזהה כמצוקה זוגית משמעותית.<br><br>זה כמובן לא אומר שאין לכם קשיים, אלא רק שהתמונה הכללית שעולה מהמדד אינה מצביעה על מצוקה משמעותית לפי הסף המחקרי הזה.';
+
+  var domainRows = DOMAIN_ITEMS.map(function(it,i){
+    var p = domainAnswers[i];
+    var pct2 = (p/3*100);
+    return '<div class="domain-row">'+
+      '<div class="domain-name">'+it.key+'</div>'+
+      '<div class="domain-bar-track"><div class="domain-bar-fill" style="width:'+pct2+'%;"></div></div>'+
+      '<div class="domain-level">'+levelWord(p)+'</div>'+
+    '</div>';
+  }).join('');
+
+  var concernBlock = below ? '<div class="result-block concern"><strong>כדאי לעצור ולהתבונן.</strong><br>זה לא אומר שמשהו "לא בסדר" בכם, וזה בוודאי לא אומר שהקשר שלכם אבוד. טיפול וייעוץ זוגי יכולים להיות רלוונטיים גם לפני שמגיעים למשבר חמור. ייתכן שכדאי לשקול פנייה לאיש/ת מקצוע בתחום הזוגיות.</div>' : '';
+
+  return '<div class="card-screen">'+
+    '<div class="warn-banner">'+
+      '<div class="wb-title">⚠️ חשוב לדעת</div>'+
+      'הכלי הזה אינו כלי טיפולי או אבחוני, אינו מחליף הערכה של איש/ת מקצוע, ואינו יכול לקבוע האם זוג זקוק לטיפול.'+
+    '</div>'+
+    '<h2>התוצאה שלך</h2>'+
+    '<p class="tagline">רמת שביעות הרצון הזוגית</p>'+
+    '<div class="score-meter">'+
+      '<div class="meter-track"><div class="meter-fill" style="width:'+pct+'%;"></div><div class="meter-cutoff" style="right:'+cutoffPct+'%;"></div></div>'+
+      '<div class="meter-label"><span>נמוכה</span><span>גבוהה</span></div>'+
+    '</div>'+
+    '<div class="result-block"><strong>'+(below?'נמצאה אינדיקציה למצוקה זוגית משמעותית':'לא נמצאה אינדיקציה למצוקה משמעותית לפי המדד')+'</strong><br>'+mainMsg+'</div>'+
+    concernBlock+
+    '<h2 style="margin-top:20px;">התמונה הזוגית שלכם</h2>'+
+    '<p class="tagline">תחומים שכדאי להתבונן בהם</p>'+
+    '<div class="domain-map">'+domainRows+'</div>'+
+    '<p class="body-text center" style="font-size:.8rem;color:var(--muted);">מפת התחומים היא כלי עזר להתבוננות ואינה מהווה אבחנה.</p>'+
+    '<div class="partner-input">'+
+      '<label>יש לכם גם את התוצאה של בן/בת הזוג? (0–81, אם ברשותכם)</label>'+
+      '<input type="number" id="partnerScore" min="0" max="81" placeholder="לדוגמה: 58">'+
+      '<button type="button" class="btn-primary" style="width:100%;margin-top:10px;" id="compareBtn">השוואת תוצאות</button>'+
+    '</div>'+
+    '<div id="compareResult"></div>'+
+    '<div class="btn-row"><button class="btn-primary" id="nextBtn">סיימתי</button></div>'+
+    '<a class="btn-back-text" id="sourcesLink">מקורות מחקריים</a>'+
+  '</div>';
+}
+
+function renderClosing(){
+  updateProgress(null);
+  return '<div class="card-screen">'+
+    '<div style="font-size:2.4rem;margin-bottom:6px;">❤️</div>'+
+    '<h2>תודה שעצרתם לרגע להסתכל על הזוגיות שלכם</h2>'+
+    '<p class="body-text center">גם בזוגיות טובה יש תקופות מורכבות. המטרה של השאלון אינה לתת ציון לזוגיות שלכם, אלא לעזור לכם לזהות איך אתם מרגישים ומה אולי כדאי לבדוק.</p>'+
+    '<p class="body-text center">אם התוצאה מצביעה על מצוקה משמעותית, אין פירוש הדבר שמשהו "מקולקל" בקשר. לפעמים דווקא פנייה מוקדמת לייעוץ מקצועי יכולה לעזור לזוג להבין טוב יותר מה קורה ביניהם וללמוד כלים חדשים.</p>'+
+    '<div class="warn-banner" style="margin-top:16px;">הכלי אינו כלי טיפולי ואינו כלי אבחוני. הוא כלי עזר לזוגות.</div>'+
+    '<div class="btn-row"><a href="tikshoret.html" class="btn-primary" style="text-decoration:none;display:block;text-align:center;">חזרה לכלים לתקשורת זוגית</a></div>'+
+  '</div>';
+}
+
+/* ================= wiring ================= */
+function wire(){
+  var nextBtn = document.getElementById('nextBtn');
+  var backBtn = document.getElementById('backBtn');
+  var sourcesLink = document.getElementById('sourcesLink');
+  if (sourcesLink) sourcesLink.addEventListener('click', function(){ document.getElementById('sourcesOverlay').classList.add('show'); });
+
+  if (screen === 'intro'){
+    nextBtn.addEventListener('click', function(){ go('safety'); });
+  }
+  else if (screen === 'safety'){
+    document.querySelectorAll('.yn-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var i = parseInt(btn.dataset.i,10);
+        safetyAnswers[i] = (btn.dataset.v === 'yes');
+        render();
+      });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function(){
+      var anyYes = safetyAnswers.some(function(a){ return a === true; });
+      go(anyYes ? 'safetyMsg' : 'csi');
+    });
+  }
+  else if (screen === 'csi'){
+    document.querySelectorAll('.csi-opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        csiAnswers[csiIndex] = parseInt(btn.dataset.p,10);
+        if (csiIndex < CSI_ITEMS.length-1){ csiIndex++; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+        else { go('supp'); }
+      });
+    });
+    if (backBtn) backBtn.addEventListener('click', function(){ csiIndex--; render(); });
+  }
+  else if (screen === 'supp'){
+    document.querySelectorAll('.csi-opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        domainAnswers[domainIndex] = parseInt(btn.dataset.p,10);
+        if (domainIndex < DOMAIN_ITEMS.length-1){ domainIndex++; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+        else { go('results'); }
+      });
+    });
+    if (backBtn) backBtn.addEventListener('click', function(){ domainIndex--; render(); });
+  }
+  else if (screen === 'results'){
+    if (nextBtn) nextBtn.addEventListener('click', function(){ go('closing'); });
+    var compareBtn = document.getElementById('compareBtn');
+    if (compareBtn) compareBtn.addEventListener('click', function(){
+      var pInput = document.getElementById('partnerScore');
+      var pScore = parseFloat(pInput.value);
+      var out = document.getElementById('compareResult');
+      if (isNaN(pScore) || pScore < 0 || pScore > 81){
+        out.innerHTML = '<div class="result-block">כדי להשוות, יש להזין ציון בין 0 ל-81.</div>';
+        return;
+      }
+      // PARTNER_A_CSI (this device's respondent) and PARTNER_B_CSI (entered manually)
+      // are always shown/reasoned about separately — never averaged into one score.
+      var partnerACsi = getCsiResult(csiAnswers).score;
+      var partnerBCsi = pScore;
+      var aBelow = partnerACsi < CSI_CUTOFF;
+      var bBelow = partnerBCsi < CSI_CUTOFF;
+      var msg;
+      if (aBelow && bBelow){
+        msg = 'שניכם דיווחתם על רמת שביעות רצון זוגית שנמצאת בטווח שהמדד המחקרי מזהה כמצביע על אי־שביעות רצון זוגית משמעותית.<br><br>אין בכך אבחנה או קביעה לגבי הזוגיות שלכם. עם זאת, אם התחושות האלה נמשכות או משפיעות על חיי היום־יום, ייתכן שכדאי לשקול שיחה עם איש/ת מקצוע בתחום הזוגיות.';
+      } else if (aBelow !== bBelow){
+        msg = 'נראה שאתם חווים את הזוגיות באופן שונה.<br><br>אחד מכם נמצא בטווח שהמדד המחקרי מזהה כמצביע על אי־שביעות רצון זוגית משמעותית, בעוד שהשני אינו נמצא בטווח הזה. הפער בין התשובות אינו אומר שמישהו מכם "צודק". הוא יכול להיות נקודת פתיחה לשיחה ביניכם.';
+      } else {
+        msg = 'התשובות של שניכם אינן נמצאות בטווח שהמדד המחקרי מזהה כמצביע על אי־שביעות רצון זוגית משמעותית.<br><br>זה כמובן לא אומר שאין ביניכם קשיים או נושאים שראויים לשיחה. המשמעות היא רק שהתמונה הכללית של שביעות הרצון הזוגית אינה נמצאת בטווח הזה לפי המדד.';
+      }
+      // CSI_GAP: purely descriptive, no invented severity threshold.
+      var csiGap = Math.abs(partnerACsi - partnerBCsi);
+      if (csiGap > 0){
+        msg += '<br><br>נראה שיש פער מסוים באופן שבו אתם חווים את הזוגיות.';
+      }
+      out.innerHTML = '<div class="result-block">'+msg+'</div>';
+    });
+  }
+  else if (screen === 'closing'){
+    // no extra wiring
+  }
+}
+
+document.getElementById('closeSourcesBtn').addEventListener('click', function(){
+  document.getElementById('sourcesOverlay').classList.remove('show');
+});
+
+runCsiSelfTests();
+render();
+</script>
+</body>
+</html>
