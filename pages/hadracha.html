@@ -164,6 +164,34 @@
   }
   .callout strong{ color:var(--navy); }
 
+  .about-block{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px;
+    margin-bottom:20px;
+    border:1px solid rgba(43,38,32,0.05);
+    color:var(--text);
+    font-size:.96rem;
+  }
+  .about-block p{ margin:0 0 12px; }
+  .about-block p:last-child{ margin-bottom:0; }
+  .about-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .about-header .icon{
+    flex:none;
+    width:42px;height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .about-header h2{ margin:0; font-size:1.05rem; color:var(--navy); }
+
   .dvir-photo{
     display:flex;
     justify-content:center;
@@ -232,6 +260,16 @@
     <p class="sub">ליווי צמוד, בגובה העיניים, מהאירוסין ועד אחרי הלידה</p>
   </header>
 
+  <div class="about-block">
+    <div class="about-header">
+      <span class="icon">👤</span>
+      <h2>על המדריך — דביר צוויבל</h2>
+    </div>
+    <div class="dvir-photo"><img src="../media/images/dvir-portrait.jpeg" alt="דביר צוויבל"></div>
+    <p>שלום! אני דביר, מלווה חתנים כבר יותר מעשור. את הדרך שלי התחלתי כתלמיד וכמרביץ תורה בישיבת "מעלה אליהו" בתל אביב, והיום אני מלמד בישיבה התיכונית בגבעת שמואל.</p>
+    <p>מעבר לניסיון בשטח, צללתי גם לעומק הצד המקצועי — למדתי הדרכת חתנים במכון פוע"ה וטיפול מיני במרכז הישראלי למשפחה. אבל עם כל הכבוד לתעודות, הדבר האמיתי הוא שאני ממשיך ללמוד מכל חתן וחתן, ומתאים את המסע בדיוק לקצב ולצרכים שלכם כזוג.</p>
+  </div>
+
   <div class="section-label"><span class="num">1</span><h2>פרטי ההדרכה</h2></div>
 
   <div id="units"></div>
@@ -254,16 +292,6 @@
 
 <script>
 const UNITS = [
-  {
-    icon:"👤",
-    title:"על המדריך — דביר צוויבל",
-    subtitle:"מי מלווה אתכם בתהליך",
-    html:`
-      <div class="dvir-photo"><img src="../media/images/dvir-portrait.jpeg" alt="דביר צוויבל"></div>
-      <p>שלום! אני דביר, מלווה חתנים כבר יותר מעשור. את הדרך שלי התחלתי כתלמיד וכמרביץ תורה בישיבת "מעלה אליהו" בתל אביב, והיום אני מלמד בישיבה התיכונית בגבעת שמואל.</p>
-      <p>מעבר לניסיון בשטח, צללתי גם לעומק הצד המקצועי — למדתי הדרכת חתנים במכון פוע"ה וטיפול מיני במרכז הישראלי למשפחה. אבל עם כל הכבוד לתעודות, הדבר האמיתי הוא שאני ממשיך ללמוד מכל חתן וחתן, ומתאים את המסע בדיוק לקצב ולצרכים שלכם כזוג.</p>
-    `
-  },
   {
     icon:"🧭",
     title:"מה מחכה לנו בהדרכה?",
