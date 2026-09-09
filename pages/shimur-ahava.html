@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDRB3WV2T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDRB3WV2T5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>שימור האהבה — המדריך לחתן</title>
+<meta property="og:title" content="שימור האהבה">
+<meta property="og:description" content="דייט שבועי ונופש שנתי — שני הרגלים שמחזיקים זוגיות לאורך זמן">
+<meta property="og:image" content="https://dvir-hadraha.netlify.app/media/images/og-couple.jpg">
+<meta property="og:url" content="https://dvir-hadraha.netlify.app/pages/shimur-ahava.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --terracotta:#C75B39;
+    --sage:#3F7D6E;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --accent:var(--gold);
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img{max-width:100%; display:block;}
+  body{
+    background:
+      radial-gradient(900px 460px at 12% -6%, rgba(199,91,57,0.13), transparent 70%),
+      radial-gradient(900px 460px at 88% 4%, rgba(63,125,110,0.13), transparent 70%),
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    line-height:1.65;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:560px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link{
+    display:inline-block;
+    color:var(--navy-soft);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  a.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{
+    display:flex; flex-direction:column; gap:8px;
+    padding:6px 4px 24px; text-align:center;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600;
+  }
+  header.app-header h1{
+    font-size:28px; margin:0; color:var(--navy); font-weight:700;
+    position:relative; display:inline-block; align-self:center;
+  }
+  header.app-header h1:after{
+    content:'';
+    display:block;
+    width:56px; height:3px;
+    margin:8px auto 0;
+    border-radius:2px;
+    background:linear-gradient(90deg,var(--terracotta),var(--gold),var(--sage));
+  }
+  header.app-header p.sub{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  .intro{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(43,38,32,0.05);
+    padding:20px 20px 18px;
+    margin-bottom:26px;
+    font-size:.95rem;
+    border-top:3px solid transparent;
+    background-image:linear-gradient(var(--card),var(--card)),linear-gradient(90deg,var(--terracotta),var(--gold),var(--sage));
+    background-origin:border-box;
+    background-clip:padding-box,border-box;
+  }
+  .intro p{ margin:0 0 12px; }
+  .intro p:last-child{ margin-bottom:0; }
+  .intro p.lead{
+    font-family:'Frank Ruhl Libre', serif;
+    font-size:1.18rem;
+    line-height:1.5;
+    color:var(--navy);
+    font-weight:500;
+  }
+  .intro p.pull{
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+    font-family:'Frank Ruhl Libre', serif;
+    font-size:1rem;
+    line-height:1.75;
+    color:var(--terracotta);
+    text-align:center;
+  }
+
+  /* ---- section ---- */
+  .section{ margin-bottom:34px; }
+  .section-dates{ --accent:var(--terracotta); }
+  .section-getaway{ --accent:var(--sage); }
+  .section-ideas{ --accent:var(--gold); }
+  .section-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+    padding:0 4px;
+  }
+  .section-head .mark{
+    width:44px; height:44px;
+    flex:none;
+    border-radius:50%;
+    background:linear-gradient(140deg,var(--accent),color-mix(in srgb,var(--accent) 62%,var(--navy)));
+    color:#FFF9EC;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 35%,transparent);
+  }
+  .section-head .mark svg{ width:23px; height:23px; }
+  .section-head h2{
+    margin:0;
+    font-size:21px;
+    color:var(--navy);
+    line-height:1.3;
+  }
+  .section-head .rhythm{
+    display:block;
+    font-family:'Heebo',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--muted);
+  }
+
+  /* ---- accordion ---- */
+  details.qa{
+    background:var(--card);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(43,38,32,0.05);
+    margin-bottom:10px;
+    overflow:hidden;
+  }
+  details.qa summary{
+    list-style:none;
+    cursor:pointer;
+    padding:15px 18px;
+    font-weight:600;
+    font-size:15.5px;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  details.qa summary::-webkit-details-marker{ display:none; }
+  details.qa summary:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:-2px;
+  }
+  details.qa{ border-right:3px solid var(--accent); }
+  details.qa[open]{ box-shadow:0 10px 26px color-mix(in srgb,var(--accent) 20%,rgba(43,38,32,0.10)); }
+  details.qa summary .chev{
+    flex:none;
+    width:20px; height:20px;
+    color:var(--accent);
+    transition:transform .2s ease;
+  }
+  details.qa[open] summary .chev{ transform:rotate(180deg); }
+  details.qa[open] summary{
+    border-bottom:1px solid var(--line);
+    background:color-mix(in srgb,var(--accent) 8%,transparent);
+  }
+  .qa-body{
+    padding:14px 18px 18px;
+    font-size:.93rem;
+  }
+  .qa-body p{ margin:0 0 10px; }
+  .qa-body p:last-child{ margin-bottom:0; }
+  .qa-body ul{
+    margin:0 0 10px;
+    padding-inline-start:20px;
+  }
+  .qa-body li{ margin-bottom:7px; }
+
+  .callout{
+    background:color-mix(in srgb,var(--accent) 9%,var(--bg));
+    border-right:4px solid var(--accent);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:12px 0;
+    font-size:.88rem;
+  }
+  .callout strong{ color:var(--navy); }
+
+  .placeholder{
+    color:var(--muted);
+    font-style:italic;
+  }
+
+  .qa-body ul.conds,
+  .qa-body ul.levels{
+    list-style:none;
+    padding:0;
+    margin:0 0 12px;
+  }
+  .qa-body ul.conds li,
+  .qa-body ul.levels li{
+    position:relative;
+    padding-inline-start:18px;
+    margin-bottom:9px;
+  }
+  .qa-body ul.conds li:before,
+  .qa-body ul.levels li:before{
+    content:'';
+    position:absolute;
+    inset-inline-start:0;
+    top:.62em;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .qa-body ul.conds li strong,
+  .qa-body ul.levels li strong{ color:var(--navy); }
+  .qa-body p.sub-head{
+    font-weight:700;
+    color:var(--accent);
+    font-size:.86rem;
+    margin:16px 0 6px;
+  }
+
+  /* ---- ideas ---- */
+  .list-title{
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--accent);
+    margin:14px 0 6px;
+  }
+  ul.seed-list{
+    margin:0;
+    padding-inline-start:18px;
+  }
+  ul.seed-list li{ margin-bottom:6px; }
+  ul.seed-list li::marker{ color:var(--accent); }
+
+  ul.my-list{
+    list-style:none;
+    margin:0 0 10px;
+    padding:0;
+  }
+  ul.my-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:color-mix(in srgb,var(--accent) 7%,var(--card));
+    border:1px solid color-mix(in srgb,var(--accent) 26%,var(--line));
+    border-radius:10px;
+    padding:9px 12px;
+    margin-bottom:7px;
+  }
+  ul.my-list li span{ flex:1; }
+  ul.my-list li button{
+    flex:none;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:1.05rem;
+    line-height:1;
+    cursor:pointer;
+    padding:2px 4px;
+    font-family:inherit;
+  }
+  ul.my-list li button:hover{ color:#B4534A; }
+  .empty-note{
+    color:var(--muted);
+    font-size:.85rem;
+    margin:0 0 10px;
+  }
+
+  .add-row{ display:flex; gap:8px; margin-bottom:10px; }
+  .idea-input{
+    flex:1;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    font-family:inherit;
+    font-size:.9rem;
+    background:var(--card);
+    color:var(--text);
+    min-width:0;
+  }
+  .idea-input:focus{ outline:2px solid var(--accent); }
+  .add-btn{
+    flex:none;
+    background:linear-gradient(140deg,var(--accent),color-mix(in srgb,var(--accent) 62%,var(--navy)));
+    color:#FFF9EC;
+    border:none;
+    border-radius:10px;
+    padding:10px 16px;
+    font-weight:700;
+    font-size:.88rem;
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .add-btn:active{ transform:scale(.97); }
+  .share-btn{
+    width:100%;
+    background:transparent;
+    color:var(--accent);
+    border:1.5px solid color-mix(in srgb,var(--accent) 45%,var(--line));
+    border-radius:10px;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:.85rem;
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .seed-group{ margin-bottom:12px; }
+  .seed-group:last-of-type{ margin-bottom:0; }
+  .seed-group .group-name{
+    font-size:.85rem;
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:4px;
+  }
+  .seed-group ul.seed-list{ margin-bottom:0; }
+
+  a.idea-cta{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:inherit;
+    background:var(--card);
+    border:1.5px solid color-mix(in srgb,#25D366 40%,var(--line));
+    border-radius:14px;
+    padding:14px 16px;
+    margin-top:14px;
+    box-shadow:var(--shadow);
+  }
+  a.idea-cta:active{ transform:scale(.99); }
+  a.idea-cta .cta-icon{
+    flex:none;
+    width:38px; height:38px;
+    border-radius:50%;
+    background:#25D366;
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+  a.idea-cta .cta-icon svg{ width:22px; height:22px; }
+  a.idea-cta .cta-text{ font-size:.88rem; line-height:1.5; }
+  a.idea-cta .cta-text strong{ display:block; color:var(--navy); font-size:.95rem; }
+
+  .privacy-note{
+    font-size:.78rem;
+    color:var(--muted);
+    text-align:center;
+    margin-top:10px;
+    padding:0 6px;
+  }
+
+  .closing{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:24px 22px 22px;
+    margin-top:34px;
+    text-align:center;
+    font-size:.95rem;
+    border:1px solid transparent;
+    background-image:linear-gradient(var(--card),var(--card)),linear-gradient(120deg,var(--terracotta),var(--gold),var(--sage));
+    background-origin:border-box;
+    background-clip:padding-box,border-box;
+  }
+  .closing p{ margin:0 0 12px; }
+  .closing p.signoff{
+    margin:16px 0 0;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+    font-family:'Frank Ruhl Libre', serif;
+    font-size:1.12rem;
+    font-weight:500;
+    color:var(--gold);
+    letter-spacing:.01em;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    details.qa summary .chev{ transition:none; }
+    .add-btn:active{ transform:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="tikshoret.html">→ חזרה לכלים לתקשורת זוגית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">כלים לתקשורת זוגית</div>
+    <h1>שימור האהבה</h1>
+    <p class="sub">דייט שבועי ונופש שנתי</p>
+  </header>
+
+  <div class="intro">
+    <p class="lead">אהבה היא כמו יצור חי — צריך לטפח אותה, צריך לגדל אותה.</p>
+    <p>גם כשהיא מתחילה טוב, העבודה היא לפתח אותה. אנחנו מציעים לכם כאן כמה כלים שיעזרו לכם לשמר, לשפר ולגדל את אהבתכם.</p>
+    <p class="pull">אהבה יכולה לגדול באופן שאתם אפילו לא מדמיינים.<br>רק תשקיעו בה.</p>
+  </div>
+
+  <!-- ============ דייט שבועי ============ -->
+  <section class="section section-dates">
+    <div class="section-head">
+      <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.4" cy="7.7" r="3.1"/><circle cx="15.6" cy="7.7" r="3.1"/><path d="M2.9 20.6c0-3 2.4-5.4 5.5-5.4 1.4 0 2.6.5 3.6 1.3"/><path d="M21.1 20.6c0-3-2.4-5.4-5.5-5.4-1.4 0-2.6.5-3.6 1.3"/></svg></div>
+      <h2>דייט שבועי
+        <span class="rhythm">פעם בשבוע, קבוע</span>
+      </h2>
+    </div>
+
+    <details class="qa">
+      <summary>
+        מה זה דייט שבועי?
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <p>דייט שבועי הוא <strong>זמן קבוע</strong>. זו לא מילה טכנית: היא אומרת שאני מכבד את הזמן הזה, שאני מתייחס אליו ברצינות, ושהוא לא קורה דרך מקרה אלא דרך תכנון. עצם התכנון מראש הוא חלק מהחשיבות.</p>
+        <p>ומעבר לזה, ארבעה תנאים:</p>
+        <ul class="conds">
+          <li><strong>זמן ממושך</strong> — לא כמה דקות, אלא שעות.</li>
+          <li><strong>זמן פנוי</strong> — בלי טרדות ובלי עיסוקים טכניים.</li>
+          <li><strong>זמן שמוקדש זה לזו</strong> — לא לארגון הבית ולא לטיפול בילדים.</li>
+          <li><strong>זמן בלי ילדים</strong> — רק בני הזוג.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary>
+        למה זה חשוב?
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <p>דייט שבועי הוא תחזוקה קבועה של האהבה. כמו שהגוף זקוק לאוכל — כך הנפש והרוח זקוקות לזמן שמוקדש לזוגיות.</p>
+        <p>הזמן הקבוע הזה הוא מקור הכוח של הזוגיות בתוך השגרה. הוא השומר מפני שחיקה, ומפני ההרגל שבו בן או בת הזוג הופכים למובנים מאליהם.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary>
+        איך עושים את זה?
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <p>דייט שבועי הוא זמן להיפגש, להסתכל זה בעיניה של זו, ולהיזכר במה שעושה לנו טוב כזוג.</p>
+        <ul class="levels">
+          <li><strong>בפשטות</strong> — להכין ארוחת ערב יחד, לשבת ולדבר, לצאת לסיבוב קטן בשכונה.</li>
+          <li><strong>להשקיע</strong> — בוקר במסעדה, או ערב נעים בחוץ.</li>
+          <li><strong>ואפשר גם אקסטרים</strong> — מצנחי רחיפה, צניחה חופשית, שיט משותף.</li>
+        </ul>
+        <p class="sub-head">מתי בשבוע?</p>
+        <p>צריך זמן משמעותי ופנוי. אצל רוב הזוגות זה מתאים בערב, אבל אפשר גם בוקר, ואפילו יום שלם.</p>
+        <div class="callout">
+          <strong>העיקר</strong> — להיות יחד בפעילות זוגית, בלי טלפונים, למשך זמן משמעותי של שעתיים־שלוש לפחות.
+        </div>
+      </div>
+    </details>
+
+  </section>
+
+  <!-- ============ נופש שנתי ============ -->
+  <section class="section section-getaway">
+    <div class="section-head">
+      <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 11.2 12 3.4l9.4 7.8"/><path d="M5.3 10.1V20.6h13.4V10.1"/><path d="M10 20.6v-5.2h4v5.2"/><path d="M16.4 6.4V4.1h2.1v4"/></svg></div>
+      <h2>נופש שנתי
+        <span class="rhythm">פעם בשנה, רק שניכם</span>
+      </h2>
+    </div>
+
+    <details class="qa">
+      <summary>
+        מה זה נופש שנתי?
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <p>יציאה מהבית, לפחות פעם בשנה, לפחות ליומיים־שלושה חופשיים — מעבודה, ממטלות, וגם מעיסוק בילדים. זמן שהוא רק שלכם.</p>
+        <p>זו לא עוד חופשה משפחתית ולא נסיעה שיש בה מטרה אחרת. המטרה היחידה שלה היא אתם.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary>
+        למה זה חשוב?
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <p>הנופש השנתי הוא הזמן שלכם להרים את האהבה ואת הביחד לגובה חדש. לצאת מהשגרה, להיזכר בראשית האהבה, ולשאוף לעומק ולגובה שעוד לא הייתם בהם.</p>
+        <p>יציאה מהמקום הרגיל עושה שלושה דברים: היא <strong>משנה אווירה</strong>, היא מאפשרת <strong>להכיר מחדש</strong>, והיא פותחת מקום <strong>לחלום יחד</strong>.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary>
+        איך עושים את זה?
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <p class="sub-head">משנה מקום, משנה מזל</p>
+        <p>לא כדאי לעשות נופש בבית: קשה לשנות אווירה במקום שרגילים אליו. אפשר לצאת לצימר, למלון, לקמפינג או סתם ללינת שטח.</p>
+        <div class="callout">
+          <strong>העיקר</strong> — מקום להירגע בו, להיות יחד, ולהתעלות מעל השגרה.
+        </div>
+      </div>
+    </details>
+
+  </section>
+
+  <!-- ============ הרעיונות שלנו ============ -->
+  <section class="section section-ideas">
+    <div class="section-head">
+      <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 16.1a5.6 5.6 0 1 1 5.6 0c-.8.5-1.2 1.3-1.2 2.2h-3.2c0-.9-.4-1.7-1.2-2.2z"/><path d="M10.2 21h3.6"/></svg></div>
+      <h2>הרעיונות שלנו
+        <span class="rhythm">נשמר אצלכם במכשיר</span>
+      </h2>
+    </div>
+
+    <details class="qa" data-cat="dates" data-label="רעיונות לדייטים">
+      <summary>
+        רעיונות לדייטים
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <div class="list-title">כמה רעיונות להתחלה</div>
+
+        <div class="seed-group">
+          <div class="group-name">🏠 בבית</div>
+          <ul class="seed-list">
+            <li>להכין ארוחת ערב יחד</li>
+            <li>לנסות מתכונים חדשים</li>
+            <li>להסתכל באלבומי תמונות</li>
+            <li>ללמוד משהו יחד</li>
+            <li>לקרוא ספר זוגיות</li>
+          </ul>
+        </div>
+
+        <div class="seed-group">
+          <div class="group-name">🌿 בחוץ</div>
+          <ul class="seed-list">
+            <li>טיול בשכונה</li>
+            <li>נסיעה לפארק ציבורי יפה</li>
+            <li>יציאה למסעדה</li>
+          </ul>
+        </div>
+
+        <div class="seed-group">
+          <div class="group-name">🎢 אטרקציה</div>
+          <ul class="seed-list">
+            <li>סדנת זכוכית, חימר או עץ</li>
+            <li>מצנחי רחיפה</li>
+          </ul>
+        </div>
+
+        <div class="list-title">הרעיונות שהוספתם</div>
+        <ul class="my-list" data-list></ul>
+        <p class="empty-note" data-empty>עוד לא הוספתם רעיונות.</p>
+
+        <div class="add-row">
+          <input class="idea-input" type="text" data-input placeholder="הרעיון שלכם...">
+          <button class="add-btn" data-add>הוספה</button>
+        </div>
+        <button class="share-btn" data-share>שליחת הרשימה לוואטסאפ</button>
+      </div>
+    </details>
+
+    <details class="qa" data-cat="gifts" data-label="רעיונות למתנות">
+      <summary>
+        רעיונות למתנות
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <div class="list-title">כמה רעיונות להתחלה</div>
+        <ul class="seed-list">
+          <li>מכתב כתוב ביד — לרוב נשמר שנים אחרי שמתנות אחרות נשכחו</li>
+          <li>משהו שהוא הזכיר במשפט אחד לפני חודש</li>
+          <li>יום פנוי: אתה לוקח על עצמך את כל המטלות</li>
+          <li>אלבום מודפס של השנה האחרונה</li>
+          <li>ספר של סופר שהיא אוהבת, עם הקדשה בעמוד הראשון</li>
+          <li>קורס או חוג בתחום שהוא רצה לנסות</li>
+          <li>מתנה שמזמינה זמן ביחד — כרטיסים, סדנה, טיול</li>
+        </ul>
+
+        <div class="list-title">הרעיונות שהוספתם</div>
+        <ul class="my-list" data-list></ul>
+        <p class="empty-note" data-empty>עוד לא הוספתם רעיונות.</p>
+
+        <div class="add-row">
+          <input class="idea-input" type="text" data-input placeholder="הרעיון שלכם...">
+          <button class="add-btn" data-add>הוספה</button>
+        </div>
+        <button class="share-btn" data-share>שליחת הרשימה לוואטסאפ</button>
+      </div>
+    </details>
+
+    <details class="qa" data-cat="getaway" data-label="רעיונות לנופש זוגי">
+      <summary>
+        רעיונות לנופש זוגי
+        <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </summary>
+      <div class="qa-body">
+        <div class="list-title">כמה רעיונות להתחלה</div>
+        <ul class="seed-list">
+          <li>צימר בצפון לשני לילות, בלי לוח זמנים</li>
+          <li>שבת בבית מלון — בלי בישולים ובלי אירוח</li>
+          <li>טיול משותף למקום שאף אחד מכם לא היה בו</li>
+          <li>נופש בעונה שקטה, כשהמחירים והעומס נמוכים</li>
+          <li>יומיים בירושלים: לימוד, טיול ואוכל טוב</li>
+          <li>חוף ים מחוץ לעונה, עם ספר לכל אחד</li>
+          <li>לחזור למקום של ירח הדבש בשנה עגולה</li>
+        </ul>
+
+        <div class="list-title">הרעיונות שהוספתם</div>
+        <ul class="my-list" data-list></ul>
+        <p class="empty-note" data-empty>עוד לא הוספתם רעיונות.</p>
+
+        <div class="add-row">
+          <input class="idea-input" type="text" data-input placeholder="הרעיון שלכם...">
+          <button class="add-btn" data-add>הוספה</button>
+        </div>
+        <button class="share-btn" data-share>שליחת הרשימה לוואטסאפ</button>
+      </div>
+    </details>
+
+    <a class="idea-cta" href="https://wa.me/972528990131?text=%D7%94%D7%99%D7%99%20%D7%93%D7%91%D7%99%D7%A8%2C%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A8%D7%A2%D7%99%D7%95%D7%9F%3A%20" target="_blank" rel="noopener">
+      <span class="cta-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.18 6.42 2.18 11.86c0 1.74.46 3.44 1.32 4.94L2.1 22l5.34-1.4a9.83 9.83 0 0 0 4.6 1.17h.01c5.43 0 9.85-4.42 9.85-9.86C21.9 6.42 17.47 2 12.04 2zm0 17.93h-.01a8.2 8.2 0 0 1-4.17-1.14l-.3-.18-3.1.81.83-3.02-.2-.31a8.16 8.16 0 0 1-1.25-4.36c0-4.52 3.68-8.19 8.2-8.19a8.19 8.19 0 0 1 8.19 8.2c0 4.52-3.68 8.19-8.19 8.19zm4.5-6.13c-.25-.13-1.46-.72-1.69-.8-.22-.09-.39-.13-.55.12s-.63.8-.77.96c-.14.17-.28.19-.53.06a6.7 6.7 0 0 1-1.97-1.22 7.4 7.4 0 0 1-1.37-1.7c-.14-.25-.01-.38.11-.5.11-.12.25-.29.37-.44.13-.15.17-.25.25-.42.09-.17.04-.31-.02-.44-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.42.06-.64.31-.22.25-.84.82-.84 2s.86 2.32.98 2.48c.13.17 1.7 2.59 4.11 3.63.58.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.46-.6 1.66-1.18.2-.58.2-1.07.14-1.18-.06-.1-.22-.17-.47-.29z"/></svg>
+      </span>
+      <span class="cta-text">
+        <strong>יש לכם רעיון טוב?</strong>
+        למה שתיהנו ממנו לבד — שלחו לנו, ונשמח לשתף בו זוגות נוספים.
+      </span>
+    </a>
+
+    <p class="privacy-note">מה שתכתבו כאן נשמר רק בדפדפן של המכשיר הזה. זה לא נשלח לשום מקום, ואף אחד חוץ מכם לא רואה את זה.</p>
+  </section>
+
+  <section class="closing">
+    <p>ההשקעה באהבה צוברת ריבית חיובית. כמו כל השקעה — אם מתחילים מוקדם מרוויחים יותר, ואם לא משקיעים, לא מרוויחים.</p>
+    <p>תשקיעו זה בזו, תשקיעו בעצמכם. זו ההשקעה הטובה ביותר שיכולה להיות לכם.</p>
+    <p class="signoff">השקעה לבניין עדי־עד.</p>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var KEY = 'shimur-ahava-ideas-v1';
+
+  function load(){
+    try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function save(data){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }
+    catch(e){ /* אחסון חסום או מלא — הרשימה תעבוד עד לרענון */ }
+  }
+
+  var store = load();
+
+  document.querySelectorAll('details.qa[data-cat]').forEach(function(box){
+    var cat     = box.dataset.cat;
+    var label   = box.dataset.label;
+    var listEl  = box.querySelector('[data-list]');
+    var emptyEl = box.querySelector('[data-empty]');
+    var input   = box.querySelector('[data-input]');
+    var addBtn  = box.querySelector('[data-add]');
+    var shareBtn= box.querySelector('[data-share]');
+
+    function items(){ return store[cat] || []; }
+
+    function render(){
+      var arr = items();
+      listEl.innerHTML = '';
+      arr.forEach(function(text, i){
+        var li = document.createElement('li');
+        var span = document.createElement('span');
+        span.textContent = text;
+        var del = document.createElement('button');
+        del.type = 'button';
+        del.textContent = '✕';
+        del.setAttribute('aria-label', 'מחיקת הרעיון: ' + text);
+        del.addEventListener('click', function(){
+          store[cat].splice(i, 1);
+          save(store);
+          render();
+        });
+        li.appendChild(span);
+        li.appendChild(del);
+        listEl.appendChild(li);
+      });
+      emptyEl.style.display = arr.length ? 'none' : 'block';
+    }
+
+    function add(){
+      var text = input.value.trim();
+      if(!text) return;
+      if(!store[cat]) store[cat] = [];
+      store[cat].push(text);
+      save(store);
+      input.value = '';
+      render();
+      input.focus();
+    }
+
+    addBtn.addEventListener('click', add);
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); add(); }
+    });
+
+    shareBtn.addEventListener('click', function(){
+      var arr = items();
+      var lines = [label + ':'];
+      box.querySelectorAll('.seed-list li').forEach(function(li){
+        lines.push('• ' + li.textContent.trim());
+      });
+      arr.forEach(function(t){ lines.push('• ' + t); });
+      window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+    });
+
+    render();
+  });
+})();
+</script>
+</body>
+</html>
