@@ -225,10 +225,73 @@
   @media (max-width:520px){
     header.app-header h1{ font-size:24px; }
   }
+
+  /* GATE */
+  #pageContent{ display:none; }
+  #gateScreen{
+    max-width:380px;
+    margin:0 auto;
+    padding:60px 20px;
+    text-align:center;
+  }
+  #gateScreen .lock-icon{
+    width:64px; height:64px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
+    box-shadow:0 6px 18px rgba(31,42,68,.3);
+  }
+  #gateScreen h2{ margin:0 0 6px; color:var(--navy); font-size:20px; }
+  #gateScreen p.gate-sub{ margin:0 0 22px; color:var(--muted); font-size:14px; }
+  #gateScreen input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:13px 16px;
+    font-family:inherit;
+    font-size:15px;
+    background:var(--card);
+    color:var(--text);
+    text-align:center;
+    margin-bottom:12px;
+  }
+  #gateScreen input:focus{ outline:2px solid var(--gold-soft); }
+  #gateScreen button{
+    width:100%;
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:13px 16px;
+    font-weight:700;
+    font-size:15px;
+    font-family:inherit;
+    cursor:pointer;
+  }
+  #gateScreen button:active{ transform:scale(0.98); }
+  #gateScreen .gate-error{
+    color:#B4534A;
+    font-size:13px;
+    margin-top:10px;
+    display:none;
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
+
+<div id="gateScreen">
+  <div class="lock-icon">🔒</div>
+  <h2>תוכן נעול</h2>
+  <p class="gate-sub">העמוד הזה פתוח רק למי שיש לו קוד גישה</p>
+  <input type="password" id="gateInput" placeholder="קוד גישה" autocomplete="off">
+  <button id="gateSubmit">כניסה</button>
+  <div class="gate-error" id="gateError">קוד שגוי, נסו שוב</div>
+</div>
+
+<div class="wrap" id="pageContent">
 
   <a class="back-link" href="../index.html">→ חזרה לדף הבית</a>
 
@@ -474,6 +537,47 @@ unitsEl.addEventListener('click', (e)=>{
     });
   }
 });
+
+/* GATE */
+(function(){
+  var GATE_KEY = 'pregnancy-birth-unlocked';
+  var CODE = 'hatanim';
+  var gateScreen = document.getElementById('gateScreen');
+  var pageContent = document.getElementById('pageContent');
+  var input = document.getElementById('gateInput');
+  var submitBtn = document.getElementById('gateSubmit');
+  var errorMsg = document.getElementById('gateError');
+
+  function unlock(){
+    gateScreen.style.display = 'none';
+    pageContent.style.display = 'block';
+    try{ localStorage.setItem(GATE_KEY, '1'); }catch(e){}
+    if (typeof gtag === 'function') gtag('event', 'gate_unlock', { gate: 'pregnancy-birth' });
+  }
+
+  var alreadyUnlocked = false;
+  try{ alreadyUnlocked = localStorage.getItem(GATE_KEY) === '1'; }catch(e){}
+  if(alreadyUnlocked){
+    unlock();
+  } else {
+    gateScreen.style.display = 'block';
+  }
+
+  function tryUnlock(){
+    var val = (input.value || '').trim().toLowerCase();
+    if(val === CODE){
+      errorMsg.style.display = 'none';
+      unlock();
+    } else {
+      errorMsg.style.display = 'block';
+    }
+  }
+
+  submitBtn.addEventListener('click', tryUnlock);
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); tryUnlock(); }
+  });
+})();
 </script>
 </body>
 </html>
