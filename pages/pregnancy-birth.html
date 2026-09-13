@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDRB3WV2T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDRB3WV2T5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>הריון ולידה — המדריך לחתן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img,video{max-width:100%;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    line-height:1.7;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:560px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link{
+    display:inline-block;
+    color:var(--navy-soft);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  a.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{
+    display:flex; flex-direction:column; gap:8px;
+    padding:6px 4px 20px; text-align:center;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600;
+  }
+  header.app-header h1{ font-size:28px; margin:0; color:var(--navy); font-weight:700; }
+  header.app-header p.sub{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  .hero-frame{
+    background:var(--card);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+  }
+  .hero-frame img{ width:100%; display:block; }
+
+  /* DISCLAIMER */
+  .disclaimer{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:12px;
+    padding:14px 16px;
+    margin:0 0 20px;
+    font-size:.9rem;
+    color:var(--text);
+  }
+  .disclaimer .d-icon{ flex:none; font-size:1.3rem; line-height:1; }
+  .disclaimer strong{ display:block; margin-bottom:2px; }
+
+  /* INTRO */
+  .intro{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+    margin:0 0 26px;
+    text-align:center;
+    color:var(--muted);
+    font-size:.96rem;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+
+  /* SECTION LABEL */
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-label .num{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    flex:none;
+    box-shadow:0 4px 10px rgba(31,42,68,.3);
+  }
+  .section-label h2{ margin:0; font-size:1.15rem; color:var(--navy); }
+
+  /* ACCORDION */
+  .unit{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .unit-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .unit-header .icon{
+    flex:none;
+    width:42px;height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .unit-header .title{
+    flex:1;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1.02rem;
+  }
+  .unit-header .title small{
+    display:block;
+    font-weight:400;
+    color:var(--muted);
+    font-size:.82rem;
+    margin-top:2px;
+  }
+  .unit-header .chevron{
+    flex:none;
+    width:22px;height:22px;
+    transition:transform .35s ease;
+    color:var(--gold);
+  }
+  .unit.open .unit-header .chevron{ transform:rotate(180deg); }
+  .unit-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .unit-inner{
+    padding:0 22px 22px;
+    color:var(--text);
+    font-size:.96rem;
+  }
+  .unit-inner p{ margin:0 0 12px; }
+  .unit-inner h4{
+    margin:16px 0 6px;
+    color:var(--navy-soft);
+    font-size:.96rem;
+  }
+  .unit-inner h4:first-child{ margin-top:0; }
+  .unit-inner ul{ margin:0 0 14px; padding-inline-start:1.3em; }
+  .unit-inner li{ margin-bottom:6px; }
+
+  .callout{
+    background:var(--bg);
+    border-right:4px solid var(--navy);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.92rem;
+  }
+  .callout.gold{
+    background:var(--gold-soft);
+    border-right-color:var(--gold);
+  }
+  .callout strong{ color:var(--navy); }
+
+  .closing-note{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#FDF6E3;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px 24px;
+    margin:28px 0 8px;
+    text-align:center;
+    font-size:.98rem;
+    line-height:1.8;
+  }
+  .closing-note strong{ color:var(--gold-soft); }
+
+  footer.page-footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:20px 12px 0;
+  }
+
+  @media (max-width:520px){
+    header.app-header h1{ font-size:24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="../index.html">→ חזרה לדף הבית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">הדרכת חתנים</div>
+    <h1>הריון ולידה</h1>
+    <p class="sub">מדריך להתנהלות זוגית, הלכתית ומעשית</p>
+  </header>
+
+  <div class="hero-frame">
+    <img src="../media/images/home-pregnancy-birth.jpeg" alt="הריון ולידה">
+  </div>
+
+  <div class="disclaimer">
+    <span class="d-icon">⚠️</span>
+    <div>
+      <strong>לתשומת לבכם</strong>
+      כל האמור במדריך זה נועד לשמש תזכורת כללית בלבד, ואינו מהווה פסיקת הלכה אישית או ייעוץ רפואי. בכל שאלה הלכתית או רפואית — יש להתייעץ עם רב מוסמך ועם הצוות הרפואי המטפל.
+    </div>
+  </div>
+
+  <div class="intro">
+    המעבר מזוגיות למשפחה הוא אחד הרגעים המכוננים והעמוקים בחיי הזוג. לפניכם מצפן מעשי שמחבר בין עולם ההלכה לבין המציאות של ההיריון, הלידה והימים שאחריה. עברו על היחידות לפי הסדר, או קפצו ישירות לנושא שמעניין אתכם.
+  </div>
+
+  <div class="section-label"><span class="num">1</span><h2>יחידות לימוד</h2></div>
+
+  <div id="units"></div>
+
+  <div class="closing-note">
+    🍼 <strong>בברכת לידה קלה</strong>, בידיים מלאות ובשמחה גדולה!
+  </div>
+
+  <footer class="page-footer">
+    המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד, ואינו מהווה פסיקת הלכה. בכל שאלה או מקרה קונקרטי — יש לפנות לרב מוסמך.
+  </footer>
+
+</div>
+
+<script>
+const UNITS = [
+  {
+    icon:"👶",
+    title:"1. מעבר מזוגיות למשפחה",
+    subtitle:"מה קורה לזוגיות כשמגיע תינוק",
+    html:`
+      <p>המעבר מזוגיות למשפחה הוא אחד הרגעים המכוננים והעמוקים בחיי הזוג. תקופה זו, שמתחילה כבר בשלהי ההיריון וממשיכה דרך חדר הלידה ועד לאחר הלידה, דורשת שילוב בין היערכות רפואית, הקפדה הלכתית ותמיכה רגשית.</p>
+
+      <h4>הפער בחוויית ההיריון</h4>
+      <p>חשוב להכיר בפער שקיים לעיתים בחוויית ההיריון. האישה עוברת במשך תשעה חודשים שינוי הדרגתי — פיזי, נפשי ורגשי. הבעל, לעומת זאת, עלול להרגיש שהמציאות עדיין קצת רחוקה ממנו. עבורו, רגע הלידה הוא לפעמים המפגש המוחשי הראשון עם העובדה שעומד להצטרף למשפחה תינוק.</p>
+      <p>ההכנה המנטלית נועדה לגשר על הפער הזה — ולהפוך את חדר הלידה לא רק לאירוע רפואי, אלא גם לרגע משמעותי, רוחני ומחבר.</p>
+    `
+  },
+  {
+    icon:"❤️",
+    title:"2. עד הלידה: לשמור על הקרבה",
+    subtitle:"חיי אישות בתקופת ההיריון",
+    html:`
+      <p>הימים שלפני הלידה הם עדיין זמן של זוגיות. דווקא בתקופה הזו, כשהלידה כבר קרובה, חשוב להמשיך להשקיע בקשר ובקרבה. אפשר לראות את התקופה הזו כזמן של "אגירת כוחות" משותפת לקראת השינוי הגדול שעומד להגיע.</p>
+      <h4>חיי אישות</h4>
+      <p>אין מניעה רפואית או הלכתית גורפת מחיי אישות וקרבה פיזית עד הלידה, אלא אם ניתנה הנחיה רפואית אחרת.</p>
+      <div class="callout gold">
+        <strong>שווה לדעת:</strong> לאחר הלידה צפויה תקופה ממושכת שבה בני הזוג יהיו אסורים מחמת דיני נידה. לכן, כל עוד הדבר אפשרי ומתאים מבחינה רפואית והלכתית — כדאי לנצל את הזמן הזה לטיפוח הזוגיות והקרבה.
+      </div>
+    `
+  },
+  {
+    icon:"🩸",
+    title:"3. הלכות כתמים לקראת הלידה",
+    subtitle:"איך להימנע מאיסור מיותר",
+    html:`
+      <p>לקראת הלידה כדאי להכיר גם כמה נקודות בסיסיות בדיני כתמים.</p>
+      <ul>
+        <li>כדי להפחית את הסיכוי להיאסר בגלל כתמים, ניתן להקפיד על לבישת בגדים תחתונים צבעוניים.</li>
+        <li>כתם ללא הרגשה, המופיע על דבר שאינו מקבל טומאה — כגון תחבושת היגיינית או נייר טואלט — אינו בהכרח אוסר.</li>
+        <li>אין לבצע בדיקות פנימיות עצמיות ללא צורך רפואי ברור. בדיקות מיותרות עלולות לגרום לפציעות ולדימומים ולהוביל לשאלות הלכתיות מיותרות.</li>
+      </ul>
+      <h4>הפקק הרירי וירידת מים</h4>
+      <p>הפקק הרירי הוא אחד הסימנים שיכולים להופיע לקראת הלידה. עצם יציאתו אינה אוסרת, אלא אם יש דימום משמעותי — ובכל מקרה יש לבחון את המקרה לפי דיני כתמים.</p>
+      <p>ירידת מים כשלעצמה אינה אוסרת, כל עוד מדובר במים נקיים ללא דם משמעותי. מבחינה רפואית, ירידת מים היא כמובן סיבה ליצור קשר עם הצוות הרפואי ולקבל הנחיות להמשך.</p>
+    `
+  },
+  {
+    icon:"🩺",
+    title:"4. פעולות רפואיות נפוצות",
+    subtitle:"סטריפינג ובדיקת פתיחה",
+    html:`
+      <h4>סטריפינג (Stripping)</h4>
+      <p>בדרך כלל אינו אוסר. מדובר בהפרדה ידנית של שק ההיריון מדופן הרחם, במטרה לעודד שחרור פרוסטגלנדינים. לפי פוסקים רבים, אין בכך כשלעצמו משום "פתיחת הקבר", אלא אם נוצר בעקבות הפעולה דימום משמעותי.</p>
+      <h4>בדיקת פתיחה</h4>
+      <p>בדיקת פתיחה כשלעצמה אינה אוסרת. מומלץ לבעל שלא להסתכל על הכפפה לאחר הבדיקה, כדי להימנע מספקות ושאלות מיותרות. במקרים מסוימים ניתן לתלות את הדימום בפציעה שנגרמה במהלך הבדיקה.</p>
+      <div class="callout">
+        <strong>חשוב:</strong> בכל מקרה של דימום או ספק הלכתי, יש לשאול רב ולא להסתמך על המידע שבאתר.
+      </div>
+    `
+  },
+  {
+    icon:"🤝",
+    title:"5. הרחקות בדרך ללידה ובחדר הלידה",
+    subtitle:"מתי מתחילים, ומה עושים במצוקה",
+    html:`
+      <p>לקראת הלידה עלולה להיווצר התנגשות בין דיני ההרחקה לבין הצורך של היולדת בביטחון, רוגע ותמיכה. העיקרון ההלכתי הבסיסי הוא: <strong>"חמירא סכנתא מאיסורא"</strong> — כאשר יש חשש לסכנה, יש להקדים את הטיפול בה על פני החשש מאיסור.</p>
+      <h4>"הנר ליולדת"</h4>
+      <p>חז"ל התירו להדליק נר בשבת עבור יולדת, אפילו כאשר היולדת אינה זקוקה לאור עצמו — אלא כדי ליישב את דעתה ולהרגיעה. מכאן אנו למדים עד כמה מצבה הנפשי של היולדת הוא חלק משמעותי מהטיפול בה. לכן, אם היולדת נמצאת במצוקה משמעותית וזקוקה למגע או לקרבה כדי להירגע ולהרגיש בטוחה, יש להפעיל שיקול דעת הלכתי ורפואי ולהעדיף את שלומה ובריאותה.</p>
+      <h4>מתי בני הזוג נאסרים?</h4>
+      <p>קיימות גישות שונות בשאלה מתי מתחילים דיני ההרחקה במהלך הלידה. יש שהחמירו כבר משלב מסוים של פתיחת צוואר הרחם, ואחרים הקלו עד לשלב מתקדם יותר של הלידה, כגון הופעת צירי לחץ או דימום ממשי. במצבים של צורך ומצוקה ניתן במקרים מסוימים לסמוך על השיטות המקילות.</p>
+      <div class="callout gold">
+        <strong>חשוב:</strong> זו נקודה שכדאי מאוד לברר מראש עם רב שמכיר את בני הזוג ואת המצב הרפואי.
+      </div>
+    `
+  },
+  {
+    icon:"🕯️",
+    title:"6. לידה בשבת",
+    subtitle:"נסיעה, הכנה מראש וחתימות",
+    html:`
+      <h4>נסיעה לבית החולים</h4>
+      <p>כאשר יש צורך לנסוע לבית החולים בשבת, אין מקום לנסיעה איטית או להתנהלות מסוכנת בשם השבת. נוהגים כרגיל ובבטיחות: מהירות רגילה, איתותים ואורות לפי הצורך.</p>
+      <h4>הכנה מראש</h4>
+      <p>כדאי להכין מראש אפשרות להזמנת מונית באמצעות אפליקציה, כולל פרטי התשלום, כדי להימנע מהתעסקות בכסף בשבת.</p>
+      <h4>חתימות</h4>
+      <p>אם במהלך הלידה נדרשת חתימה, למשל לצורך אפידורל או רישום, יש לברר מראש עם רב כיצד לחתום בשינוי.</p>
+    `
+  },
+  {
+    icon:"💙",
+    title:"7. תפקיד הבעל בחדר הלידה",
+    subtitle:"המעטפת, הכוחות והתמיכה",
+    html:`
+      <p>חדר הלידה הוא מקום שבו התפקידים הזוגיים מקבלים צורה קצת אחרת. ברגעים האלה, אחד התפקידים המרכזיים של הבעל הוא להיות המעטפת: להעניק ביטחון, יציבות ונוכחות. לא תמיד צריך לדעת מה לומר — לפעמים עצם הנוכחות והתחושה ש"אני איתך" הן התמיכה הגדולה ביותר.</p>
+      <h4>ניהול הכוחות</h4>
+      <p>לידה ראשונה יכולה להימשך שעות רבות, ולעיתים אפילו יותר מ־20 שעות. גם הבעל צריך לשמור על הכוחות שלו: לאכול, לשתות, לצאת מדי פעם להתרענן ולחזור ליולדת. המטרה היא להיות שם ברגעים הקריטיים כשאתם רגועים, מרוכזים ובכוחות מחודשים.</p>
+      <h4>איך תומכים כשהזוג אסור?</h4>
+      <p>גם כאשר בני הזוג אסורים במגע, אפשר להעניק המון תמיכה: קשר עין, מילים טובות, עידוד, תפילה ונוכחות רגועה — כל אלה משמעותיים מאוד. במצב כזה חשוב להקפיד על דיני ההרחקה, ובכלל זה להימנע מהסתכלות במקומות המכוסים מהמותניים ומטה.</p>
+      <h4>תפילה ותפילין</h4>
+      <p>גם בזמן הלידה הבעל נשאר אדם מאמין ועובד ה'. הוא צריך להתפלל ולהניח תפילין כרגיל, אבל כאשר הדבר אפשרי עדיף לעשות זאת בחדר הלידה או בקרבתו, כדי שלא להתרחק מהיולדת בזמן שהיא זקוקה לו.</p>
+      <h4>רגע הלידה</h4>
+      <p>רגע הלידה הוא רגע עוצמתי ומרגש. גם כאן, כאשר בני הזוג אסורים, הבעל יכול להיות נוכח, לעודד ולשמור על קשר עין פנים אל פנים עם אשתו, תוך הקפדה על דיני ההרחקה. אין צורך "להיעלם" ברגעים האלה — להפך, הנוכחות שלך משמעותית מאוד.</p>
+      <h4>רגעים של הודיה</h4>
+      <p>הלידה היא רגע של הודיה גדולה. בלידת בן מברכים "הטוב והמטיב", ובלידת בת "שהחיינו", בהתאם להלכה ולנסיבות. כדאי לברר מראש עם רב כיצד לנהוג למעשה.</p>
+    `
+  },
+  {
+    icon:"🤱",
+    title:"8. המגע הראשון והעברת התינוק",
+    subtitle:"Skin to Skin, והעברה מיד ליד",
+    html:`
+      <h4>Skin to Skin — המגע הראשון</h4>
+      <p>המגע הראשוני בין התינוק לאמו, המכונה Skin to Skin, הוא חלק משמעותי מהטיפול בתינוק לאחר הלידה. הוא מסייע בין היתר בוויסות חום הגוף ובהרגעת התינוק, ובונה את החיבור הראשוני בין האם לתינוק. כדאי להכיר את הנושא מראש ולדעת כיצד הוא מתבצע בבית החולים.</p>
+      <h4>העברת התינוק לאחר הלידה</h4>
+      <p>לאחר הלידה קיימים גם דינים הנוגעים להעברת התינוק בין בני הזוג. במצבים מסוימים, כגון עייפות קיצונית של היולדת או צורך בטיפול בטוח בתינוק, יש מקום להקל בהעברת התינוק מיד ליד, בהתאם לנסיבות ולשיטות ההלכתיות המקובלות.</p>
+      <div class="callout">
+        <strong>טיפ:</strong> זהו נושא שכדאי לברר מראש עם רב, כדי שבזמן אמת לא תצטרכו להתחיל לחפש תשובות.
+      </div>
+    `
+  },
+  {
+    icon:"🏠",
+    title:"9. אחרי הלידה: העבודה הזוגית",
+    subtitle:"הנקה כפרויקט משותף",
+    html:`
+      <p>הימים שאחרי הלידה הם תקופה חדשה לגמרי. האישה מתאוששת מהלידה, התינוק דורש טיפול כמעט מסביב לשעון, שעות השינה משתנות — וכל הבית נכנס למציאות חדשה. דווקא עכשיו חשוב לזכור: אתם לא רק הורים לתינוק, אתם עדיין זוג.</p>
+      <h4>הנקה היא פרויקט זוגי</h4>
+      <p>הנקה היא משימה תובענית מאוד — לעיתים מדובר במחזור שבו ההנקה חוזרת בכל שעתיים־שלוש, לאורך כל היממה. לכן תפקידו של הבעל אינו מסתיים בכך שהוא "עוזר". הוא חלק מהמערכת: להביא את התינוק, להחליף טיטול, לדאוג לאוכל ולשתייה של היולדת, להרדים את התינוק ולאפשר לאמא לישון כשהדבר אפשרי. הנקה היא משימה זוגית.</p>
+      <h4>הקולוסטרום</h4>
+      <p>החלב הראשוני, הקולוסטרום, עשיר ברכיבים חיסוניים ובעל חשיבות לתינוק. כדאי לעשות מאמץ לאפשר לתינוק לקבל אותו, בהתאם להנחיות הצוות הרפואי ולמצב האם והתינוק.</p>
+    `
+  },
+  {
+    icon:"🌸",
+    title:"10. טהרה אחרי הלידה",
+    subtitle:"תהליך ההתאוששות והבדיקות",
+    html:`
+      <p>לאחר הלידה הגוף עובר תהליך משמעותי של התאוששות. בנוסף, הירידה ברמת האסטרוגן, ובמיוחד בתקופת ההנקה, עלולה לגרום ליובש ולרגישות באזור הנרתיק.</p>
+      <p>לכן, כאשר מתחילים את תהליך הטהרה, חשוב להיות מודעים לכך שבדיקות פנימיות עלולות לעיתים לגרום לאי־נוחות ואף לפציעה ודימום.</p>
+      <div class="callout gold">
+        <strong>מומלץ:</strong> לקבל הדרכה מעשית מרב או מיועצת הלכה לגבי אופן ביצוע הבדיקות, ובמידת הצורך לברר האם וכיצד ניתן להרטיב מעט את העד במים כדי למנוע פציעה.
+      </div>
+    `
+  },
+  {
+    icon:"👨‍👩‍👧‍👦",
+    title:"11. תכנון המשפחה ומצב הרוח",
+    subtitle:"המרווח בין הלידות, ומתי לפנות לעזרה",
+    html:`
+      <h4>תכנון המשפחה</h4>
+      <p>המרווח בין הלידות הוא נושא שחשוב לדבר עליו כחלק מההיערכות לחיי המשפחה. יש משפחות שמרגישות שהן רוצות ללדת ילדים בזה אחר זה, ויש זוגות שזקוקים למרווח גדול יותר כדי להתאושש ולצבור כוחות. שתי התחושות לגיטימיות. כדאי לדבר על כך כזוג ולהתייעץ עם רב ועם גורם רפואי לגבי אמצעי המניעה המתאימים, ובפרט בתקופת ההנקה.</p>
+      <h4>ומה עם מצב הרוח של היולדת?</h4>
+      <p>לא כל קושי אחרי לידה הוא "סתם עייפות". חשוב לשים לב לשינויים משמעותיים במצב הרוח, לתפקוד או ליכולת של האם לדאוג לעצמה ולתינוק.</p>
+      <div class="callout">
+        <strong>חשוב:</strong> אם מופיעים סימנים מדאיגים, כדאי לפנות בהקדם לגורם מקצועי — למשל לאחות טיפת חלב, לרופא או לגורם טיפולי מתאים. לבקש עזרה זו לא חולשה. זו אחריות.
+      </div>
+    `
+  },
+  {
+    icon:"📜",
+    title:"12. תעודת אחריות לזוגיות",
+    subtitle:"דייט שבועי ונופש שנתי",
+    html:`
+      <p>והנה אולי הדבר החשוב ביותר בכל המדריך: התינוק שלכם זקוק לא רק להורים טובים — הוא זקוק להורים שאוהבים זה את זו. הזוגיות שלכם היא אחת המתנות הגדולות ביותר שאתם יכולים לתת לילד שלכם. לכן אני מציע לכם לקחת על עצמכם "תעודת אחריות" לזוגיות — לפחות לשלוש השנים הקרובות.</p>
+      <h4>1. דייט שבועי</h4>
+      <p>חובה, לא רשות. זה לא חייב להיות ערב שלם במסעדה — גם קפה קצר מחוץ לבית, בזמן שמישהו שומר על התינוק, יכול לעשות את העבודה. העיקר הוא לעצור לרגע את מרוץ החיים ולחזור להיות בעל ואישה — ולא רק אבא ואמא.</p>
+      <h4>2. נופש זוגי פעם בשנה</h4>
+      <p>פעם בשנה, אם הדבר אפשרי, צאו לבד. גם לילה או שניים יכולים לעשות הבדל גדול. המטרה היא לא מותרות — המטרה היא להטעין מחדש את המצברים הזוגיים.</p>
+      <div class="callout gold">
+        <strong>לזכור:</strong> השקעה בזוגיות אינה באה על חשבון הילדים — להפך. זוגיות טובה ויציבה היא אחת ההשקעות הטובות ביותר שאפשר לעשות עבור הבית והילדים.
+      </div>
+    `
+  }
+];
+
+const unitsEl = document.getElementById('units');
+UNITS.forEach((u,i)=>{
+  const div = document.createElement('div');
+  div.className = 'unit';
+  div.innerHTML = `
+    <div class="unit-header" data-i="${i}">
+      <span class="icon">${u.icon}</span>
+      <span class="title">${u.title}<small>${u.subtitle}</small></span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="unit-body"><div class="unit-inner">${u.html}</div></div>
+  `;
+  unitsEl.appendChild(div);
+});
+
+unitsEl.addEventListener('click', (e)=>{
+  const header = e.target.closest('.unit-header');
+  if(!header) return;
+  const unit = header.closest('.unit');
+  const body = unit.querySelector('.unit-body');
+  const isOpen = unit.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(()=>{ body.style.maxHeight = '0px'; });
+    unit.classList.remove('open');
+  } else {
+    unit.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function te(){
+      if(unit.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', te);
+    });
+  }
+});
+</script>
+</body>
+</html>
