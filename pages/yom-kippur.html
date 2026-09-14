@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDRB3WV2T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDRB3WV2T5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>הלכות טהרה, אישות ויום הכיפורים — המדריך לחתן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img,video{max-width:100%;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    line-height:1.7;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:560px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link, button.back-link{
+    display:inline-block;
+    color:var(--navy-soft);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:14px;
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  a.back-link:hover, button.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{
+    display:flex; flex-direction:column; gap:8px;
+    padding:6px 4px 20px; text-align:center;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600;
+  }
+  header.app-header h1{ font-size:26px; margin:0; color:var(--navy); font-weight:700; }
+
+  /* DISCLAIMER */
+  .disclaimer{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:12px;
+    padding:14px 16px;
+    margin:0 0 20px;
+    font-size:.9rem;
+    color:var(--text);
+  }
+  .disclaimer .d-icon{ flex:none; font-size:1.3rem; line-height:1; }
+  .disclaimer strong{ display:block; margin-bottom:2px; }
+
+  /* INTRO */
+  .intro{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+    margin:0 0 26px;
+    text-align:center;
+    color:var(--muted);
+    font-size:.94rem;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-label .num{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    flex:none;
+    box-shadow:0 4px 10px rgba(31,42,68,.3);
+  }
+  .section-label h2{ margin:0; font-size:1.15rem; color:var(--navy); }
+
+  /* MAIN GRID (level 1) */
+  .main-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-bottom:6px;
+  }
+  button.main-card{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(43,38,32,0.05);
+    padding:18px 20px;
+    cursor:pointer;
+    text-align:right;
+    width:100%;
+    font-family:inherit;
+    color:inherit;
+    transition:transform .15s ease;
+  }
+  button.main-card:active{ transform:scale(0.98); }
+  button.main-card .icon{
+    flex:none;
+    width:52px;height:52px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.7rem;
+  }
+  button.main-card .info{ flex:1; }
+  button.main-card .info .title{ font-weight:700; color:var(--navy); font-size:1.03rem; margin-bottom:2px; }
+  button.main-card .info .count{ font-size:.8rem; color:var(--muted); }
+  button.main-card .arrow{
+    flex:none;
+    width:20px;height:20px;
+    color:var(--gold);
+    transform:scaleX(-1);
+  }
+
+  /* TOPIC SCREEN (level 2 container) */
+  #topicScreen{ display:none; }
+  .topic-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:2px 0 20px;
+  }
+  .topic-header .icon{
+    flex:none;
+    width:54px;height:54px;
+    border-radius:16px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.8rem;
+  }
+  .topic-header h2{ margin:0; font-size:1.25rem; color:var(--navy); }
+
+  /* ACCORDION (level 2 sub-cards / level 3 content) */
+  .unit{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .unit-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .unit-header .letter{
+    flex:none;
+    width:34px;height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--navy));
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.9rem;
+    font-weight:700;
+  }
+  .unit-header .title{
+    flex:1;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1rem;
+  }
+  .unit-header .chevron{
+    flex:none;
+    width:22px;height:22px;
+    transition:transform .35s ease;
+    color:var(--gold);
+  }
+  .unit.open .unit-header .chevron{ transform:rotate(180deg); }
+  .unit-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .unit-inner{
+    padding:0 22px 22px;
+    color:var(--text);
+    font-size:.95rem;
+  }
+  .unit-inner p{ margin:0 0 12px; }
+  .unit-inner h4{
+    margin:16px 0 6px;
+    color:var(--navy-soft);
+    font-size:.94rem;
+  }
+  .unit-inner h4:first-child{ margin-top:0; }
+  .unit-inner ul{ margin:0 0 14px; padding-inline-start:1.3em; }
+  .unit-inner li{ margin-bottom:6px; }
+
+  .callout{
+    background:var(--bg);
+    border-right:4px solid var(--navy);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.9rem;
+  }
+  .callout.gold{
+    background:var(--gold-soft);
+    border-right-color:var(--gold);
+  }
+  .callout strong{ color:var(--navy); }
+
+  .topic-intro{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:12px;
+    padding:14px 16px;
+    margin:0 0 18px;
+    font-size:.9rem;
+  }
+  .topic-intro .d-icon{ flex:none; font-size:1.2rem; line-height:1; }
+  .topic-intro strong{ display:block; margin-bottom:2px; color:var(--navy); }
+  .topic-intro ol{ margin:8px 0 0; padding-inline-start:1.3em; }
+  .topic-intro li{ margin-bottom:4px; }
+
+  /* SOURCES */
+  details.sources{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(43,38,32,0.05);
+    margin:24px 0 8px;
+    overflow:hidden;
+  }
+  details.sources summary{
+    cursor:pointer;
+    padding:16px 20px;
+    font-weight:700;
+    color:var(--navy);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  details.sources summary::-webkit-details-marker{ display:none; }
+  details.sources[open] summary{ border-bottom:1px solid var(--line); }
+  details.sources .sources-body{
+    padding:14px 20px 18px;
+    font-size:.85rem;
+    color:var(--muted);
+  }
+  details.sources .sources-body ul{ margin:0; padding-inline-start:1.2em; }
+  details.sources .sources-body li{ margin-bottom:6px; }
+
+  .closing-note{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+    margin:8px 0 8px;
+    font-size:.9rem;
+  }
+  .closing-note .d-icon{ flex:none; font-size:1.3rem; line-height:1; }
+  .closing-note strong{ display:block; margin-bottom:4px; color:var(--navy); }
+  .closing-note p{ margin:0 0 8px; }
+  .closing-note p:last-child{ margin-bottom:0; }
+
+  footer.page-footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:20px 12px 0;
+  }
+
+  @media (max-width:520px){
+    header.app-header h1{ font-size:22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="../index.html">→ חזרה לדף הבית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">הדרכת חתנים</div>
+    <h1>הלכות טהרה, אישות ויום הכיפורים</h1>
+  </header>
+
+  <div class="disclaimer">
+    <span class="d-icon">⚠️</span>
+    <div>
+      <strong>לתשומת לבכם</strong>
+      כל האמור ביחידה זו נועד ללימוד והיכרות כללית עם ההלכות בלבד, ואינו מהווה הוראה הלכתית או רפואית מעשית. בשאלות מעשיות, ובפרט בענייני צום, היריון, הנקה, לידה וטיפולי פוריות — יש להתייעץ עם רופא ועם רב מוסמך.
+    </div>
+  </div>
+
+  <div class="intro">
+    יום הכיפורים כולל חמישה איסורים מרכזיים: אכילה ושתייה, רחצה, סיכה, נעילת נעלי עור ויחסי אישות. ביחידה זו נתמקד בעיקר בדיני טהרה, קרבה והרחקה, ובדינים הנוגעים למעוברות, מיניקות ויולדות.
+  </div>
+
+  <div id="mainScreen">
+    <div class="section-label"><span class="num">1</span><h2>בחרו נושא</h2></div>
+    <div class="main-grid" id="mainGrid"></div>
+  </div>
+
+  <div id="topicScreen">
+    <button class="back-link" id="topicBack">← חזרה לנושאים</button>
+    <div class="topic-header">
+      <span class="icon" id="topicIcon"></span>
+      <h2 id="topicTitle"></h2>
+    </div>
+    <div id="topicIntro"></div>
+    <div id="subUnits"></div>
+  </div>
+
+  <details class="sources">
+    <summary>מקורות והעמקה <span style="color:var(--gold);">↓</span></summary>
+    <div class="sources-body">
+      <ul>
+        <li>שולחן ערוך, אורח חיים, סימן תרט"ו סעיף א</li>
+        <li>מגן אברהם, סימן תרט"ו</li>
+        <li>שולחן ערוך, אורח חיים, סימן תרי"ז</li>
+        <li>משנה ברורה, סימן תרי"ז</li>
+        <li>מרדכי, סוף מועד קטן, סימן תתקל"ד</li>
+        <li>ספר האגודה, פסחים, סימן נ"ב</li>
+        <li>מהרי"ל, הלכות ערב יום הכיפורים</li>
+        <li>חזו"ע, ימים נוראים</li>
+        <li>טהרת הבית</li>
+        <li>פניני הלכה</li>
+        <li>תורת היולדת</li>
+        <li>מכון פוע"ה — מאמרים והנחיות בנושא צום יום הכיפורים לנשים בהיריון, בהנקה ובטיפולי פוריות</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="closing-note">
+    <span class="d-icon">⚠️</span>
+    <div>
+      <strong>אין פוסקים מהכרטיסיות</strong>
+      <p>המידע ביחידה זו נועד ללימוד והיכרות עם ההלכות בלבד. בדיני צום יום הכיפורים, ובפרט בהיריון, הנקה, לידה וטיפולי פוריות, אין לקבל החלטה מעשית על סמך הכרטיסיות בלבד.</p>
+      <p>במקרה רפואי: יש לפנות לרופא המכיר את המצב האישי, ולאחר קבלת המידע הרפואי — לפנות לרב לקבלת הוראה הלכתית אישית.</p>
+      <p>במקרה של ספק שיש בו חשש סכנה — אין להחמיר בצום על חשבון הבריאות.</p>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד, ואינו מהווה פסיקת הלכה. בכל שאלה או מקרה קונקרטי — יש לפנות לרב מוסמך.
+  </footer>
+
+</div>
+
+<script>
+const TOPICS = [
+  {
+    icon:"🕊️",
+    title:"דיני טהרה ביום כיפור",
+    sub:[
+      {
+        letter:"א",
+        title:"טבילה בערב יום כיפור",
+        html:`
+          <p>יש נשים שנוהגות לטבול בערב יום הכיפורים, כהכנה רוחנית של קדושה ותשובה. זהו <strong>מנהג</strong>, ולא חיוב מעיקר הדין.</p>
+          <ul>
+            <li>מי שיש לה מנהג משפחתי בעניין — תנהג כמנהג אמה.</li>
+            <li>מי שאין לה מנהג כזה — אינה צריכה לטבול בערב יום הכיפורים, אלא אם היא זקוקה לטבילה לשם טהרה.</li>
+          </ul>
+        `
+      },
+      {
+        letter:"ב",
+        title:"טבילה שחלה בליל יום כיפור",
+        html:`
+          <p>אם ליל הטבילה חל בליל יום הכיפורים, הטבילה נדחית למוצאי יום הכיפורים — הן מפני איסור רחיצה, והן מפני איסור יחסי אישות באותו היום.</p>
+          <p>גם כשהאישה טהורה, בני הזוג נוהגים ביום הכיפורים בדיני קרבה והרחקה המיוחדים ליום זה.</p>
+          <div class="callout">
+            <strong>חשוב:</strong> דחיית הטבילה אינה דוחה את בדיקת היום השביעי לנקיים — יש לבצע אותה במועדה המקורי, ולא ביום הטבילה בפועל.
+          </div>
+        `
+      },
+      {
+        letter:"ג",
+        title:"הפסק טהרה והכנות לטבילה במוצאי יום כיפור",
+        html:`
+          <p>ניתן לבצע הפסק טהרה ביום הכיפורים עצמו. לפני הבדיקה אפשר לנקות נקודתית את המקום הנדרש, אך <strong>אין להתקלח או לשטוף את כל הגוף</strong> — ויש להשתמש במים קרים בלבד.</p>
+          <p>כשהטבילה מתקיימת במוצאי יום הכיפורים, אין לבצע את הכנות הטבילה תוך כדי הצום. יש להמתין לצאת הצום, לאכול ולנוח מעט, ורק אז להתכונן לטבילה בנחת. כדאי לברר מראש עם הבלנית את שעות פתיחת המקווה, שכן במוצאי יום הכיפורים הן עשויות להיות שונות מהרגיל.</p>
+          <ul>
+            <li>אם האישה הייתה טהורה כבר לפני יום הכיפורים — בני הזוג מותרים זה לזה מייד עם צאת הצום.</li>
+            <li>אם היא בתוך שבעת הנקיים — ממשיכים את תהליך הטהרה כרגיל.</li>
+          </ul>
+        `
+      }
+    ]
+  },
+  {
+    icon:"❤️",
+    title:"דיני קרבה והרחקה ביום כיפור",
+    sub:[
+      {
+        letter:"א",
+        title:"יחסי אישות ביום כיפור",
+        html:`
+          <p>אסור לקיים יחסי אישות ביום הכיפורים, <strong>גם כשהאישה טהורה</strong>. האיסור נוהג הן בלילה והן ביום.</p>
+        `
+      },
+      {
+        letter:"ב",
+        title:"מגע, חיבוק ונישוק",
+        html:`
+          <p>ביום הכיפורים נוהגים בני הזוג בדיני הרחקה מיוחדים: יש להימנע ממגע, חיבוק ונישוק.</p>
+          <p>במקום צורך, יש פוסקים שהתירו מגע שאינו של חיבה — כגון העברת חפץ מיד ליד.</p>
+          <div class="callout gold">
+            יש הבדלים בין הפוסקים והמנהגים בשאלה עד כמה להרחיב את הרחקות היום. במקרה מעשי של צורך או ספק — יש לשאול רב בהתאם למנהג המשפחה.
+          </div>
+        `
+      },
+      {
+        letter:"ג",
+        title:"שינה והרחקות",
+        html:`
+          <p>אסור לבני הזוג לישון יחד באותה מיטה ביום הכיפורים, ויש להרחיק את המיטות זו מזו.</p>
+          <p>לגבי שאר ההרחקות הנהוגות בימי נידה — קיימות דעות שונות: יש שכתבו לנהוג כדיני נידה במלואם, ואחרים חילקו בין ההרחקות השונות.</p>
+          <div class="callout">
+            <strong>חשוב:</strong> אין להציג את כל דיני ההרחקות של נידה כאיסור מוסכם ביום הכיפורים. במקרה של ספק — יש לפנות לרב.
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    icon:"🤰",
+    title:"מעוברת, מיניקה ויולדת ביום כיפור",
+    intro:`
+      <span class="d-icon">⚠️</span>
+      <div>
+        <strong>חשוב</strong>
+        דיני הצום ביום הכיפורים במצבי היריון, הנקה ולידה תלויים במצב הרפואי האישי. אין להסיק מהמידע כאן הוראה מעשית האם לצום.
+        <ol>
+          <li>פונים לרופא המכיר את המצב האישי.</li>
+          <li>עם המידע הרפואי פונים לרב לקבלת הוראה הלכתית.</li>
+        </ol>
+      </div>
+    `,
+    sub:[
+      {
+        letter:"א",
+        title:"מעוברת ומיניקה",
+        html:`
+          <p>מעוברות ומיניקות חייבות בצום יום הכיפורים, אולם במצבים רפואיים מסוימים ייתכן שהצום אינו אפשרי. <strong>אין להכריע לפי עצם העובדה שהאישה בהיריון או מיניקה.</strong></p>
+          <h4>מצבים שבהם בדרך כלל ניתן לצום (לפי החומר)</h4>
+          <ul>
+            <li>היריון תקין שהושג באופן טבעי</li>
+            <li>היריון לאחר הזרעה מלאכותית</li>
+            <li>הנקה כשאין חשש למיעוט חלב</li>
+            <li>טיפול הפריה חוץ-גופית לפני שאיבת ביציות, כשאין חשש לגירוי יתר של השחלות</li>
+            <li>שליש ראשון של היריון מרובה עוברים תקין</li>
+          </ul>
+          <h4>מצבים שבהם עשויה להידרש שתייה לשיעורים</h4>
+          <ul>
+            <li>היריון לאחר הפלות חוזרות</li>
+            <li>הנקה עם חשש למיעוט חלב, כשהתינוק ניזון רק מהנקה</li>
+            <li>לאחר שאיבת ביציות והחזרת עוברים טריים, ובפרט לפני הופעת דופק</li>
+            <li>הקאות במהלך ההיריון</li>
+            <li>המוגלובין נמוך</li>
+            <li>סחרחורות קשות</li>
+            <li>לחץ דם גבוה</li>
+            <li>צירים מוקדמים</li>
+            <li>היריון מרובה עוברים לאחר השליש הראשון</li>
+          </ul>
+          <div class="callout">הרשימה היא דוגמאות עקרוניות בלבד, ואינה מהווה הוראה רפואית.</div>
+        `
+      },
+      {
+        letter:"ב",
+        title:"יולדת",
+        html:`
+          <p>מרגע שאחזו ביולדת חבלי לידה, או משעה שיש צורך להבהילה לבית החולים, היא נחשבת כחולה שיש בה סכנה — ואוכלת ושותה לפי צרכה.</p>
+          <p>מעמד זה נמשך <strong>72 שעות</strong> מרגע הלידה (מחושבות מעת לעת). אם 72 השעות מסתיימות באמצע יום הכיפורים, היא ממשיכה לאכול ולשתות לפי צרכה עד תום הזמן.</p>
+          <p>כשאכילה ושתייה לשיעורים יפגעו במנוחה שהיא זקוקה לה, אין צורך להסתפק בשיעורים כשמבחינה הלכתית מותר לה לאכול ולשתות כדרכה.</p>
+          <h4>מהיום השלישי עד היום השביעי לאחר הלידה</h4>
+          <ul>
+            <li>אם ברור ליולדת ולרופא שאין סכנה — היא צמה.</li>
+            <li>אם אין ודאות שאין סכנה — אינה צמה, ויש לקבל הוראה אישית.</li>
+          </ul>
+          <div class="callout gold">
+            יש מחלוקת במקורות כיצד לחשב את שלושת הימים; החומר כאן מביא חישוב של 72 שעות מעת לעת.
+          </div>
+        `
+      },
+      {
+        letter:"ג",
+        title:"טיפולי פוריות",
+        html:`
+          <p>במהלך טיפולי פוריות הדין משתנה בהתאם לשלב הטיפול ולמצבה הרפואי של האישה. <strong>אין לקבוע את הדין לפי סוג הטיפול בלבד.</strong></p>
+          <ul>
+            <li>לפני שאיבת ביציות, כשאין חשש לגירוי יתר של השחלות — פעמים רבות ניתן לצום.</li>
+            <li>לאחר שאיבת ביציות והחזרת עוברים טריים, ובפרט לפני הופעת דופק — ייתכנו מצבים שבהם יש צורך בשתייה לשיעורים.</li>
+          </ul>
+          <p>יש לקבל חוות דעת רפואית אישית, ולאחר מכן הוראה מרב.</p>
+        `
+      }
+    ]
+  },
+  {
+    icon:"🍽️",
+    title:"אכילה ושתייה ביום כיפור",
+    sub:[
+      {
+        letter:"א",
+        title:"מתי מותר לאכול ולשתות?",
+        html:`
+          <p>אכילה ושתייה ביום הכיפורים מותרות רק כשקיימת סיבה רפואית והתקבלה הוראה הלכתית מתאימה — בשני שלבים: <strong>חוות דעת רפואית אישית</strong>, ולאחריה <strong>הוראה הלכתית מרב</strong>.</p>
+          <p>אין להסתמך על הנחיה כללית כגון "כל אישה בהיריון צריכה לשתות". מצד שני, כשקיים חשש לסכנה — אין להחמיר בצום על חשבון הבריאות.</p>
+          <h4>לפני הצום</h4>
+          <p>מומלץ להרבות בשתייה ביום שלפני הצום, ולהגיע לצום במצב של רוויה טובה.</p>
+          <h4>במהלך הצום</h4>
+          <p>יש להימנע ממאמץ ומשהייה במקום חם. אם ההליכה לבית הכנסת עלולה לגרום לצורך בשתייה, עדיף להישאר בבית בסביבה ממוזגת ולוותר על תפילה בציבור כדי לצום כראוי. גם מי שקיבלה היתר לשתות לשיעורים צריכה להימנע ממאמץ מיותר.</p>
+        `
+      },
+      {
+        letter:"ב",
+        title:"שתייה לשיעורים",
+        html:`
+          <p>כשרב הורה על שתייה לשיעורים, הכוונה לשתייה בכמות קטנה בכל פעם, עם הפסקה בין שתייה לשתייה.</p>
+          <h4>מדידת השיעור</h4>
+          <p>השיעור הוא "מלוא לוגמיו", והוא משתנה מאדם לאדם. לפני יום הכיפורים ממלאים את הפה במים בכמות המרבית האפשרית, פולטים לכוס ומודדים — מעט פחות ממחצית מהכמות הוא השיעור לכל פעם. כשלא נמדד מראש, שיעור מעשי מקובל הוא כ-35 סמ"ק.</p>
+          <h4>זמני ההפסקה</h4>
+          <p>לכתחילה — לפחות 9 דקות בין שתייה לשתייה. כשיש צורך רפואי בהפסקות קצרות יותר: 7.5 / 7 / 6 / 5 / 4 דקות. אם מבחינה רפואית יש צורך בכמות גדולה בזמן קצר — שותים לפי הצורך, ועדיף בכל זאת בלגימות קטנות עם הפסקה של כמה שניות ביניהן.</p>
+          <h4>בחירת משקה</h4>
+          <p>עדיף משקה מזין כדי לצמצם את הצורך באכילה — למשל מיץ ענבים טבעי, מיצי פירות טבעיים, יוגורט נוזלי, או מרק נוזלי מזין שהוכן מראש. לעיתים יורה רב על שתייה מרה מאוד (כגון תה קמומיל מרוכז) כשיש צורך רפואי ורוצים להימנע מהנאה — ועל שתייה כזו אין מברכים.</p>
+        `
+      },
+      {
+        letter:"ג",
+        title:"אכילה לשיעורים",
+        html:`
+          <p>אכילה ושתייה הן שני איסורים נפרדים ביום הכיפורים, ולכן היתר לשתייה לשיעורים <strong>אינו מתיר אכילה</strong>. במקרים רבים אפשר להסתפק בשתייה מזינה בלבד.</p>
+          <p>אם הרופא קבע צורך גם באכילה, נדרשת הוראה הלכתית נפרדת.</p>
+          <p>שיעור האכילה נקרא "ככותבת הגסה": בערך פחות מ-30 סמ"ק; אם אין בכך די — פחות מ-33 סמ"ק; ואם גם זה אינו מספיק — עד פחות מ-40 סמ"ק, לפי ההוראה האישית.</p>
+          <div class="callout">
+            <strong>שימו לב:</strong> אין לעבור את השיעור שנקבע בהוראה האישית. אכילה ושתייה אינן מצטרפות זו לזו — כשהותרו שתיהן, אפשר לאכול פחות מכשיעור ואז לשתות פחות מכשיעור, אך יש להפריד בין אכילה לאכילה ובין שתייה לשתייה.
+          </div>
+        `
+      },
+      {
+        letter:"ד",
+        title:"ברכות, קידוש ואכילת לחם",
+        html:`
+          <p>לפני האכילה או השתייה הראשונה מברכים את הברכה המתאימה. אין צורך לברך שוב בכל פעם, אלא אם נוצר היסח דעת (למשל שינוי מקום או שינה ממושכת).</p>
+          <p>על שתייה פחות מכשיעור אין מברכים ברכה אחרונה. על אכילה פחות מכשיעור יש ספק, ולכן אין מברכים ברכה אחרונה מספק.</p>
+          <p>מי שנצרך לאכול או לשתות ביום הכיפורים <strong>אינו עושה קידוש</strong>, גם אם הוא אוכל ושותה כרגיל.</p>
+          <h4>מי שנצרך לאכול לחם</h4>
+          <ul>
+            <li>נוטל ידיים עד פרק היד</li>
+            <li>אם אוכל לשיעורים — אינו מברך על נטילת ידיים</li>
+            <li>אם נצרך לאכול יותר מכביצה ברציפות — מברך על נטילת ידיים</li>
+            <li>מברך "המוציא"; אין צורך בלחם משנה</li>
+            <li>מברך ברכת המזון כרגיל ומזכיר "יעלה ויבוא" — ואם שכח, אינו חוזר</li>
+          </ul>
+        `
+      }
+    ]
+  }
+];
+
+const mainGrid = document.getElementById('mainGrid');
+const mainScreen = document.getElementById('mainScreen');
+const topicScreen = document.getElementById('topicScreen');
+const topicIcon = document.getElementById('topicIcon');
+const topicTitle = document.getElementById('topicTitle');
+const topicIntro = document.getElementById('topicIntro');
+const subUnits = document.getElementById('subUnits');
+
+TOPICS.forEach((t,i)=>{
+  const btn = document.createElement('button');
+  btn.className = 'main-card';
+  btn.type = 'button';
+  btn.innerHTML = `
+    <span class="icon">${t.icon}</span>
+    <span class="info">
+      <span class="title">${t.title}</span>
+      <span class="count">${t.sub.length} נושאי משנה</span>
+    </span>
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
+  `;
+  btn.addEventListener('click', ()=> openTopic(i));
+  mainGrid.appendChild(btn);
+});
+
+function openTopic(i){
+  const t = TOPICS[i];
+  topicIcon.textContent = t.icon;
+  topicTitle.textContent = t.title;
+  topicIntro.innerHTML = t.intro ? `<div class="topic-intro">${t.intro}</div>` : '';
+  subUnits.innerHTML = '';
+  t.sub.forEach(u=>{
+    const div = document.createElement('div');
+    div.className = 'unit';
+    div.innerHTML = `
+      <div class="unit-header">
+        <span class="letter">${u.letter}</span>
+        <span class="title">${u.title}</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="unit-body"><div class="unit-inner">${u.html}</div></div>
+    `;
+    subUnits.appendChild(div);
+  });
+  mainScreen.style.display = 'none';
+  topicScreen.style.display = 'block';
+  window.scrollTo(0,0);
+  if (typeof gtag === 'function') gtag('event', 'yk_topic_open', { topic: t.title });
+}
+
+document.getElementById('topicBack').addEventListener('click', ()=>{
+  topicScreen.style.display = 'none';
+  mainScreen.style.display = 'block';
+  window.scrollTo(0,0);
+});
+
+subUnits.addEventListener('click', (e)=>{
+  const header = e.target.closest('.unit-header');
+  if(!header) return;
+  const unit = header.closest('.unit');
+  const body = unit.querySelector('.unit-body');
+  const isOpen = unit.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(()=>{ body.style.maxHeight = '0px'; });
+    unit.classList.remove('open');
+  } else {
+    unit.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function te(){
+      if(unit.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', te);
+    });
+  }
+});
+</script>
+</body>
+</html>
