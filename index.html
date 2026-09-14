@@ -241,7 +241,10 @@
     align-items:center;
     gap:10px;
     margin:0 0 28px;
+    text-decoration:none;
+    color:inherit;
   }
+  .season-banner:active{ transform:scale(0.98); }
   .season-circle{
     position:relative;
     width:128px;
@@ -269,6 +272,8 @@
     font-weight:700;
     color:var(--navy);
     font-size:16.5px;
+    text-align:center;
+    max-width:280px;
   }
   .season-banner .season-badge{
     display:inline-block;
@@ -295,14 +300,14 @@
     <p class="sub">בחרו נושא כדי להתחיל</p>
   </header>
 
-  <div class="season-banner">
+  <a class="season-banner" href="pages/yom-kippur.html">
     <div class="season-circle">
       <span class="halo"></span>
-      <img src="media/images/home-yom-kippur.jpeg" alt="הלכות יום כיפור">
+      <img src="media/images/home-yom-kippur.jpeg" alt="הלכות טהרה, אישות ויום הכיפורים">
     </div>
-    <div class="season-title">הלכות יום כיפור</div>
-    <span class="season-badge">בקרוב</span>
-  </div>
+    <div class="season-title">הלכות טהרה, אישות ויום הכיפורים</div>
+    <span class="season-badge">חדש</span>
+  </a>
 
   <div class="search-wrap">
     <input type="search" id="topicSearch" placeholder="🔍 חיפוש נושא..." autocomplete="off">
