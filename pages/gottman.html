@@ -443,7 +443,7 @@ function render(){
     html = `
       <div class="card-screen">
         <div class="eyebrow">תחנה ${step.si+1} מתוך ${STATIONS.length}</div>
-        <div class="photo-slot" data-station-photo="${st.key}">${st.photo ? `<img src="${st.photo}" alt="${st.title}">` : `<span class="icon">${st.icon}</span><span>תמונה תתווסף כאן</span>`}</div>
+        <div class="photo-slot" data-station-photo="${st.key}">${st.photo ? `<img src="${st.photo}" alt="${st.title}" loading="lazy" decoding="async">` : `<span class="icon">${st.icon}</span><span>תמונה תתווסף כאן</span>`}</div>
         <h2>${st.icon} ${st.title}</h2>
         <p class="tagline">${st.tagline}</p>
         <div class="btn-row"><button class="btn-primary" id="nextBtn">בואו נשחק</button></div>

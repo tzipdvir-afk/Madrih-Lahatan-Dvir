@@ -454,7 +454,7 @@ LANGUAGES.forEach((lang,i)=>{
       <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="unit-body"><div class="unit-inner">
-      <div class="lang-photo"><img src="${lang.photo}" alt="${lang.title}"></div>
+      <div class="lang-photo"><img src="${lang.photo}" alt="${lang.title}" loading="lazy" decoding="async"></div>
       ${lang.intro}
       <div class="game-box" data-i="${i}">
         <div class="game-label">🎲 משחק זוגי — שאלה לדיון</div>

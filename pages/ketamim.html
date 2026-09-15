@@ -892,7 +892,7 @@ UNITS.forEach((u,i)=>{
   const div = document.createElement('div');
   div.className = 'unit';
   div.innerHTML = `
-    ${u.mascot ? `<img class="unit-mascot" src="${u.mascot}" alt="">` : ''}
+    ${u.mascot ? `<img class="unit-mascot" src="${u.mascot}" alt="" loading="lazy" decoding="async">` : ''}
     <div class="unit-header" data-i="${i}">
       <span class="icon">${u.icon}</span>
       <span class="title">${u.title}<small>${u.subtitle}</small></span>
