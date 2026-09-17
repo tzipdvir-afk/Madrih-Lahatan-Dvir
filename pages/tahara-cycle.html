@@ -424,6 +424,14 @@
   .mini-day.empty{ background:transparent; }
   .mini-day.today{ box-shadow: inset 0 0 0 1.5px var(--gold); }
   .mini-day .md-num{ line-height:1; }
+  .mini-day .md-onah{
+    font-size:6.5px;
+    color:var(--navy-soft);
+    line-height:1.1;
+    margin-top:1px;
+    font-weight:700;
+    text-align:center;
+  }
   .mini-day .md-dots{
     display:flex;
     gap:1.5px;
@@ -1695,16 +1703,33 @@
      `container` starting from {y,m} (gregorian) or {hy,hm} (hebrew), calling
      dayCellFn(abs) to build each day's cell. Returns a controller with destroy()
      so a fresh render can disconnect the old IntersectionObserver first. */
-  /* Renders `initialCount` months, then a "עוד חודשים" button that appends
-     `batchSize` more per click (up to maxMonths total). A button instead of
-     auto-load-on-scroll so the user can actually scroll past the calendar to
-     the rest of the page — auto-loading more months every time the bottom
-     nears means the list never ends and the page below it is unreachable. */
+  /* Renders `initialCount` months starting at `start`, with a "חודשים
+     קודמים" button above them (prepends earlier months) and a "חודשים
+     נוספים" button below (appends later months) — both load `batchSize`
+     more per click, capped independently. Buttons instead of
+     auto-load-on-scroll so the user can actually scroll past the calendar
+     to the rest of the page — auto-loading every time an edge nears means
+     the list never ends. */
   function createInfiniteMonthList(container, view, start, dayCellFn, initialCount, batchSize, maxMonths){
     container.innerHTML = '';
-    var y = start.y, m = start.m, hy = start.hy, hm = start.hm;
-    var loaded = 0;
+    var fy = start.y, fm = start.m, fhy = start.hy, fhm = start.hm; // forward cursor
+    var by, bm, bhy, bhm; // backward cursor — one step before start
+    if (view === 'gregorian'){
+      by = start.y; bm = start.m - 1;
+      if (bm < 1){ bm = 12; by -= 1; }
+    } else {
+      var p0 = prevHebrewMonth(start.hy, start.hm);
+      bhy = p0.year; bhm = p0.month;
+    }
+    var loadedForward = 0, loadedBackward = 0;
     maxMonths = maxMonths || 48;
+    var maxBack = 24;
+
+    var loadOlderBtn = document.createElement('button');
+    loadOlderBtn.type = 'button';
+    loadOlderBtn.className = 'btn load-more-months';
+    loadOlderBtn.textContent = '⌃ חודשים קודמים';
+    container.appendChild(loadOlderBtn);
 
     var loadMoreBtn = document.createElement('button');
     loadMoreBtn.type = 'button';
@@ -1712,8 +1737,7 @@
     loadMoreBtn.textContent = 'חודשים נוספים ⌄';
     container.appendChild(loadMoreBtn);
 
-    function appendOneMonth(){
-      var mo = (view === 'gregorian') ? monthCellsGreg(y, m) : monthCellsHeb(hy, hm);
+    function buildMonthDiv(mo){
       var monthDiv = document.createElement('div');
       monthDiv.className = 'mini-month';
       var h4 = document.createElement('h4'); h4.textContent = mo.label;
@@ -1729,20 +1753,55 @@
         grid.appendChild(cell);
       });
       monthDiv.appendChild(grid);
-      container.insertBefore(monthDiv, loadMoreBtn);
-      loaded++;
-      if (view === 'gregorian'){ m++; if (m>12){ m=1; y++; } }
-      else { var n = nextHebrewMonth(hy,hm); hy=n.year; hm=n.month; }
+      return monthDiv;
     }
 
-    function loadBatch(n){
-      for (var i=0;i<n && loaded<maxMonths;i++) appendOneMonth();
-      if (loaded >= maxMonths) loadMoreBtn.style.display = 'none';
+    function appendForwardMonth(){
+      var mo = (view === 'gregorian') ? monthCellsGreg(fy, fm) : monthCellsHeb(fhy, fhm);
+      container.insertBefore(buildMonthDiv(mo), loadMoreBtn);
+      loadedForward++;
+      if (view === 'gregorian'){ fm++; if (fm>12){ fm=1; fy++; } }
+      else { var n = nextHebrewMonth(fhy,fhm); fhy=n.year; fhm=n.month; }
     }
 
-    loadMoreBtn.addEventListener('click', function(){ loadBatch(batchSize); });
+    // Inserted right after loadOlderBtn each time, which — since we always
+    // step one month further back before the next call — naturally keeps
+    // the prepended months in correct chronological order.
+    function prependBackwardMonth(){
+      var mo = (view === 'gregorian') ? monthCellsGreg(by, bm) : monthCellsHeb(bhy, bhm);
+      var div = buildMonthDiv(mo);
+      container.insertBefore(div, loadOlderBtn.nextSibling);
+      loadedBackward++;
+      if (view === 'gregorian'){ bm--; if (bm<1){ bm=12; by--; } }
+      else { var p = prevHebrewMonth(bhy,bhm); bhy=p.year; bhm=p.month; }
+      return div;
+    }
 
-    loadBatch(initialCount);
+    function loadForwardBatch(n){
+      for (var i=0;i<n && loadedForward<maxMonths;i++) appendForwardMonth();
+      if (loadedForward >= maxMonths) loadMoreBtn.style.display = 'none';
+    }
+
+    function loadBackwardBatch(n){
+      // measure a fixed reference point's on-screen position before inserting,
+      // so we can scroll by the exact visual displacement afterward — more
+      // robust than summing element heights, which misses grid gaps/margins
+      var anchorEl = loadOlderBtn.nextSibling;
+      var beforeTop = anchorEl ? anchorEl.getBoundingClientRect().top : 0;
+
+      for (var i=0;i<n && loadedBackward<maxBack;i++) prependBackwardMonth();
+      if (loadedBackward >= maxBack) loadOlderBtn.style.display = 'none';
+
+      if (anchorEl){
+        var delta = anchorEl.getBoundingClientRect().top - beforeTop;
+        if (delta) window.scrollBy(0, delta);
+      }
+    }
+
+    loadOlderBtn.addEventListener('click', function(){ loadBackwardBatch(batchSize); });
+    loadMoreBtn.addEventListener('click', function(){ loadForwardBatch(batchSize); });
+
+    loadForwardBatch(initialCount);
 
     return { destroy: function(){} };
   }
@@ -1809,7 +1868,14 @@
     if (h.bedikaCritical) dotsHtml += '<span style="background:#D9515F"></span>';
     if (isOvulation) dotsHtml += '<span style="background:#9B7FCB"></span>';
 
+    var bl = state.bleedLength;
+    var dayLabel = '';
+    if (h.status === 'bleeding' && idx === bl) dayLabel = 'הפסק';
+    else if (h.status === 'nekiim') dayLabel = (idx - bl) + ' לנקיים';
+    else if (h.status === 'tevilah') dayLabel = 'טבילה';
+
     cell.innerHTML = '<div class="md-num">'+numText+'</div>' +
+      (dayLabel ? '<div class="md-onah">'+dayLabel+'</div>' : '') +
       (dotsHtml ? '<div class="md-dots">'+dotsHtml+'</div>' : '');
 
     cell.addEventListener('click', function(){
@@ -2589,8 +2655,8 @@
   };
 
   function buildOursMarkers(){
-    var markers = {}; // abs -> {phase:null|'raiya1'|'raiyaCont'|'hefsek'|'nekiim'|'tevilah', perisha:[{type,isDay}]}
-    function ensure(abs){ if (!markers[abs]) markers[abs] = {phase:null, perisha:[]}; return markers[abs]; }
+    var markers = {}; // abs -> {phase:null|'raiya1'|'raiyaCont'|'hefsek'|'nekiim'|'tevilah', nekiimDay:null|1-7, perisha:[{type,isDay}]}
+    function ensure(abs){ if (!markers[abs]) markers[abs] = {phase:null, nekiimDay:null, perisha:[]}; return markers[abs]; }
     state.raiyot.forEach(function(r){
       var gp = r.dateGreg.split('-');
       var raiyaAbs = gregorianToAbsolute(parseInt(gp[0],10), parseInt(gp[1],10), parseInt(gp[2],10));
@@ -2603,7 +2669,9 @@
         else if (di < bl) phase = 'raiyaCont';
         else if (di <= bl+7) phase = 'nekiim';
         else phase = 'tevilah';
-        ensure(dayAbs).phase = phase;
+        var marker = ensure(dayAbs);
+        marker.phase = phase;
+        if (phase === 'nekiim') marker.nekiimDay = di - bl;
       }
     });
     var preds = computeHistoricalPredictions();
@@ -2621,7 +2689,8 @@
     var wd = WEEKDAY_NAMES[weekdayOf(abs)];
     var rows = '';
     if (m.phase && PHASE_STYLE[m.phase]){
-      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+PHASE_STYLE[m.phase].color+'"></span>'+PHASE_DETAIL_TEXT[m.phase]+'</div>';
+      var detailText = m.phase === 'nekiim' ? ('יום '+m.nekiimDay+' מתוך שבעת הנקיים.') : PHASE_DETAIL_TEXT[m.phase];
+      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+PHASE_STYLE[m.phase].color+'"></span>'+detailText+'</div>';
     }
     rows += m.perisha.map(function(p){
       return '<div class="odd-row"><span class="odd-dot" style="background:'+MARKER_COLORS[p.type]+'"></span>'+MARKER_NAMES[p.type]+' — '+(p.isDay?'☀️ יום':'✨ לילה')+'</div>';
@@ -2646,12 +2715,13 @@
 
       if (m && m.phase && PHASE_STYLE[m.phase]){
         var ps = PHASE_STYLE[m.phase];
+        var label = m.phase === 'nekiim' ? (m.nekiimDay + ' לנקיים') : ps.label;
         cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
         cell.style.background = ps.half ? dayNightSplitBackground([ps.color], []) : ps.color;
         cell.style.opacity = String(ps.opacity);
         var hasAlsoPerisha = m.perisha.length > 0;
         cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
-          '<div class="md-onah">'+ps.label+'</div>' +
+          '<div class="md-onah">'+label+'</div>' +
           (hasAlsoPerisha ? '<div class="md-dots"><span style="background:#ffffff"></span></div>' : '');
         cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
       } else if (m && m.perisha.length){
