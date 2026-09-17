@@ -919,6 +919,38 @@
     </div>
   </details>
 
+  <details class="settings" id="raiyotPanelMain">
+    <summary>ניהול ראיות שמורות <span class="chev">⌄</span></summary>
+    <div class="settings-body">
+      <p class="section-sub" style="margin:0 0 4px;">הוספה או מחיקה של תאריכי ראייה — מסונכרן אוטומטית עם לשונית הלכות וסתות.</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="raiyaDateMain">תאריך</label>
+          <input type="date" id="raiyaDateMain">
+        </div>
+        <div class="field">
+          <label for="raiyaTimeMain">שעה</label>
+          <input type="time" id="raiyaTimeMain">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="raiyaBleedMain">משך דימום (ימים)</label>
+          <input type="number" id="raiyaBleedMain" min="1" max="14" value="5">
+        </div>
+      </div>
+      <label class="checkbox-field">
+        <input type="checkbox" id="raiyaSensationMain">
+        <span>היו הרגשות גוף (סימני גוף) לפני הראייה הזו</span>
+      </label>
+      <div id="raiyaFormMsgMain" class="warn-note" style="display:none; margin-top:10px;"></div>
+      <button class="save-btn" id="addRaiyaBtnMain" style="margin-top:12px;">הוספת תאריך ראייה</button>
+
+      <div id="raiyotListMain" class="raiyot-list" style="margin-top:16px;"></div>
+    </div>
+  </details>
+
   <section class="card wheel-card">
     <div class="wheel-title">
       <h2>מעגל המחזור</h2>
@@ -2205,10 +2237,65 @@
     renderOursCalendar();
   });
 
+  // Same "add a ra'iyah" flow, offered again on the cycle tab (Gregorian date
+  // only — no Hebrew-date toggle here, to keep this second copy simple) so
+  // ra'iyot can be added/deleted without switching to the vesatot tab.
+  var raiyaFormMsgMain = document.getElementById('raiyaFormMsgMain');
+  function showRaiyaMsgMain(msg){
+    raiyaFormMsgMain.textContent = msg;
+    raiyaFormMsgMain.style.display = 'block';
+  }
+  document.getElementById('addRaiyaBtnMain').addEventListener('click', function(){
+    raiyaFormMsgMain.style.display = 'none';
+    var dateStr = document.getElementById('raiyaDateMain').value;
+    if (!dateStr){ showRaiyaMsgMain('נא לבחור תאריך.'); return; }
+    var time = document.getElementById('raiyaTimeMain').value;
+    if (!time){ showRaiyaMsgMain('נא להזין שעה.'); return; }
+    var bleed = parseInt(document.getElementById('raiyaBleedMain').value,10) || 5;
+    var hasSensation = document.getElementById('raiyaSensationMain').checked;
+
+    if (state.raiyot.length >= MAX_RAIYOT){
+      showRaiyaMsgMain('הגעתם למכסה של '+MAX_RAIYOT+' רשומות. יש למחוק רשומה ישנה כדי להוסיף חדשה.');
+      return;
+    }
+
+    state.raiyot.push({
+      id: Date.now()+'_'+Math.random().toString(36).slice(2,7),
+      dateGreg: dateStr, time: time, bleedLength: bleed, hasSensation: hasSensation
+    });
+
+    var jp = dateStr.split('-');
+    var jy = parseInt(jp[0],10), jm = parseInt(jp[1],10), jd = parseInt(jp[2],10);
+    if (state.oursCalView === 'gregorian'){
+      state.oursViewYear = jy; state.oursViewMonth = jm;
+    } else {
+      var jhd = absoluteToHebrew(gregorianToAbsolute(jy,jm,jd));
+      state.oursViewHYear = jhd.year; state.oursViewHMonth = jhd.month;
+    }
+
+    saveState();
+
+    document.getElementById('raiyaDateMain').value = '';
+    document.getElementById('raiyaTimeMain').value = '';
+    document.getElementById('raiyaBleedMain').value = 5;
+    document.getElementById('raiyaSensationMain').checked = false;
+
+    renderRaiyotList();
+    renderVeset();
+    renderOursCalendar();
+  });
+
+  // Renders the saved-ra'iyot list into EVERY .raiyot-list container on the
+  // page (the vesatot tab has one, the cycle tab has its own copy) — both
+  // read/write the same state.raiyot array, so they always stay in sync.
   function renderRaiyotList(){
-    var container = document.getElementById('raiyotList');
+    var containers = document.querySelectorAll('.raiyot-list');
+    if (!containers.length) return;
+
     if (!state.raiyot.length){
-      container.innerHTML = '<div class="raiyot-empty">עדיין לא נוספו תאריכי ראייה.</div>';
+      containers.forEach(function(container){
+        container.innerHTML = '<div class="raiyot-empty">עדיין לא נוספו תאריכי ראייה.</div>';
+      });
       return;
     }
     var items = state.raiyot.map(function(r){
@@ -2217,7 +2304,7 @@
     });
     items.sort(function(a,b){ return b.abs - a.abs; }); // most recent first
 
-    container.innerHTML = items.map(function(item){
+    var html = items.map(function(item){
       var r = item.r;
       var gParts = r.dateGreg.split('-');
       var gy = parseInt(gParts[0],10), gm = parseInt(gParts[1],10), gd = parseInt(gParts[2],10);
@@ -2236,33 +2323,37 @@
       '</div>';
     }).join('');
 
-    container.querySelectorAll('.raiyot-item').forEach(function(itemEl){
-      itemEl.addEventListener('click', function(e){
-        if (e.target.closest('.ri-del')) return;
-        var dateStr = itemEl.getAttribute('data-jump');
-        var jp = dateStr.split('-');
-        var jy = parseInt(jp[0],10), jm = parseInt(jp[1],10), jd = parseInt(jp[2],10);
-        if (state.oursCalView === 'gregorian'){
-          state.oursViewYear = jy; state.oursViewMonth = jm;
-        } else {
-          var jhd = absoluteToHebrew(gregorianToAbsolute(jy,jm,jd));
-          state.oursViewHYear = jhd.year; state.oursViewHMonth = jhd.month;
-        }
-        saveState();
-        renderOursCalendar();
-        var calSection = document.querySelector('.ours-cal-card');
-        if (calSection) calSection.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
+    containers.forEach(function(container){
+      container.innerHTML = html;
 
-    container.querySelectorAll('.ri-del').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var id = btn.getAttribute('data-id');
-        state.raiyot = state.raiyot.filter(function(x){ return String(x.id) !== String(id); });
-        saveState();
-        renderRaiyotList();
-        renderVeset();
-        renderOursCalendar();
+      container.querySelectorAll('.raiyot-item').forEach(function(itemEl){
+        itemEl.addEventListener('click', function(e){
+          if (e.target.closest('.ri-del')) return;
+          var dateStr = itemEl.getAttribute('data-jump');
+          var jp = dateStr.split('-');
+          var jy = parseInt(jp[0],10), jm = parseInt(jp[1],10), jd = parseInt(jp[2],10);
+          if (state.oursCalView === 'gregorian'){
+            state.oursViewYear = jy; state.oursViewMonth = jm;
+          } else {
+            var jhd = absoluteToHebrew(gregorianToAbsolute(jy,jm,jd));
+            state.oursViewHYear = jhd.year; state.oursViewHMonth = jhd.month;
+          }
+          saveState();
+          renderOursCalendar();
+          var calSection = document.querySelector('.ours-cal-card');
+          if (calSection) calSection.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+
+      container.querySelectorAll('.ri-del').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var id = btn.getAttribute('data-id');
+          state.raiyot = state.raiyot.filter(function(x){ return String(x.id) !== String(id); });
+          saveState();
+          renderRaiyotList();
+          renderVeset();
+          renderOursCalendar();
+        });
       });
     });
   }
