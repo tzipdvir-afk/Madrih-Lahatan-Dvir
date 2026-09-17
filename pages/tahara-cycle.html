@@ -436,6 +436,13 @@
     display:inline-block;
   }
   .mini-legend{ margin-top:12px; }
+  .load-more-months{
+    display:block;
+    width:100%;
+    margin-top:6px;
+    padding:11px;
+    font-weight:600;
+  }
 
   .mini-day.perisha-day{
     color:#fff;
@@ -1653,14 +1660,22 @@
      `container` starting from {y,m} (gregorian) or {hy,hm} (hebrew), calling
      dayCellFn(abs) to build each day's cell. Returns a controller with destroy()
      so a fresh render can disconnect the old IntersectionObserver first. */
+  /* Renders `initialCount` months, then a "עוד חודשים" button that appends
+     `batchSize` more per click (up to maxMonths total). A button instead of
+     auto-load-on-scroll so the user can actually scroll past the calendar to
+     the rest of the page — auto-loading more months every time the bottom
+     nears means the list never ends and the page below it is unreachable. */
   function createInfiniteMonthList(container, view, start, dayCellFn, initialCount, batchSize, maxMonths){
     container.innerHTML = '';
     var y = start.y, m = start.m, hy = start.hy, hm = start.hm;
     var loaded = 0;
     maxMonths = maxMonths || 48;
-    var sentinel = document.createElement('div');
-    sentinel.setAttribute('aria-hidden','true');
-    container.appendChild(sentinel);
+
+    var loadMoreBtn = document.createElement('button');
+    loadMoreBtn.type = 'button';
+    loadMoreBtn.className = 'btn load-more-months';
+    loadMoreBtn.textContent = 'חודשים נוספים ⌄';
+    container.appendChild(loadMoreBtn);
 
     function appendOneMonth(){
       var mo = (view === 'gregorian') ? monthCellsGreg(y, m) : monthCellsHeb(hy, hm);
@@ -1679,7 +1694,7 @@
         grid.appendChild(cell);
       });
       monthDiv.appendChild(grid);
-      container.insertBefore(monthDiv, sentinel);
+      container.insertBefore(monthDiv, loadMoreBtn);
       loaded++;
       if (view === 'gregorian'){ m++; if (m>12){ m=1; y++; } }
       else { var n = nextHebrewMonth(hy,hm); hy=n.year; hm=n.month; }
@@ -1687,20 +1702,14 @@
 
     function loadBatch(n){
       for (var i=0;i<n && loaded<maxMonths;i++) appendOneMonth();
+      if (loaded >= maxMonths) loadMoreBtn.style.display = 'none';
     }
+
+    loadMoreBtn.addEventListener('click', function(){ loadBatch(batchSize); });
 
     loadBatch(initialCount);
 
-    var io = null;
-    if ('IntersectionObserver' in window){
-      io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if (e.isIntersecting && loaded<maxMonths) loadBatch(batchSize);
-        });
-      }, { rootMargin: '500px 0px' });
-      io.observe(sentinel);
-    }
-    return { destroy: function(){ if (io) io.disconnect(); } };
+    return { destroy: function(){} };
   }
 
   function statusColorClass(status){
@@ -1801,7 +1810,7 @@
       var bh = absoluteToHebrew(backAbs);
       start = { hy: bh.year, hm: bh.month };
     }
-    mainCalController = createInfiniteMonthList(mainMiniMonthsEl, state.calendarView, start, mainDayCell, 6, 3, 48);
+    mainCalController = createInfiniteMonthList(mainMiniMonthsEl, state.calendarView, start, mainDayCell, 6, 6, 48);
   }
 
   /* ============================================================
@@ -2573,7 +2582,7 @@
       var bh = absoluteToHebrew(backAbs);
       start = { hy: bh.year, hm: bh.month };
     }
-    oursCalController = createInfiniteMonthList(oursMiniMonthsEl, state.oursCalView, start, oursDayCell(markers), 6, 3, 48);
+    oursCalController = createInfiniteMonthList(oursMiniMonthsEl, state.oursCalView, start, oursDayCell(markers), 6, 6, 48);
   }
 
   var oursCalToggleBtn = document.getElementById('oursCalToggleBtn');
