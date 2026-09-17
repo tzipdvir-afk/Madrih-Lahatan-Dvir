@@ -875,9 +875,15 @@
   <details class="settings" id="settingsPanel">
     <summary>הגדרות מחזור <span class="chev">⌄</span></summary>
     <div class="settings-body">
+      <div class="controls-row" style="justify-content:flex-start; margin:0;">
+        <button class="btn active" id="cycleModeRepeat" type="button">מחזור קבוע וחוזר</button>
+        <button class="btn" id="cycleModeSingle" type="button">וסת בודד (מחזור נוכחי בלבד)</button>
+      </div>
+      <p class="section-sub" id="cycleModeHint" style="margin:0;">הלוח יציג את דפוס המחזור חוזר על עצמו קדימה ואחורה, ללא הגבלה.</p>
+
       <div class="field-row">
         <div class="field">
-          <label for="startDate">תאריך תחילת מחזור (ראייה)</label>
+          <label for="startDate" id="startDateLabel">תאריך תחילת מחזור (ראייה)</label>
           <input type="date" id="startDate">
         </div>
         <div class="field">
@@ -888,7 +894,7 @@
       <div id="sunsetInfo" class="sunset-note"></div>
       <div class="field-row">
         <div class="field">
-          <label for="cycleLength">אורך מחזור כולל (ימים)</label>
+          <label for="cycleLength" id="cycleLengthLabel">אורך מחזור כולל (ימים)</label>
           <input type="number" id="cycleLength" min="20" max="45" value="28">
         </div>
         <div class="field">
@@ -896,6 +902,12 @@
           <input type="number" id="bleedLength" min="3" max="10" value="5">
         </div>
       </div>
+
+      <label class="checkbox-field" id="syncVesetField" style="display:none;">
+        <input type="checkbox" id="syncToVesetot" checked>
+        <span>הוסיפו תאריך זה גם כרשומת ראייה בהלכות וסתות</span>
+      </label>
+
       <button class="save-btn" id="saveSettings">שמירה ועדכון</button>
     </div>
   </details>
@@ -924,14 +936,9 @@
 
   <section class="card cal-card">
     <div class="cal-header">
-      <button class="nav-btn" id="prevMonth" aria-label="חודש קודם">›</button>
-      <div class="month-label" id="monthLabel"></div>
-      <button class="nav-btn" id="nextMonth" aria-label="חודש הבא">‹</button>
+      <h2 class="section-title" style="margin:0;">לוח המחזור</h2>
     </div>
-    <div class="weekdays">
-      <div>א</div><div>ב</div><div>ג</div><div>ד</div><div>ה</div><div>ו</div><div>ש</div>
-    </div>
-    <div class="daysgrid" id="daysGrid"></div>
+    <div class="mini-months" id="mainMiniMonths"></div>
   </section>
 
   <section class="card detail-card" id="detailCard">
@@ -1040,22 +1047,28 @@
 
     <section class="card ours-cal-card">
       <h2 class="section-title">לוח שנה — ראיות ופרישות עתידיות</h2>
-      <div class="cal-header">
-        <button class="nav-btn" id="oursPrevMonth" aria-label="חודשים קודמים">›</button>
-        <div class="month-label" id="oursMonthLabel"></div>
-        <button class="nav-btn" id="oursNextMonth" aria-label="חודשים הבאים">‹</button>
-      </div>
-      <div class="controls-row" style="margin:6px 0 12px;">
+      <p class="section-sub">גללו למטה כדי לראות חודשים נוספים.</p>
+
+      <label class="checkbox-field" style="margin-bottom:10px;">
+        <input type="checkbox" id="orZaruaToggle">
+        <span><strong>עונת אור זרוע</strong> — הוסיפו עונת פרישה נוספת צמודה לעונה הבינונית</span>
+      </label>
+
+      <div class="controls-row" style="margin:0 0 12px;">
         <button class="btn" id="oursCalToggleBtn" type="button">לוח: לועזי</button>
       </div>
       <div class="mini-months" id="oursMiniMonths"></div>
       <div id="oursDayDetail" class="ours-day-detail" style="display:none;"></div>
       <div class="legend mini-legend">
         <div><span class="dot" style="background:#D9515F"></span>ראייה בפועל</div>
+        <div><span class="dot" style="background:#C97C6D"></span>הפסק טהרה</div>
+        <div><span class="dot" style="background:#4FB3C9"></span>טבילה</div>
         <div><span class="dot" style="background:#C9A227"></span>וסת החודש</div>
         <div><span class="dot" style="background:#5C93B0"></span>וסת בינוני</div>
         <div><span class="dot" style="background:#9B7FCB"></span>וסת הפלגה</div>
+        <div><span class="dot" style="background:#8FA9C4"></span>אור זרוע (חומרה)</div>
       </div>
+      <p class="section-sub" style="margin-top:10px;">משבצת מחצית עליונה = פרישת לילה · מחצית תחתונה = פרישת יום.</p>
     </section>
 
     <section class="card veset-card">
@@ -1293,6 +1306,8 @@
       selectedAbs: jsDateToAbs(now),
       raiyot: [], // {id, dateGreg:'YYYY-MM-DD', time:'HH:MM', bleedLength, hasSensation}
       onGloolot: false,
+      singleCycleOnly: false,
+      orZarua: false,
       oursCalView: 'gregorian',
       oursViewYear: now.getFullYear(),
       oursViewMonth: now.getMonth()+1,
@@ -1350,6 +1365,16 @@
     var startAbs = computeEffectiveStartAbs();
     var diff = abs - startAbs;
     return mod(diff, state.cycleLength) + 1; // 1-based
+  }
+
+  /* In "single veset" mode, the calendar grid should only color/select the ONE
+     upcoming cycle starting at the entered date — not repeat the pattern forever
+     via modulo like the default "recurring cycle" mode does. */
+  function isAbsInActiveCycle(abs){
+    if (!state.singleCycleOnly) return true;
+    var startAbs = computeEffectiveStartAbs();
+    var diff = abs - startAbs;
+    return diff >= 0 && diff < state.cycleLength;
   }
 
   function classifyHalacha(dayIndex){
@@ -1496,12 +1521,58 @@
   startDateInput.addEventListener('change', updateSunsetInfo);
   startTimeInput.addEventListener('change', updateSunsetInfo);
 
+  /* ============================================================
+     5b. CYCLE MODE: recurring (default) vs. single-veset (current cycle only)
+     ============================================================ */
+  var cycleModeRepeatBtn = document.getElementById('cycleModeRepeat');
+  var cycleModeSingleBtn = document.getElementById('cycleModeSingle');
+  var cycleModeHint = document.getElementById('cycleModeHint');
+  var startDateLabel = document.getElementById('startDateLabel');
+  var cycleLengthLabel = document.getElementById('cycleLengthLabel');
+  var syncVesetField = document.getElementById('syncVesetField');
+  var syncToVesetotInput = document.getElementById('syncToVesetot');
+  var pendingSingleMode = state.singleCycleOnly;
+
+  function applyCycleModeUI(){
+    cycleModeRepeatBtn.classList.toggle('active', !pendingSingleMode);
+    cycleModeSingleBtn.classList.toggle('active', pendingSingleMode);
+    if (pendingSingleMode){
+      cycleModeHint.textContent = 'הלוח יצבע רק את המחזור הבודד שמתחיל בתאריך שתזינו — ימים מחוץ למחזור הזה יישארו ריקים.';
+      startDateLabel.textContent = 'תאריך הוסת';
+      cycleLengthLabel.textContent = 'אורך מחזור משוער (ימים)';
+      syncVesetField.style.display = 'flex';
+    } else {
+      cycleModeHint.textContent = 'הלוח יציג את דפוס המחזור חוזר על עצמו קדימה ואחורה, ללא הגבלה.';
+      startDateLabel.textContent = 'תאריך תחילת מחזור (ראייה)';
+      cycleLengthLabel.textContent = 'אורך מחזור כולל (ימים)';
+      syncVesetField.style.display = 'none';
+    }
+  }
+  cycleModeRepeatBtn.addEventListener('click', function(){ pendingSingleMode = false; applyCycleModeUI(); });
+  cycleModeSingleBtn.addEventListener('click', function(){ pendingSingleMode = true; applyCycleModeUI(); });
+  applyCycleModeUI();
+  document.getElementById('settingsPanel').addEventListener('toggle', function(e){
+    if (e.target.open){ pendingSingleMode = state.singleCycleOnly; applyCycleModeUI(); }
+  });
+
   document.getElementById('saveSettings').addEventListener('click', function(){
     state.startDate = startDateInput.value || state.startDate;
     state.startTime = startTimeInput.value || state.startTime;
     state.region = regionSelect.value;
     state.cycleLength = Math.max(20, Math.min(45, parseInt(cycleLengthInput.value,10) || 28));
     state.bleedLength = Math.max(3, Math.min(10, parseInt(bleedLengthInput.value,10) || 5));
+    state.singleCycleOnly = pendingSingleMode;
+
+    if (pendingSingleMode && syncToVesetotInput.checked){
+      var alreadyExists = state.raiyot.some(function(r){ return r.dateGreg === state.startDate; });
+      if (!alreadyExists && state.raiyot.length < MAX_RAIYOT){
+        state.raiyot.push({
+          id: Date.now()+'_'+Math.random().toString(36).slice(2,7),
+          dateGreg: state.startDate, time: state.startTime, bleedLength: state.bleedLength, hasSensation:false
+        });
+      }
+    }
+
     saveState();
     renderAll();
     renderRaiyotList();
@@ -1535,32 +1606,102 @@
     renderCalendar();
   });
 
-  document.getElementById('prevMonth').addEventListener('click', function(){
-    if (state.calendarView === 'gregorian'){
-      state.viewMonth -= 1;
-      if (state.viewMonth < 1){ state.viewMonth = 12; state.viewYear -= 1; }
-    } else {
-      var p = prevHebrewMonth(state.viewHYear, state.viewHMonth);
-      state.viewHYear = p.year; state.viewHMonth = p.month;
-    }
-    saveState(); renderCalendar();
-  });
-  document.getElementById('nextMonth').addEventListener('click', function(){
-    if (state.calendarView === 'gregorian'){
-      state.viewMonth += 1;
-      if (state.viewMonth > 12){ state.viewMonth = 1; state.viewYear += 1; }
-    } else {
-      var n = nextHebrewMonth(state.viewHYear, state.viewHMonth);
-      state.viewHYear = n.year; state.viewHMonth = n.month;
-    }
-    saveState(); renderCalendar();
-  });
-
   /* ============================================================
-     7. RENDER: CALENDAR GRID
+     6b. SHARED: month-cell math + infinite-scroll month list
      ============================================================ */
-  var monthLabel = document.getElementById('monthLabel');
-  var daysGrid = document.getElementById('daysGrid');
+  function monthCellsGreg(y, m){
+    var firstAbs = gregorianToAbsolute(y, m, 1);
+    var leading = weekdayOf(firstAbs);
+    var dim = daysInGregorianMonth(y, m);
+    var cells = [];
+    for (var i=0;i<leading;i++) cells.push(null);
+    for (var d=1; d<=dim; d++) cells.push(firstAbs+d-1);
+    return { label: GREG_MONTH_NAMES[m-1]+' '+y, cells: cells };
+  }
+  function monthCellsHeb(hy, hm){
+    var firstAbs = hebrewToAbsolute(hy, hm, 1);
+    var leading = weekdayOf(firstAbs);
+    var dim = hebrewMonthDays(hy, hm);
+    var cells = [];
+    for (var i=0;i<leading;i++) cells.push(null);
+    for (var d=1; d<=dim; d++) cells.push(firstAbs+d-1);
+    return { label: hebMonthName(hy,hm)+' ה׳'+hebrewNumeral(hy%1000), cells: cells };
+  }
+
+  /* Builds a day/night split background: night (first/top half) gets nightColors,
+     day (second/bottom half) gets dayColors. Either side may be empty (falls back
+     to a neutral fill for that half). Each side can itself hold multiple colors,
+     banded evenly within its own half (0-50% or 50-100% of the cell). */
+  function dayNightSplitBackground(nightColors, dayColors){
+    var neutral = 'var(--bg-alt)';
+    function bandStops(colors, from, to){
+      if (!colors.length) return [neutral+' '+from+'%', neutral+' '+to+'%'];
+      var n = colors.length, stops = [];
+      for (var i=0;i<n;i++){
+        var p1 = (from + (to-from)*(i/n)).toFixed(2)+'%';
+        var p2 = (from + (to-from)*((i+1)/n)).toFixed(2)+'%';
+        stops.push(colors[i]+' '+p1);
+        stops.push(colors[i]+' '+p2);
+      }
+      return stops;
+    }
+    var stops = bandStops(nightColors, 0, 50).concat(bandStops(dayColors, 50, 100));
+    return 'linear-gradient(180deg, '+stops.join(', ')+')';
+  }
+
+  /* Generic "load more as you scroll" month list. Appends .mini-month blocks to
+     `container` starting from {y,m} (gregorian) or {hy,hm} (hebrew), calling
+     dayCellFn(abs) to build each day's cell. Returns a controller with destroy()
+     so a fresh render can disconnect the old IntersectionObserver first. */
+  function createInfiniteMonthList(container, view, start, dayCellFn, initialCount, batchSize, maxMonths){
+    container.innerHTML = '';
+    var y = start.y, m = start.m, hy = start.hy, hm = start.hm;
+    var loaded = 0;
+    maxMonths = maxMonths || 48;
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden','true');
+    container.appendChild(sentinel);
+
+    function appendOneMonth(){
+      var mo = (view === 'gregorian') ? monthCellsGreg(y, m) : monthCellsHeb(hy, hm);
+      var monthDiv = document.createElement('div');
+      monthDiv.className = 'mini-month';
+      var h4 = document.createElement('h4'); h4.textContent = mo.label;
+      monthDiv.appendChild(h4);
+      var wd = document.createElement('div'); wd.className = 'mini-weekdays';
+      wd.innerHTML = '<div>א</div><div>ב</div><div>ג</div><div>ד</div><div>ה</div><div>ו</div><div>ש</div>';
+      monthDiv.appendChild(wd);
+      var grid = document.createElement('div'); grid.className = 'mini-days';
+      mo.cells.forEach(function(abs){
+        var cell;
+        if (abs === null){ cell = document.createElement('div'); cell.className = 'mini-day empty'; }
+        else { cell = dayCellFn(abs); }
+        grid.appendChild(cell);
+      });
+      monthDiv.appendChild(grid);
+      container.insertBefore(monthDiv, sentinel);
+      loaded++;
+      if (view === 'gregorian'){ m++; if (m>12){ m=1; y++; } }
+      else { var n = nextHebrewMonth(hy,hm); hy=n.year; hm=n.month; }
+    }
+
+    function loadBatch(n){
+      for (var i=0;i<n && loaded<maxMonths;i++) appendOneMonth();
+    }
+
+    loadBatch(initialCount);
+
+    var io = null;
+    if ('IntersectionObserver' in window){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting && loaded<maxMonths) loadBatch(batchSize);
+        });
+      }, { rootMargin: '500px 0px' });
+      io.observe(sentinel);
+    }
+    return { destroy: function(){ if (io) io.disconnect(); } };
+  }
 
   function statusColorClass(status){
     return 'status-'+status;
@@ -1594,63 +1735,73 @@
     el.innerHTML = html;
   }
 
-  function renderCalendar(){
-    daysGrid.innerHTML = '';
-    var cells = []; // {abs, inMonth}
-    var ovIdx = ovulationDayIndex();
+  var CAL_STATUS_BG = { bleeding:'#F0CBB4', nekiim:'#F5C3D6', tevilah:'#DCEBF2', tahara:'#DFF5FA' };
+  var mainMiniMonthsEl = document.getElementById('mainMiniMonths');
+  var mainCalController = null;
+  var mainSelectedCellEl = null;
 
-    if (state.calendarView === 'gregorian'){
-      monthLabel.textContent = GREG_MONTH_NAMES[state.viewMonth-1] + ' ' + state.viewYear;
-      var firstAbs = gregorianToAbsolute(state.viewYear, state.viewMonth, 1);
-      var leading = weekdayOf(firstAbs);
-      var dim = daysInGregorianMonth(state.viewYear, state.viewMonth);
-      for (var i=0;i<leading;i++) cells.push(null);
-      for (var d=1; d<=dim; d++) cells.push(firstAbs + d - 1);
-    } else {
-      monthLabel.textContent = hebMonthName(state.viewHYear, state.viewHMonth) + ' ה׳' + hebrewNumeral(state.viewHYear % 1000);
-      var firstAbsH = hebrewToAbsolute(state.viewHYear, state.viewHMonth, 1);
-      var leadingH = weekdayOf(firstAbsH);
-      var dimH = hebrewMonthDays(state.viewHYear, state.viewHMonth);
-      for (var j=0;j<leadingH;j++) cells.push(null);
-      for (var d2=1; d2<=dimH; d2++) cells.push(firstAbsH + d2 - 1);
+  function mainDayCell(abs){
+    var cell = document.createElement('div');
+    var numText = state.calendarView === 'gregorian' ? String(absoluteToGregorian(abs).day) : hebrewNumeral(absoluteToHebrew(abs).day);
+    var isToday = (abs === jsDateToAbs(todayJs));
+
+    if (!isAbsInActiveCycle(abs)){
+      cell.className = 'mini-day' + (isToday ? ' today' : '');
+      var numOnly = document.createElement('div'); numOnly.className = 'md-num';
+      numOnly.textContent = numText;
+      cell.appendChild(numOnly);
+      return cell;
     }
 
-    cells.forEach(function(abs){
-      var cell = document.createElement('div');
-      if (abs === null){
-        cell.className = 'daycell empty';
-        daysGrid.appendChild(cell);
-        return;
-      }
-      var idx = cycleDayIndex(abs);
-      var h = classifyHalacha(idx);
-      var isOvulation = (idx === ovIdx);
-      cell.className = 'daycell ' + statusColorClass(h.status) + (isOvulation ? ' ovulation' : '');
-      if (abs === jsDateToAbs(todayJs)) cell.classList.add('today');
-      if (abs === state.selectedAbs) cell.classList.add('selected');
+    var ovIdx = ovulationDayIndex();
+    var idx = cycleDayIndex(abs);
+    var h = classifyHalacha(idx);
+    var isOvulation = (idx === ovIdx);
 
-      var numText;
-      if (state.calendarView === 'gregorian'){
-        numText = absoluteToGregorian(abs).day;
-      } else {
-        numText = hebrewNumeral(absoluteToHebrew(abs).day);
-      }
+    cell.className = 'mini-day' + (isToday ? ' today' : '') + (abs === state.selectedAbs ? ' selected' : '');
+    cell.style.background = isOvulation ? '#EFE1F7' : CAL_STATUS_BG[h.status];
 
-      var dotsHtml = '';
-      if (h.bedikaCritical){ dotsHtml += '<span style="background:#D9515F"></span>'; }
-      if (isOvulation){ dotsHtml += '<span style="background:#9B7FCB"></span>'; }
+    var dotsHtml = '';
+    if (h.bedikaCritical) dotsHtml += '<span style="background:#D9515F"></span>';
+    if (isOvulation) dotsHtml += '<span style="background:#9B7FCB"></span>';
 
-      cell.innerHTML = '<div class="num">'+numText+'</div>' +
-        (dotsHtml ? '<div class="cal-dots">'+dotsHtml+'</div>' : '');
+    cell.innerHTML = '<div class="md-num">'+numText+'</div>' +
+      (dotsHtml ? '<div class="md-dots">'+dotsHtml+'</div>' : '');
 
-      cell.addEventListener('click', function(){
-        state.selectedAbs = abs;
-        saveState();
-        renderAll();
-      });
-
-      daysGrid.appendChild(cell);
+    cell.addEventListener('click', function(){
+      state.selectedAbs = abs;
+      saveState();
+      if (mainSelectedCellEl) mainSelectedCellEl.classList.remove('selected');
+      cell.classList.add('selected');
+      mainSelectedCellEl = cell;
+      renderWheel();
+      renderDetail();
+      renderOvulation();
     });
+
+    if (abs === state.selectedAbs) mainSelectedCellEl = cell;
+
+    return cell;
+  }
+
+  function renderCalendar(){
+    if (mainCalController) mainCalController.destroy();
+    mainSelectedCellEl = null;
+    var anchorAbs = (state.calendarView === 'gregorian')
+      ? gregorianToAbsolute(state.viewYear, state.viewMonth, 1)
+      : hebrewToAbsolute(state.viewHYear, state.viewHMonth, 1);
+    // start the scroll a couple of months before the anchor so there's context
+    // above the fold, and the user isn't only ever scrolling forward
+    var backAbs = anchorAbs - 62;
+    var start;
+    if (state.calendarView === 'gregorian'){
+      var bg = absoluteToGregorian(backAbs);
+      start = { y: bg.year, m: bg.month };
+    } else {
+      var bh = absoluteToHebrew(backAbs);
+      start = { hy: bh.year, hm: bh.month };
+    }
+    mainCalController = createInfiniteMonthList(mainMiniMonthsEl, state.calendarView, start, mainDayCell, 6, 3, 48);
   }
 
   /* ============================================================
@@ -2131,6 +2282,11 @@
 
     // veset beinoni: day 30 counted inclusively = +29 days, same onah
     result.beinoni = { abs: last.abs + 29, isDay:last.isDay };
+    if (state.orZarua){
+      result.orZarua = last.isDay
+        ? { abs: last.abs + 29, isDay:false }        // same halachic day, night half
+        : { abs: last.abs + 29 - 1, isDay:true };    // previous day, day half
+    }
 
     // veset haflagah: interval between the two most recent ra'iyot, projected forward
     if (secondLast){
@@ -2167,6 +2323,13 @@
 
       // veset beinoni
       predictions.push({ abs: cur.abs + 29, type:'beinoni', isDay:cur.isDay });
+      if (state.orZarua){
+        if (cur.isDay){
+          predictions.push({ abs: cur.abs + 29, type:'orzarua', isDay:false });
+        } else {
+          predictions.push({ abs: cur.abs + 29 - 1, type:'orzarua', isDay:true });
+        }
+      }
 
       // veset haflagah — only if there's a previous ra'iya to measure the interval from,
       // and only if no LATER actual ra'iya already happened on/before the predicted date
@@ -2282,6 +2445,9 @@
     }
     html += buildVesetBlock('וסת החודש', res.hachodesh, res.hachodesh && res.hachodesh.overflowed ? 'החודש היעד קצר מהיום שנרשם — הותאם ליום האחרון בחודש.' : '');
     html += buildVesetBlock('וסת בינוני (יום ל׳)', res.beinoni, '');
+    if (res.orZarua){
+      html += buildVesetBlock('עונת אור זרוע (חומרה)', res.orZarua, 'עונת פרישה נוספת, צמודה לעונה הבינונית, לפי שיטת אור זרוע.');
+    }
     if (res.haflagah){
       html += buildVesetBlock('וסת הפלגה ('+res.haflagah.interval+' יום)', res.haflagah, '');
     } else {
@@ -2290,32 +2456,26 @@
     vc.innerHTML = html;
   }
 
-  // Builds a hard-split multi-band CSS background: one solid color per veset type
-  // that coincides on the same day (e.g. two colors = two equal halves).
-  function multiColorBackground(colors){
-    if (colors.length <= 1) return colors[0] || 'transparent';
-    var n = colors.length, stops = [];
-    for (var i=0; i<n; i++){
-      var p1 = (i/n*100).toFixed(2)+'%';
-      var p2 = ((i+1)/n*100).toFixed(2)+'%';
-      stops.push(colors[i]+' '+p1);
-      stops.push(colors[i]+' '+p2);
-    }
-    return 'linear-gradient(90deg, '+stops.join(', ')+')';
-  }
-
-  // ---- mini 3-month calendar with ra'iya + prediction markers ----
-  var MARKER_COLORS = { raiya:'#C97C6D', hachodesh:'#C9A227', beinoni:'#5C93B0', haflagah:'#9B7FCB' };
+  // ---- scrolling calendar with ra'iya / hefsek / tevilah + veset-prediction markers ----
+  var MARKER_COLORS = { raiya:'#C97C6D', hachodesh:'#C9A227', beinoni:'#5C93B0', haflagah:'#9B7FCB', orzarua:'#8FA9C4' };
   var RAIYA_COLOR = '#D9515F';
-  var MARKER_NAMES = { hachodesh:'וסת החודש', beinoni:'וסת בינוני', haflagah:'וסת הפלגה' };
+  var HEFSEK_COLOR = '#C97C6D';
+  var TEVILAH_COLOR = '#4FB3C9';
+  var MARKER_NAMES = { hachodesh:'וסת החודש', beinoni:'וסת בינוני', haflagah:'וסת הפלגה', orzarua:'עונת אור זרוע (חומרה)' };
 
   function buildOursMarkers(){
-    var markers = {}; // abs -> {raiya:bool, perisha:[{type,isDay}]}
-    function ensure(abs){ if (!markers[abs]) markers[abs] = {raiya:false, perisha:[]}; return markers[abs]; }
+    var markers = {}; // abs -> {raiya:bool, milestone:null|'hefsek'|'tevilah', perisha:[{type,isDay}]}
+    function ensure(abs){ if (!markers[abs]) markers[abs] = {raiya:false, milestone:null, perisha:[]}; return markers[abs]; }
     state.raiyot.forEach(function(r){
       var gp = r.dateGreg.split('-');
-      var abs = gregorianToAbsolute(parseInt(gp[0],10), parseInt(gp[1],10), parseInt(gp[2],10));
-      ensure(abs).raiya = true;
+      var raiyaAbs = gregorianToAbsolute(parseInt(gp[0],10), parseInt(gp[1],10), parseInt(gp[2],10));
+      var bl = r.bleedLength || 5;
+      for (var di=1; di<=bl; di++){
+        var dayAbs = raiyaAbs + di - 1;
+        if (di === bl){ ensure(dayAbs).milestone = 'hefsek'; }
+        else { ensure(dayAbs).raiya = true; }
+      }
+      ensure(raiyaAbs + bl + 7).milestone = 'tevilah'; // night after the 7th of the nekiim
     });
     var preds = computeHistoricalPredictions();
     preds.forEach(function(p){
@@ -2330,130 +2490,92 @@
     var g = absoluteToGregorian(abs);
     var hd = absoluteToHebrew(abs);
     var wd = WEEKDAY_NAMES[weekdayOf(abs)];
-    var rows = m.perisha.map(function(p){
+    var rows = '';
+    if (m.milestone === 'hefsek'){
+      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+HEFSEK_COLOR+'"></span>הפסק טהרה — יש לבצע בדיקה סמוך לשקיעה ולהניח מוך דחוק.</div>';
+    } else if (m.milestone === 'tevilah'){
+      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+TEVILAH_COLOR+'"></span>ליל טבילה, לאחר צאת הכוכבים.</div>';
+    } else if (m.raiya){
+      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+RAIYA_COLOR+'"></span>יום ראייה / איסור.</div>';
+    }
+    rows += m.perisha.map(function(p){
       return '<div class="odd-row"><span class="odd-dot" style="background:'+MARKER_COLORS[p.type]+'"></span>'+MARKER_NAMES[p.type]+' — '+(p.isDay?'☀️ יום':'✨ לילה')+'</div>';
     }).join('');
+    var note = m.perisha.length
+      ? '<div class="odd-note">'+magnifierHTML(13,'#B5546B')+'<span>יום פרישה סמוך לוסת — יש לבצע בדיקה פנימית.</span></div>'
+      : '';
     panel.innerHTML = '<div class="odd-title">'+wd+', '+g.day+' ב'+GREG_MONTH_NAMES[g.month-1]+' '+g.year+' · '+hebrewNumeral(hd.day)+' ב'+hebMonthName(hd.year,hd.month)+'</div>'+
-      rows +
-      '<div class="odd-note">'+magnifierHTML(13,'#B5546B')+'<span>יום פרישה סמוך לוסת — יש לבצע בדיקה פנימית.</span></div>';
+      rows + note;
     panel.style.display = 'block';
   }
 
+  var oursMiniMonthsEl = document.getElementById('oursMiniMonths');
+  var oursCalController = null;
+
+  function oursDayCell(markers){
+    return function(abs){
+      var cell = document.createElement('div');
+      var dayNumText = state.oursCalView === 'gregorian' ? String(absoluteToGregorian(abs).day) : hebrewNumeral(absoluteToHebrew(abs).day);
+      var m = markers[abs];
+      var isToday = (abs === jsDateToAbs(todayJs));
+
+      if (m && m.milestone === 'hefsek'){
+        cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
+        cell.style.background = HEFSEK_COLOR;
+        cell.innerHTML = '<div class="md-num">'+dayNumText+'</div><div class="md-onah">הפסק</div>';
+        cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
+      } else if (m && m.milestone === 'tevilah'){
+        cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
+        cell.style.background = TEVILAH_COLOR;
+        cell.innerHTML = '<div class="md-num">'+dayNumText+'</div><div class="md-onah">טבילה</div>';
+        cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
+      } else if (m && m.raiya){
+        cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
+        cell.style.background = RAIYA_COLOR;
+        var hasAlsoPerisha = m.perisha.length > 0;
+        cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
+          '<div class="md-onah">ראייה</div>' +
+          (hasAlsoPerisha ? '<div class="md-dots"><span style="background:#ffffff"></span></div>' : '');
+        cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
+      } else if (m && m.perisha.length){
+        cell.className = 'mini-day perisha-day' + (isToday ? ' today' : '');
+        var nightColors = m.perisha.filter(function(p){ return !p.isDay; }).map(function(p){ return MARKER_COLORS[p.type]; });
+        var dayColors = m.perisha.filter(function(p){ return p.isDay; }).map(function(p){ return MARKER_COLORS[p.type]; });
+        cell.style.background = dayNightSplitBackground(nightColors, dayColors);
+        cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
+          '<div class="md-mag">'+magnifierHTML(9,'#5C4A3A')+'</div>';
+        cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
+      } else {
+        cell.className = 'mini-day' + (isToday ? ' today' : '');
+        var num = document.createElement('div'); num.className = 'md-num';
+        num.textContent = dayNumText;
+        cell.appendChild(num);
+      }
+      return cell;
+    };
+  }
+
   function renderOursCalendar(){
-    var container = document.getElementById('oursMiniMonths');
-    var markers = buildOursMarkers();
-    var months = [];
+    if (oursCalController) oursCalController.destroy();
     var detailPanel = document.getElementById('oursDayDetail');
     if (detailPanel){ detailPanel.style.display = 'none'; detailPanel.innerHTML = ''; }
 
+    var markers = buildOursMarkers();
+    var anchorAbs = (state.oursCalView === 'gregorian')
+      ? gregorianToAbsolute(state.oursViewYear, state.oursViewMonth, 1)
+      : hebrewToAbsolute(state.oursViewHYear, state.oursViewHMonth, 1);
+    var backAbs = anchorAbs - 62;
+    var start;
     if (state.oursCalView === 'gregorian'){
-      var y = state.oursViewYear, m = state.oursViewMonth;
-      for (var i=0;i<3;i++){
-        var firstAbs = gregorianToAbsolute(y,m,1);
-        var leading = weekdayOf(firstAbs);
-        var dim = daysInGregorianMonth(y,m);
-        var cells = [];
-        for (var k=0;k<leading;k++) cells.push(null);
-        for (var d=1; d<=dim; d++) cells.push(firstAbs+d-1);
-        months.push({ label: GREG_MONTH_NAMES[m-1]+' '+y, cells:cells });
-        m++; if (m>12){ m=1; y++; }
-      }
+      var bg = absoluteToGregorian(backAbs);
+      start = { y: bg.year, m: bg.month };
     } else {
-      var hy = state.oursViewHYear, hm = state.oursViewHMonth;
-      for (var i2=0;i2<3;i2++){
-        var firstAbsH = hebrewToAbsolute(hy,hm,1);
-        var leadingH = weekdayOf(firstAbsH);
-        var dimH = hebrewMonthDays(hy,hm);
-        var cellsH = [];
-        for (var k2=0;k2<leadingH;k2++) cellsH.push(null);
-        for (var d2=1; d2<=dimH; d2++) cellsH.push(firstAbsH+d2-1);
-        months.push({ label: hebMonthName(hy,hm)+' ה׳'+hebrewNumeral(hy%1000), cells:cellsH });
-        var nx = nextHebrewMonth(hy,hm); hy=nx.year; hm=nx.month;
-      }
+      var bh = absoluteToHebrew(backAbs);
+      start = { hy: bh.year, hm: bh.month };
     }
-
-    document.getElementById('oursMonthLabel').textContent = months[0].label + ' – ' + months[2].label;
-
-    container.innerHTML = '';
-    months.forEach(function(mo){
-      var monthDiv = document.createElement('div');
-      monthDiv.className = 'mini-month';
-      var h4 = document.createElement('h4'); h4.textContent = mo.label;
-      monthDiv.appendChild(h4);
-      var wd = document.createElement('div'); wd.className = 'mini-weekdays';
-      wd.innerHTML = '<div>א</div><div>ב</div><div>ג</div><div>ד</div><div>ה</div><div>ו</div><div>ש</div>';
-      monthDiv.appendChild(wd);
-      var grid = document.createElement('div'); grid.className = 'mini-days';
-      mo.cells.forEach(function(abs){
-        var cell = document.createElement('div');
-        if (abs === null){
-          cell.className = 'mini-day empty';
-          grid.appendChild(cell);
-          return;
-        }
-        var dayNumText = state.oursCalView === 'gregorian' ? String(absoluteToGregorian(abs).day) : hebrewNumeral(absoluteToHebrew(abs).day);
-        var m = markers[abs];
-        var isToday = (abs === jsDateToAbs(todayJs));
-
-        if (m && m.raiya){
-          // actual ra'iya day — full solid red cell, most prominent marking on the calendar
-          cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
-          cell.style.background = RAIYA_COLOR;
-          var hasAlsoPerisha = m.perisha.length > 0;
-          cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
-            '<div class="md-onah">ראייה</div>' +
-            (hasAlsoPerisha ? '<div class="md-dots"><span style="background:#ffffff"></span></div>' : '');
-          if (hasAlsoPerisha){
-            cell.addEventListener('click', function(clickedAbs, clickedM){
-              return function(){ showOursDayDetail(clickedAbs, clickedM); };
-            }(abs, m));
-          }
-        } else if (m && m.perisha.length){
-          cell.className = 'mini-day perisha-day' + (isToday ? ' today' : '');
-          var perishaColors = m.perisha.map(function(p){ return MARKER_COLORS[p.type]; });
-          cell.style.background = multiColorBackground(perishaColors);
-          var onahIsDay = m.perisha[0].isDay;
-          var onahIcon = onahIsDay ? '☀️' : '✨';
-          var onahWord = onahIsDay ? 'יום' : 'לילה';
-          cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
-            '<div class="md-mag">'+magnifierHTML(9,'#ffffff')+'</div>'+
-            '<div class="md-onah"><span class="oh-icon">'+onahIcon+'</span>'+onahWord+'</div>';
-          cell.addEventListener('click', function(clickedAbs, clickedM){
-            return function(){ showOursDayDetail(clickedAbs, clickedM); };
-          }(abs, m));
-        } else {
-          cell.className = 'mini-day' + (isToday ? ' today' : '');
-          var num = document.createElement('div'); num.className = 'md-num';
-          num.textContent = dayNumText;
-          cell.appendChild(num);
-        }
-        grid.appendChild(cell);
-      });
-      monthDiv.appendChild(grid);
-      container.appendChild(monthDiv);
-    });
+    oursCalController = createInfiniteMonthList(oursMiniMonthsEl, state.oursCalView, start, oursDayCell(markers), 6, 3, 48);
   }
 
-  document.getElementById('oursPrevMonth').addEventListener('click', function(){
-    if (state.oursCalView === 'gregorian'){
-      state.oursViewMonth -= 1;
-      if (state.oursViewMonth < 1){ state.oursViewMonth = 12; state.oursViewYear -= 1; }
-    } else {
-      var p = prevHebrewMonth(state.oursViewHYear, state.oursViewHMonth);
-      state.oursViewHYear = p.year; state.oursViewHMonth = p.month;
-    }
-    saveState(); renderOursCalendar();
-  });
-  document.getElementById('oursNextMonth').addEventListener('click', function(){
-    if (state.oursCalView === 'gregorian'){
-      state.oursViewMonth += 1;
-      if (state.oursViewMonth > 12){ state.oursViewMonth = 1; state.oursViewYear += 1; }
-    } else {
-      var n = nextHebrewMonth(state.oursViewHYear, state.oursViewHMonth);
-      state.oursViewHYear = n.year; state.oursViewHMonth = n.month;
-    }
-    saveState(); renderOursCalendar();
-  });
   var oursCalToggleBtn = document.getElementById('oursCalToggleBtn');
   oursCalToggleBtn.addEventListener('click', function(){
     if (state.oursCalView === 'gregorian'){
@@ -2471,12 +2593,20 @@
     }
     saveState(); renderOursCalendar();
   });
+  var orZaruaToggle = document.getElementById('orZaruaToggle');
+  orZaruaToggle.addEventListener('change', function(){
+    state.orZarua = orZaruaToggle.checked;
+    saveState();
+    renderVeset();
+    renderOursCalendar();
+  });
   (function initOursCal(){
     if (state.oursCalView === 'hebrew' && (state.oursViewHYear===null || state.oursViewHMonth===null)){
       var hd0 = absoluteToHebrew(gregorianToAbsolute(state.oursViewYear, state.oursViewMonth, 1));
       state.oursViewHYear = hd0.year; state.oursViewHMonth = hd0.month;
     }
     oursCalToggleBtn.textContent = state.oursCalView === 'hebrew' ? 'לוח: עברי' : 'לוח: לועזי';
+    orZaruaToggle.checked = !!state.orZarua;
   })();
 
   /* ============================================================
