@@ -883,14 +883,14 @@
     <summary>הגדרות מחזור <span class="chev">⌄</span></summary>
     <div class="settings-body">
       <div class="controls-row" style="justify-content:flex-start; margin:0;">
-        <button class="btn active" id="cycleModeRepeat" type="button">מחזור קבוע וחוזר</button>
-        <button class="btn" id="cycleModeSingle" type="button">וסת בודד (מחזור נוכחי בלבד)</button>
+        <button class="btn" id="cycleModeRepeat" type="button">מחזור קבוע וחוזר</button>
+        <button class="btn active" id="cycleModeSingle" type="button">וסת בודד (מחזור נוכחי בלבד)</button>
       </div>
-      <p class="section-sub" id="cycleModeHint" style="margin:0;">הלוח יציג את דפוס המחזור חוזר על עצמו קדימה ואחורה, ללא הגבלה.</p>
+      <p class="section-sub" id="cycleModeHint" style="margin:0;">הלוח יצבע רק את המחזור הבודד שמתחיל בתאריך שתזינו — ימים מחוץ למחזור הזה יישארו ריקים.</p>
 
       <div class="field-row">
         <div class="field">
-          <label for="startDate" id="startDateLabel">תאריך תחילת מחזור (ראייה)</label>
+          <label for="startDate" id="startDateLabel">תאריך הוסת</label>
           <input type="date" id="startDate">
         </div>
         <div class="field">
@@ -901,7 +901,7 @@
       <div id="sunsetInfo" class="sunset-note"></div>
       <div class="field-row">
         <div class="field">
-          <label for="cycleLength" id="cycleLengthLabel">אורך מחזור כולל (ימים)</label>
+          <label for="cycleLength" id="cycleLengthLabel">אורך מחזור משוער (ימים)</label>
           <input type="number" id="cycleLength" min="20" max="45" value="28">
         </div>
         <div class="field">
@@ -910,7 +910,7 @@
         </div>
       </div>
 
-      <label class="checkbox-field" id="syncVesetField" style="display:none;">
+      <label class="checkbox-field" id="syncVesetField" style="display:flex;">
         <input type="checkbox" id="syncToVesetot" checked>
         <span>הוסיפו תאריך זה גם כרשומת ראייה בהלכות וסתות</span>
       </label>
@@ -1099,15 +1099,18 @@
       <div class="mini-months" id="oursMiniMonths"></div>
       <div id="oursDayDetail" class="ours-day-detail" style="display:none;"></div>
       <div class="legend mini-legend">
-        <div><span class="dot" style="background:#D9515F"></span>ראייה בפועל</div>
-        <div><span class="dot" style="background:#C97C6D"></span>הפסק טהרה</div>
-        <div><span class="dot" style="background:#4FB3C9"></span>טבילה</div>
+        <div><span class="dot" style="background:#D9515F"></span>יום ראשון של ראייה</div>
+        <div><span class="dot" style="background:#C97C6D; opacity:.5;"></span>המשך ימי ראייה</div>
+        <div><span class="dot" style="background:#C97C6D; opacity:.5;"></span>הפסק טהרה</div>
+        <div><span class="dot" style="background:#B5546B; opacity:.5;"></span>שבעת הנקיים</div>
+        <div><span class="dot" style="background:#4FB3C9; opacity:.5;"></span>טבילה</div>
         <div><span class="dot" style="background:#C9A227"></span>וסת החודש</div>
         <div><span class="dot" style="background:#5C93B0"></span>וסת בינוני</div>
         <div><span class="dot" style="background:#9B7FCB"></span>וסת הפלגה</div>
         <div><span class="dot" style="background:#8FA9C4"></span>אור זרוע (חומרה)</div>
       </div>
-      <p class="section-sub" style="margin-top:10px;">משבצת מחצית עליונה = פרישת לילה · מחצית תחתונה = פרישת יום.</p>
+      <p class="section-sub" style="margin-top:10px;">ימי המחזור בפועל (ראייה, הפסק, נקיים, טבילה) מסומנים בגוון שקוף למחצה, כדי שלא יתבלבלו עם תחזיות הפרישה הסמוכה לוסת (צבע מלא). רק היום הראשון של הראייה מסומן בצבע מלא.</p>
+      <p class="section-sub" style="margin-top:6px;">משבצת פרישה צפויה — מחצית עליונה = פרישת לילה, מחצית תחתונה = פרישת יום. משבצת טבילה מסומנת רק במחצית העליונה (הלילה שבו הטבילה חלה).</p>
     </section>
 
     <section class="card veset-card">
@@ -1345,7 +1348,7 @@
       selectedAbs: jsDateToAbs(now),
       raiyot: [], // {id, dateGreg:'YYYY-MM-DD', time:'HH:MM', bleedLength, hasSensation}
       onGloolot: false,
-      singleCycleOnly: false,
+      singleCycleOnly: true,
       orZarua: false,
       oursCalView: 'gregorian',
       oursViewYear: now.getFullYear(),
@@ -2086,8 +2089,7 @@
     videoEl.addEventListener('ended', finishIntro);
     videoEl.addEventListener('error', finishIntro);
     skipBtn.addEventListener('click', finishIntro);
-
-    videoEl.play().catch(function(){ /* autoplay blocked - controls stay visible, user taps play */ });
+    // no auto-play — the video only starts when the visitor taps its controls
   }
 
   // legend composite icons
@@ -2560,22 +2562,49 @@
   var MARKER_COLORS = { raiya:'#C97C6D', hachodesh:'#C9A227', beinoni:'#5C93B0', haflagah:'#9B7FCB', orzarua:'#8FA9C4' };
   var RAIYA_COLOR = '#D9515F';
   var HEFSEK_COLOR = '#C97C6D';
+  var NEKIIM_COLOR = '#B5546B';
   var TEVILAH_COLOR = '#4FB3C9';
   var MARKER_NAMES = { hachodesh:'וסת החודש', beinoni:'וסת בינוני', haflagah:'וסת הפלגה', orzarua:'עונת אור זרוע (חומרה)' };
 
+  // Styling for the ACTUAL-cycle phases (ra'iyah -> hefsek -> 7 nekiim -> tevilah),
+  // as opposed to the PREDICTED prishah-near-veset markers (MARKER_COLORS above).
+  // Everything here renders semi-transparent so it never reads as a veset
+  // prediction — except day 1 of the ra'iyah itself, which stays full color
+  // per the explicit request that only the first day be opaque.
+  var PHASE_STYLE = {
+    raiya1:    { color: RAIYA_COLOR,   label:'ראייה', opacity:1,    half:false },
+    raiyaCont: { color: RAIYA_COLOR,   label:'ראייה', opacity:0.5,  half:false },
+    hefsek:    { color: HEFSEK_COLOR,  label:'הפסק',  opacity:0.5,  half:false },
+    nekiim:    { color: NEKIIM_COLOR,  label:'נקי',   opacity:0.5,  half:false },
+    // tevilah only marks the first (night) half of its cell — the immersion
+    // happens at the start of that halachic day's night, not the whole day
+    tevilah:   { color: TEVILAH_COLOR, label:'טבילה', opacity:0.5,  half:true  }
+  };
+  var PHASE_DETAIL_TEXT = {
+    raiya1: 'יום ראייה / איסור.',
+    raiyaCont: 'יום ראייה / איסור.',
+    hefsek: 'הפסק טהרה — יש לבצע בדיקה סמוך לשקיעה ולהניח מוך דחוק.',
+    nekiim: 'יום משבעת הנקיים.',
+    tevilah: 'ליל טבילה, לאחר צאת הכוכבים.'
+  };
+
   function buildOursMarkers(){
-    var markers = {}; // abs -> {raiya:bool, milestone:null|'hefsek'|'tevilah', perisha:[{type,isDay}]}
-    function ensure(abs){ if (!markers[abs]) markers[abs] = {raiya:false, milestone:null, perisha:[]}; return markers[abs]; }
+    var markers = {}; // abs -> {phase:null|'raiya1'|'raiyaCont'|'hefsek'|'nekiim'|'tevilah', perisha:[{type,isDay}]}
+    function ensure(abs){ if (!markers[abs]) markers[abs] = {phase:null, perisha:[]}; return markers[abs]; }
     state.raiyot.forEach(function(r){
       var gp = r.dateGreg.split('-');
       var raiyaAbs = gregorianToAbsolute(parseInt(gp[0],10), parseInt(gp[1],10), parseInt(gp[2],10));
       var bl = r.bleedLength || 5;
-      for (var di=1; di<=bl; di++){
+      for (var di=1; di<=bl+8; di++){
         var dayAbs = raiyaAbs + di - 1;
-        if (di === bl){ ensure(dayAbs).milestone = 'hefsek'; }
-        else { ensure(dayAbs).raiya = true; }
+        var phase;
+        if (di === 1) phase = 'raiya1';
+        else if (di === bl) phase = 'hefsek';
+        else if (di < bl) phase = 'raiyaCont';
+        else if (di <= bl+7) phase = 'nekiim';
+        else phase = 'tevilah';
+        ensure(dayAbs).phase = phase;
       }
-      ensure(raiyaAbs + bl + 7).milestone = 'tevilah'; // night after the 7th of the nekiim
     });
     var preds = computeHistoricalPredictions();
     preds.forEach(function(p){
@@ -2591,12 +2620,8 @@
     var hd = absoluteToHebrew(abs);
     var wd = WEEKDAY_NAMES[weekdayOf(abs)];
     var rows = '';
-    if (m.milestone === 'hefsek'){
-      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+HEFSEK_COLOR+'"></span>הפסק טהרה — יש לבצע בדיקה סמוך לשקיעה ולהניח מוך דחוק.</div>';
-    } else if (m.milestone === 'tevilah'){
-      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+TEVILAH_COLOR+'"></span>ליל טבילה, לאחר צאת הכוכבים.</div>';
-    } else if (m.raiya){
-      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+RAIYA_COLOR+'"></span>יום ראייה / איסור.</div>';
+    if (m.phase && PHASE_STYLE[m.phase]){
+      rows += '<div class="odd-row"><span class="odd-dot" style="background:'+PHASE_STYLE[m.phase].color+'"></span>'+PHASE_DETAIL_TEXT[m.phase]+'</div>';
     }
     rows += m.perisha.map(function(p){
       return '<div class="odd-row"><span class="odd-dot" style="background:'+MARKER_COLORS[p.type]+'"></span>'+MARKER_NAMES[p.type]+' — '+(p.isDay?'☀️ יום':'✨ לילה')+'</div>';
@@ -2619,22 +2644,14 @@
       var m = markers[abs];
       var isToday = (abs === jsDateToAbs(todayJs));
 
-      if (m && m.milestone === 'hefsek'){
+      if (m && m.phase && PHASE_STYLE[m.phase]){
+        var ps = PHASE_STYLE[m.phase];
         cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
-        cell.style.background = HEFSEK_COLOR;
-        cell.innerHTML = '<div class="md-num">'+dayNumText+'</div><div class="md-onah">הפסק</div>';
-        cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
-      } else if (m && m.milestone === 'tevilah'){
-        cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
-        cell.style.background = TEVILAH_COLOR;
-        cell.innerHTML = '<div class="md-num">'+dayNumText+'</div><div class="md-onah">טבילה</div>';
-        cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
-      } else if (m && m.raiya){
-        cell.className = 'mini-day raiya-day' + (isToday ? ' today' : '');
-        cell.style.background = RAIYA_COLOR;
+        cell.style.background = ps.half ? dayNightSplitBackground([ps.color], []) : ps.color;
+        cell.style.opacity = String(ps.opacity);
         var hasAlsoPerisha = m.perisha.length > 0;
         cell.innerHTML = '<div class="md-num">'+dayNumText+'</div>'+
-          '<div class="md-onah">ראייה</div>' +
+          '<div class="md-onah">'+ps.label+'</div>' +
           (hasAlsoPerisha ? '<div class="md-dots"><span style="background:#ffffff"></span></div>' : '');
         cell.addEventListener('click', function(){ showOursDayDetail(abs, m); });
       } else if (m && m.perisha.length){

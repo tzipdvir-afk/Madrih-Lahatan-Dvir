@@ -1053,7 +1053,8 @@ function wizSummaryBlock(){
   let history = [];
   let currentId = 'start';
 
-  function render(id){
+  function render(id, opts){
+    opts = opts || {};
     const node = WIZ[id];
     const unitBody = el.closest('.unit-body');
 
@@ -1093,8 +1094,10 @@ function wizSummaryBlock(){
       `;
     }
 
-    if(unitBody) unitBody.style.maxHeight = 'none';
-    el.scrollIntoView({behavior:'smooth', block:'start'});
+    if(!opts.initial){
+      if(unitBody) unitBody.style.maxHeight = 'none';
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }
 
   el.addEventListener('click', (e)=>{
@@ -1127,7 +1130,7 @@ function wizSummaryBlock(){
     }
   });
 
-  render(currentId);
+  render(currentId, {initial:true});
 })();
 
 
