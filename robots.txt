@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /pages/pregnancy-birth.html
+Allow: /
+
+Sitemap: https://dvir-hadraha.netlify.app/sitemap.xml
