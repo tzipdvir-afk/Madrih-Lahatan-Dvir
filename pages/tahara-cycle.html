@@ -1901,9 +1901,9 @@
     var anchorAbs = (state.calendarView === 'gregorian')
       ? gregorianToAbsolute(state.viewYear, state.viewMonth, 1)
       : hebrewToAbsolute(state.viewHYear, state.viewHMonth, 1);
-    // start the scroll a couple of months before the anchor so there's context
-    // above the fold, and the user isn't only ever scrolling forward
-    var backAbs = anchorAbs - 62;
+    // start one month before the anchor (e.g. today in Tishrei → the list opens
+    // at Elul); older months are one tap away via "חודשים קודמים"
+    var backAbs = anchorAbs - 15;
     var start;
     if (state.calendarView === 'gregorian'){
       var bg = absoluteToGregorian(backAbs);
@@ -2757,7 +2757,7 @@
     var anchorAbs = (state.oursCalView === 'gregorian')
       ? gregorianToAbsolute(state.oursViewYear, state.oursViewMonth, 1)
       : hebrewToAbsolute(state.oursViewHYear, state.oursViewHMonth, 1);
-    var backAbs = anchorAbs - 62;
+    var backAbs = anchorAbs - 15;   // open one month before the anchor, like the main calendar
     var start;
     if (state.oursCalView === 'gregorian'){
       var bg = absoluteToGregorian(backAbs);
