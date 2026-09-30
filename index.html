@@ -290,6 +290,65 @@
     0%,100%{ transform:scale(1); opacity:.85; }
     50%{ transform:scale(1.3); opacity:.35; }
   }
+
+  /* כפתור סרטון בכרטיסיית "הדרכת חתנים" + חלון צפייה */
+  .featured-wrap{ grid-column:1 / -1; position:relative; }
+  .featured-wrap a.topic-card.featured .label{ padding-left:104px; }
+  .iv-btn{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    background:none; border:0; padding:0; cursor:pointer; font:inherit;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .iv-circle{
+    position:relative; width:68px; height:68px; border-radius:50%; overflow:hidden;
+    border:2.5px solid var(--gold); background:#fff;
+    box-shadow:0 0 0 3px rgba(201,162,39,.25), 0 6px 16px rgba(0,0,0,.35);
+  }
+  .iv-circle img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .iv-play{
+    position:absolute; inset:0; margin:auto; width:34px; height:34px; border-radius:50%;
+    background:rgba(31,42,68,.45); border:1.5px solid rgba(255,255,255,.85);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .iv-play::after{
+    content:''; margin-left:3px;
+    border-style:solid; border-width:7px 0 7px 11px; border-color:transparent transparent transparent #fff;
+  }
+  .iv-shine{
+    position:absolute; top:-20%; bottom:-20%; width:38%; left:-60%;
+    background:linear-gradient(100deg,transparent,rgba(255,244,200,.85),transparent);
+    transform:skewX(-20deg); animation:ivShine 3.6s ease-in-out infinite;
+  }
+  @keyframes ivShine{ 0%,62%{ left:-60%; } 88%,100%{ left:130%; } }
+  .iv-ring{
+    position:absolute; left:0; top:0; width:68px; height:68px; border-radius:50%;
+    border:2px solid var(--gold-soft); pointer-events:none; animation:ivRing 3.6s ease-out infinite;
+  }
+  @keyframes ivRing{ 0%,55%{ transform:scale(1); opacity:0; } 60%{ opacity:.9; } 100%{ transform:scale(1.35); opacity:0; } }
+  .iv-cap{ font-size:11.5px; font-weight:600; color:var(--gold-soft); white-space:nowrap; }
+  .iv-btn:active .iv-circle{ transform:scale(.94); }
+  @media (max-width:350px){
+    .featured-wrap a.topic-card.featured .label{ padding-left:84px; font-size:15px; }
+    .iv-circle,.iv-ring{ width:56px; height:56px; }
+    .iv-cap{ font-size:10.5px; }
+  }
+  @media (prefers-reduced-motion:reduce){ .iv-shine,.iv-ring{ animation:none; display:none; } }
+
+  .video-modal{
+    position:fixed; inset:0; z-index:1000; display:none;
+    align-items:center; justify-content:center;
+    background:rgba(15,19,32,.93); padding:16px;
+  }
+  .video-modal.open{ display:flex; }
+  .video-modal video{
+    max-width:100%; max-height:calc(100vh - 90px); aspect-ratio:9/16;
+    border-radius:16px; background:#000; box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  .video-modal .vm-close{
+    position:absolute; top:14px; right:14px; width:44px; height:44px; border-radius:50%;
+    border:0; background:rgba(255,255,255,.14); color:#fff; font-size:22px; cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -300,6 +359,7 @@
     <h1>המדריך לחתן</h1>
     <p class="sub">בחרו נושא כדי להתחיל</p>
   </header>
+
 
   <!-- באנר עונתי "הלכות יום הכיפורים" (pages/yom-kippur.html) הוסר כאן אחרי החג.
        הדף עצמו עדיין קיים ולא נמחק — רק לא מקושר. לקראת יום כיפור הבא: להחזיר
@@ -320,10 +380,21 @@
 
   <div class="grid">
 
-    <a class="topic-card featured" href="pages/hadracha.html" data-keywords="דביר ליווי אישי פגישות">
-      <img class="thumb" src="media/images/home-hadracha.jpeg" alt="הדרכת חתנים" loading="lazy" decoding="async">
-      <div class="label">הדרכת חתנים</div>
-    </a>
+    <div class="featured-wrap">
+      <a class="topic-card featured" href="pages/hadracha.html" data-keywords="דביר ליווי אישי פגישות">
+        <img class="thumb" src="media/images/home-hadracha.jpeg" alt="הדרכת חתנים" loading="lazy" decoding="async">
+        <div class="label">הדרכת חתנים</div>
+      </a>
+      <button type="button" class="iv-btn" id="ivOpen" aria-label="צפייה בסרטון: מה יש בהדרכת חתנים">
+        <span class="iv-circle">
+          <img src="media/images/dvir-face-circle.jpg" alt="">
+          <span class="iv-shine"></span>
+          <span class="iv-play"></span>
+        </span>
+        <span class="iv-ring"></span>
+        <span class="iv-cap">מה יש בהדרכה?</span>
+      </button>
+    </div>
 
     <a class="topic-card" href="pages/tahara-cycle.html?topic=cycle" data-keywords="לוח שנה מחזור ציר זמן">
       <img class="thumb" src="media/images/home-tahara-cycle.jpeg" alt="מעגל הטהרה" loading="lazy" decoding="async">
@@ -376,6 +447,11 @@
 
 </div>
 
+<div class="video-modal" id="ivModal" role="dialog" aria-modal="true" aria-label="מה יש בהדרכת חתנים">
+  <button type="button" class="vm-close" id="ivClose" aria-label="סגירה">✕</button>
+  <video id="ivVideo" controls playsinline preload="none" poster="media/images/hadracha-intro-poster.jpg"></video>
+</div>
+
 <a class="wa-float" href="https://wa.me/972528990131" target="_blank" rel="noopener noreferrer">
   <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.001 3C9.107 3 3.5 8.607 3.5 15.5c0 2.3.62 4.46 1.7 6.32L3 29l7.36-2.15a12.44 12.44 0 0 0 5.64 1.36h.005C22.9 28.21 28.5 22.6 28.5 15.71 28.5 8.82 22.9 3.21 16.001 3zm0 22.7h-.004a10.4 10.4 0 0 1-5.3-1.46l-.38-.23-3.94 1.15 1.08-3.84-.25-.4a10.35 10.35 0 0 1-1.58-5.42c0-5.75 4.68-10.43 10.43-10.43 2.79 0 5.4 1.09 7.37 3.06a10.33 10.33 0 0 1 3.05 7.35c0 5.75-4.68 10.22-10.42 10.22zm5.72-7.62c-.31-.16-1.85-.91-2.14-1.02-.29-.1-.5-.16-.71.16-.21.31-.81 1.02-1 1.23-.18.21-.37.23-.68.08-.31-.16-1.32-.49-2.51-1.56-.93-.83-1.56-1.85-1.74-2.16-.18-.31-.02-.48.14-.63.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.72-.97-2.35-.26-.62-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39s-1.1 1.08-1.1 2.63 1.13 3.05 1.29 3.26c.16.21 2.22 3.4 5.39 4.77.75.32 1.34.52 1.8.66.76.24 1.45.21 1.99.13.61-.09 1.85-.76 2.11-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37z"/></svg>
   <span>לפרטים על הדרכת חתנים</span>
@@ -393,11 +469,31 @@
       var label = card.querySelector('.label').textContent;
       var keywords = card.dataset.keywords || '';
       var match = !q || label.indexOf(q) !== -1 || keywords.indexOf(q) !== -1;
-      card.style.display = match ? '' : 'none';
+      (card.closest('.featured-wrap') || card).style.display = match ? '' : 'none';
       if (match) visible++;
     });
     noResults.style.display = visible === 0 ? 'block' : 'none';
   });
+})();
+
+(function(){
+  var modal = document.getElementById('ivModal');
+  var video = document.getElementById('ivVideo');
+  function open(){
+    if (!video.getAttribute('src')) video.setAttribute('src', 'media/videos/hadracha-intro.mp4');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var p = video.play(); if (p && p.catch) p.catch(function(){});
+  }
+  function close(){
+    video.pause();
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('ivOpen').addEventListener('click', open);
+  document.getElementById('ivClose').addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if (e.target === modal) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
 })();
 </script>
 
