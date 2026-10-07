@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDRB3WV2T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDRB3WV2T5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>בנין עדי עד — המדריך לחתן</title>
+<meta name="description" content="פסקאות נבחרות מדברי הראי״ה קוק על הזוגיות, הבית וקדושת חיי המשפחה — עם שאלות לשיחה אישית וזוגית.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.09);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img{max-width:100%; display:block;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    line-height:1.7;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:600px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link{ display:inline-block; color:var(--navy-soft); text-decoration:none; font-size:14px; margin-bottom:14px; }
+  a.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{ display:flex; flex-direction:column; gap:8px; padding:6px 4px 16px; text-align:center; }
+  .eyebrow{ font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600; }
+  header.app-header h1{ font-size:30px; margin:0; color:var(--navy); font-weight:700; }
+  header.app-header p.sub{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  .intro-card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:16px 18px; margin-bottom:18px; font-size:.95rem; color:var(--navy-soft);
+    border:1px solid rgba(43,38,32,0.04);
+  }
+  .intro-card p{ margin:0; }
+
+  .primary-btn{
+    display:block; width:100%;
+    font-family:'Heebo',sans-serif; font-size:17px; font-weight:700;
+    color:#fff; background:linear-gradient(140deg,var(--navy),var(--navy-soft));
+    border:0; border-radius:16px; padding:15px 18px; cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .primary-btn:active{ transform:scale(.99); }
+
+  .filters{ margin:18px 0 6px; }
+  .filter-group{ margin-bottom:12px; }
+  .filter-label{ font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.06em; margin-bottom:6px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{
+    font-family:'Heebo',sans-serif; font-size:13.5px; font-weight:600;
+    border:1px solid var(--line); background:var(--card); color:var(--navy-soft);
+    padding:7px 13px; border-radius:999px; cursor:pointer;
+  }
+  .chip .n{ font-weight:400; color:var(--muted); margin-right:3px; font-size:12px; }
+  .chip.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
+  .chip.active .n{ color:var(--gold-soft); }
+  .chip[disabled]{ opacity:.45; cursor:default; }
+  .count{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+  #stage{ margin-top:14px; }
+  .empty{
+    text-align:center; color:var(--muted); font-size:14px;
+    border:1.5px dashed var(--line); border-radius:var(--radius); padding:28px 18px;
+  }
+
+  article.passage{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 18px 18px; border:1px solid rgba(43,38,32,0.04);
+    animation:fadein .2s ease;
+  }
+  @keyframes fadein{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+  .p-meta{ display:flex; gap:8px; align-items:center; margin-bottom:8px; flex-wrap:wrap; }
+  .p-tag{
+    font-size:11.5px; font-weight:700; color:var(--gold); letter-spacing:.04em;
+    border:1px solid var(--gold-soft); border-radius:999px; padding:2px 10px;
+  }
+  .p-tag.len{ color:var(--muted); border-color:var(--line); }
+  .p-title{ margin:0 0 10px; font-size:21px; line-height:1.35; color:var(--navy); font-weight:700; }
+  .p-quote{
+    margin:0 0 12px; padding:8px 12px; font-size:.86rem; color:var(--navy-soft);
+    background:var(--bg-alt); border-right:3px solid var(--gold-soft); border-radius:8px;
+  }
+  .p-sub{ font-size:.8rem; color:var(--muted); margin:-4px 0 12px; }
+  .p-text{ font-family:'Frank Ruhl Libre', serif; font-size:1.1rem; line-height:1.95; color:#241f19; }
+  .p-text p{ margin:0 0 12px; }
+  .p-text p:last-child{ margin-bottom:0; }
+  .p-text.clamp{ max-height:17.5em; overflow:hidden; position:relative; }
+  .p-text.clamp::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:4.5em;
+    background:linear-gradient(to bottom, rgba(255,253,248,0), var(--card) 85%);
+  }
+  .more-btn{
+    margin:8px 0 0; font-family:'Heebo',sans-serif; font-size:13.5px; font-weight:700;
+    color:var(--navy-soft); background:none; border:0; padding:4px 0; cursor:pointer;
+  }
+  .p-source{ margin-top:12px; font-size:.82rem; color:var(--muted); }
+  sup.fn{
+    font-family:'Heebo',sans-serif; font-size:.62em; font-weight:700; color:var(--gold);
+    cursor:pointer; margin:0 1px; padding:0 2px;
+  }
+
+  details.p-notes{
+    margin-top:14px; border:1px solid var(--line); border-radius:12px; background:var(--bg);
+  }
+  details.p-notes summary{ cursor:pointer; padding:10px 14px; font-weight:700; font-size:.9rem; color:var(--navy-soft); }
+  .notes-body{ padding:2px 14px 12px; }
+  .note{ display:flex; gap:10px; padding:8px 0; border-top:1px solid var(--line); font-size:.9rem; line-height:1.75; }
+  .note:first-child{ border-top:0; }
+  .note.flash{ background:rgba(228,200,120,.28); border-radius:8px; }
+  .note-n{
+    flex:none; width:24px; height:24px; border-radius:50%; background:var(--navy); color:#fff;
+    font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:2px;
+  }
+  .note-n.wide{ width:auto; padding:0 9px; border-radius:999px; background:var(--muted); }
+  .note p{ margin:0 0 6px; }
+  .note p:last-child{ margin:0; }
+
+  .q-box{ border-radius:14px; padding:13px 15px; margin-top:12px; }
+  .q-label{ font-size:12px; font-weight:800; letter-spacing:.04em; margin-bottom:4px; }
+  .q-box p{ margin:0; font-size:.98rem; font-weight:500; line-height:1.65; }
+  .q-self{ background:#FBF3DC; border-right:4px solid var(--gold); }
+  .q-self .q-label{ color:#8a6a0b; }
+  .q-couple{ background:#E8ECF4; border-right:4px solid var(--navy-soft); }
+  .q-couple .q-label{ color:var(--navy-soft); }
+  .q-note{ font-size:11.5px; color:var(--muted); margin-top:8px; text-align:center; }
+
+  .p-nav{ display:flex; gap:10px; margin-top:16px; }
+  .nav-btn{
+    flex:1; font-family:'Heebo',sans-serif; font-size:14.5px; font-weight:700;
+    border-radius:12px; padding:12px 10px; cursor:pointer;
+    background:transparent; color:var(--navy); border:1.5px solid var(--line);
+  }
+  .nav-btn.next{ background:var(--navy); color:#fff; border-color:var(--navy); }
+  .nav-btn[disabled]{ opacity:.4; cursor:default; }
+
+  footer.page-footer{ text-align:center; color:var(--muted); font-size:.82rem; padding:22px 12px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="tikshoret.html">→ חזרה לכלים לתקשורת זוגית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">כלים לתקשורת זוגית</div>
+    <h1>בנין עדי עד</h1>
+    <p class="sub">מדברי הראי"ה קוק על הזוגיות, הבית וקדושת חיי המשפחה</p>
+  </header>
+
+  <div class="intro-card">
+    <p>פסקאות נבחרות מדברי הראי"ה קוק. אפשר להגריל פסקה, או לבחור לפי נושא ואורך. מתחת לכל פסקה שתי שאלות לשיחה: אחת לעצמי ואחת לשנינו.</p>
+  </div>
+
+  <button class="primary-btn" id="randomBtn" type="button">🎲 פסקה אקראית</button>
+
+  <section class="filters" aria-label="סינון פסקאות">
+    <div class="filter-group">
+      <div class="filter-label">נושא</div>
+      <div class="chips" id="chips-topic"></div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label">אורך</div>
+      <div class="chips" id="chips-len"></div>
+    </div>
+    <div class="filter-group" id="group-author" hidden>
+      <div class="filter-label">מחבר</div>
+      <div class="chips" id="chips-author"></div>
+    </div>
+    <div class="count" id="count"></div>
+  </section>
+
+  <div id="stage" aria-live="polite">
+    <div class="empty">לחצו על "פסקה אקראית", או בחרו נושא / אורך כדי להתחיל.</div>
+  </div>
+
+  <footer class="page-footer">
+    המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד.
+  </footer>
+
+</div>
+
+<noscript><p style="text-align:center;padding:20px">הכלי דורש JavaScript.</p></noscript>
+
+<script src="../js/binyan/meta.js"></script>
+<script src="../js/binyan/passages-before.js"></script>
+<script src="../js/binyan/passages-home.js"></script>
+<script src="../js/binyan/passages-shalom.js"></script>
+<script src="../js/binyan/passages-roles.js"></script>
+<script src="../js/binyan/passages-apart.js"></script>
+<script src="../js/binyan/passages-covenant.js"></script>
+<script src="../js/binyan/passages-kedusha.js"></script>
+<script>
+(function(){
+  var B = window.BINYAN;
+  var P = B.passages;
+  var byId = {};
+  P.forEach(function(p){ byId[p.id] = p; });
+  var TOPIC = {};
+  B.topics.forEach(function(t){ TOPIC[t.key] = t.label; });
+
+  var SHORT_MAX = 120;
+  var CLAMP_MIN = 160;
+  var state = { topic:'all', len:'all', author:'all', hist:[], pos:-1, decks:{} };
+
+  var stage = document.getElementById('stage');
+  var countEl = document.getElementById('count');
+
+  function isShort(p){ return p.words <= SHORT_MAX; }
+
+  function matches(p, skip){
+    if (skip !== 'topic' && state.topic !== 'all' && p.topic !== state.topic) return false;
+    if (skip !== 'len' && state.len !== 'all' && (state.len === 'short') !== isShort(p)) return false;
+    if (skip !== 'author' && state.author !== 'all' && p.author !== state.author) return false;
+    return true;
+  }
+  function filtered(){ return P.filter(function(p){ return matches(p); }); }
+
+  function shuffle(a){
+    for (var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function nextRandom(){
+    var key = state.topic + '|' + state.len + '|' + state.author;
+    var list = filtered();
+    if (!list.length) return null;
+    var deck = state.decks[key];
+    if (!deck || !deck.length){
+      deck = shuffle(list.map(function(p){ return p.id; }));
+      var cur = state.hist[state.pos];
+      if (cur && deck.length > 1 && deck[0] === cur) deck.push(deck.shift());
+      state.decks[key] = deck;
+    }
+    return byId[deck.shift()];
+  }
+
+  /* ---------- filter chips ---------- */
+  function makeChip(label, n, active, onClick, disabled){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip' + (active ? ' active' : '');
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    b.appendChild(document.createTextNode(label));
+    if (n !== null){
+      var s = document.createElement('span');
+      s.className = 'n';
+      s.textContent = '(' + n + ')';
+      b.appendChild(s);
+    }
+    if (disabled) b.disabled = true;
+    else b.addEventListener('click', onClick);
+    return b;
+  }
+
+  function renderChips(){
+    var elT = document.getElementById('chips-topic');
+    var elL = document.getElementById('chips-len');
+    var elA = document.getElementById('chips-author');
+    elT.innerHTML = ''; elL.innerHTML = ''; elA.innerHTML = '';
+
+    var allT = P.filter(function(p){ return matches(p, 'topic'); }).length;
+    elT.appendChild(makeChip('הכל', allT, state.topic === 'all', function(){ setFilter('topic', 'all'); }));
+    B.topics.forEach(function(t){
+      var n = P.filter(function(p){ return p.topic === t.key && matches(p, 'topic'); }).length;
+      elT.appendChild(makeChip(t.label, n, state.topic === t.key, function(){ setFilter('topic', t.key); }, n === 0 && state.topic !== t.key));
+    });
+
+    var base = P.filter(function(p){ return matches(p, 'len'); });
+    var nShort = base.filter(isShort).length;
+    elL.appendChild(makeChip('הכל', base.length, state.len === 'all', function(){ setFilter('len', 'all'); }));
+    elL.appendChild(makeChip('קצרות', nShort, state.len === 'short', function(){ setFilter('len', 'short'); }, nShort === 0 && state.len !== 'short'));
+    elL.appendChild(makeChip('ארוכות', base.length - nShort, state.len === 'long', function(){ setFilter('len', 'long'); }, base.length - nShort === 0 && state.len !== 'long'));
+
+    var authors = {};
+    P.forEach(function(p){ authors[p.author] = true; });
+    var keys = Object.keys(authors);
+    var groupA = document.getElementById('group-author');
+    if (keys.length > 1){
+      groupA.hidden = false;
+      var allA = P.filter(function(p){ return matches(p, 'author'); }).length;
+      elA.appendChild(makeChip('הכל', allA, state.author === 'all', function(){ setFilter('author', 'all'); }));
+      keys.forEach(function(k){
+        var n = P.filter(function(p){ return p.author === k && matches(p, 'author'); }).length;
+        elA.appendChild(makeChip(B.authors[k] || k, n, state.author === k, function(){ setFilter('author', k); }));
+      });
+    } else {
+      groupA.hidden = true;
+    }
+
+    var total = filtered().length;
+    countEl.textContent = total === 0 ? 'אין פסקאות מתאימות לסינון הזה' : (total === 1 ? 'פסקה אחת מתאימה' : total + ' פסקאות מתאימות');
+  }
+
+  function setFilter(kind, value){
+    state[kind] = value;
+    renderChips();
+    var p = nextRandom();
+    if (p) show(p);
+    else stage.innerHTML = '<div class="empty">אין פסקאות מתאימות לסינון הזה. נסו לשנות את הבחירה.</div>';
+  }
+
+  /* ---------- passage rendering ---------- */
+  function addText(el, text){
+    text.split(/(⟦[^⟧]+⟧)/).forEach(function(part){
+      var m = part.match(/^⟦([^⟧]+)⟧$/);
+      if (m){
+        var s = document.createElement('sup');
+        s.className = 'fn';
+        s.textContent = m[1];
+        s.setAttribute('data-note', m[1]);
+        s.setAttribute('role', 'button');
+        s.setAttribute('tabindex', '0');
+        el.appendChild(s);
+      } else if (part){
+        el.appendChild(document.createTextNode(part));
+      }
+    });
+  }
+  function para(text){
+    var p = document.createElement('p');
+    addText(p, text);
+    return p;
+  }
+  function div(cls){ var d = document.createElement('div'); if (cls) d.className = cls; return d; }
+
+  function show(p, noPush){
+    if (!noPush){
+      state.hist = state.hist.slice(0, state.pos + 1);
+      state.hist.push(p);
+      state.pos = state.hist.length - 1;
+    }
+    var art = document.createElement('article');
+    art.className = 'passage';
+
+    var meta = div('p-meta');
+    var t1 = document.createElement('span'); t1.className = 'p-tag'; t1.textContent = TOPIC[p.topic] || '';
+    var t2 = document.createElement('span'); t2.className = 'p-tag len'; t2.textContent = isShort(p) ? 'קצרה' : 'ארוכה';
+    meta.appendChild(t1); meta.appendChild(t2);
+    art.appendChild(meta);
+
+    var h = document.createElement('h2'); h.className = 'p-title'; h.textContent = p.title; art.appendChild(h);
+
+    if (p.quote){
+      var q = document.createElement('blockquote'); q.className = 'p-quote';
+      addText(q, p.quote);
+      art.appendChild(q);
+    }
+    if (p.sub){
+      var sb = div('p-sub'); sb.textContent = p.sub; art.appendChild(sb);
+    }
+
+    var text = div('p-text');
+    p.paras.forEach(function(t){ text.appendChild(para(t)); });
+    var long = p.words > CLAMP_MIN;
+    if (long) text.classList.add('clamp');
+    art.appendChild(text);
+    if (long){
+      var more = document.createElement('button');
+      more.type = 'button'; more.className = 'more-btn'; more.textContent = 'קרא עוד ⌄';
+      more.addEventListener('click', function(){
+        var open = text.classList.toggle('clamp');
+        more.textContent = open ? 'קרא עוד ⌄' : 'הצג פחות ⌃';
+      });
+      art.appendChild(more);
+    }
+
+    if (p.source){
+      var src = div('p-source'); src.textContent = 'מקור: ' + p.source; art.appendChild(src);
+    }
+
+    if (p.notes && p.notes.length){
+      var det = document.createElement('details'); det.className = 'p-notes';
+      var sum = document.createElement('summary'); sum.textContent = 'הסברי הרב טאו (' + p.notes.length + ' הערות)';
+      det.appendChild(sum);
+      var body = div('notes-body');
+      p.notes.forEach(function(n){
+        var row = div('note');
+        row.id = 'note-' + p.id + '-' + n.n.replace(/\*/g, 's');
+        var num = div('note-n');
+        if (n.label){ num.className = 'note-n wide'; num.textContent = n.label; }
+        else { num.textContent = n.n; }
+        row.appendChild(num);
+        var tx = div();
+        n.paras.forEach(function(t){ tx.appendChild(para(t)); });
+        row.appendChild(tx);
+        body.appendChild(row);
+      });
+      det.appendChild(body);
+      art.appendChild(det);
+      art.addEventListener('click', function(e){ footnoteClick(e, p, det); });
+      art.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') footnoteClick(e, p, det); });
+    }
+
+    function qBox(cls, label, textStr){
+      var b = div('q-box ' + cls);
+      var l = div('q-label'); l.textContent = label;
+      var pp = document.createElement('p'); pp.textContent = textStr;
+      b.appendChild(l); b.appendChild(pp);
+      return b;
+    }
+    art.appendChild(qBox('q-self', 'שאלה לעצמי', p.qSelf));
+    art.appendChild(qBox('q-couple', 'שאלה לשנינו', p.qCouple));
+    var qn = div('q-note'); qn.textContent = 'השאלות נוסחו לצורך הכלי.'; art.appendChild(qn);
+
+    var nav = div('p-nav');
+    var prev = document.createElement('button');
+    prev.type = 'button'; prev.className = 'nav-btn'; prev.textContent = 'הקודמת';
+    prev.disabled = state.pos <= 0;
+    prev.addEventListener('click', goPrev);
+    var next = document.createElement('button');
+    next.type = 'button'; next.className = 'nav-btn next'; next.textContent = 'פסקה נוספת';
+    next.addEventListener('click', goNext);
+    nav.appendChild(prev); nav.appendChild(next);
+    art.appendChild(nav);
+
+    stage.innerHTML = '';
+    stage.appendChild(art);
+    try { history.replaceState(null, '', '#' + p.id); } catch (e) {}
+    if (stage.getBoundingClientRect().top < 0) stage.scrollIntoView({ block: 'start' });
+  }
+
+  function footnoteClick(e, p, det){
+    var t = e.target;
+    if (!t || !t.getAttribute || t.getAttribute('data-note') === null) return;
+    var key = t.getAttribute('data-note').replace(/\*/g, 's');
+    var row = document.getElementById('note-' + p.id + '-' + key);
+    if (!row) return;
+    det.open = true;
+    row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    row.classList.add('flash');
+    setTimeout(function(){ row.classList.remove('flash'); }, 1600);
+  }
+
+  function goPrev(){
+    if (state.pos > 0){ state.pos--; show(state.hist[state.pos], true); }
+  }
+  function goNext(){
+    if (state.pos < state.hist.length - 1){ state.pos++; show(state.hist[state.pos], true); return; }
+    var p = nextRandom();
+    if (p) show(p);
+  }
+
+  document.getElementById('randomBtn').addEventListener('click', function(){
+    var p = nextRandom();
+    if (p) show(p);
+    else stage.innerHTML = '<div class="empty">אין פסקאות מתאימות לסינון הזה. נסו לשנות את הבחירה.</div>';
+  });
+
+  renderChips();
+  var hash = (location.hash || '').replace('#', '');
+  if (hash && byId[hash]) show(byId[hash]);
+})();
+</script>
+</body>
+</html>
