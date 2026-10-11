@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /pages/pregnancy-birth.html
+Disallow: /pages/birth-spacing.html
 Allow: /
 
 Sitemap: https://dvir-hadraha.netlify.app/sitemap.xml

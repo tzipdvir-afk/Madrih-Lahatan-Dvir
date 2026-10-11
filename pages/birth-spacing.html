@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDRB3WV2T5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YDRB3WV2T5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<title>הפרדה בין לידות — המדריך לחתן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E8;
+    --bg-alt:#EFE7D8;
+    --card:#FFFDF8;
+    --navy:#1F2A44;
+    --navy-soft:#3A4766;
+    --gold:#C9A227;
+    --gold-soft:#E4C878;
+    --text:#2B2620;
+    --muted:#8a8272;
+    --line:#E3D9C4;
+    --shadow: 0 8px 24px rgba(43,38,32,0.10);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; width:100%;}
+  img,video{max-width:100%;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, var(--bg-alt), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:'Heebo',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+    line-height:1.7;
+  }
+  h1,h2{ font-family:'Frank Ruhl Libre', serif; }
+  .wrap{ max-width:560px; margin:0 auto; padding:18px 16px 8px; }
+
+  a.back-link{
+    display:inline-block;
+    color:var(--navy-soft);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  a.back-link:hover{ text-decoration:underline; }
+
+  header.app-header{
+    display:flex; flex-direction:column; gap:8px;
+    padding:6px 4px 20px; text-align:center;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; color:var(--gold); font-weight:600;
+  }
+  header.app-header h1{ font-size:28px; margin:0; color:var(--navy); font-weight:700; }
+  header.app-header p.sub{ margin:0; color:var(--muted); font-size:14.5px; }
+
+  .hero-frame{
+    background:var(--card);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+  }
+  .hero-frame img{ width:100%; display:block; }
+
+  .disclaimer{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEFE9;
+    border-right:4px solid #B4534A;
+    border-radius:12px;
+    padding:14px 16px;
+    margin:0 0 20px;
+    font-size:.9rem;
+    color:var(--text);
+  }
+  .disclaimer .d-icon{ flex:none; font-size:1.3rem; line-height:1; }
+  .disclaimer strong{ display:block; margin-bottom:2px; }
+
+  .intro{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+    margin:0 0 26px;
+    text-align:center;
+    color:var(--muted);
+    font-size:.96rem;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-label .num{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    width:34px;height:34px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    flex:none;
+    box-shadow:0 4px 10px rgba(31,42,68,.3);
+  }
+  .section-label h2{ margin:0; font-size:1.15rem; color:var(--navy); }
+
+  .unit{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+    border:1px solid rgba(43,38,32,0.05);
+  }
+  .unit-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .unit-header .icon{
+    flex:none;
+    width:42px;height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--bg-alt),var(--line));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .unit-header .title{
+    flex:1;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1.02rem;
+  }
+  .unit-header .title small{
+    display:block;
+    font-weight:400;
+    color:var(--muted);
+    font-size:.82rem;
+    margin-top:2px;
+  }
+  .unit-header .chevron{
+    flex:none;
+    width:22px;height:22px;
+    transition:transform .35s ease;
+    color:var(--gold);
+  }
+  .unit.open .unit-header .chevron{ transform:rotate(180deg); }
+  .unit-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .unit-inner{
+    padding:0 22px 22px;
+    color:var(--text);
+    font-size:.96rem;
+  }
+  .unit-inner p{ margin:0 0 12px; }
+  .unit-inner h4{
+    margin:16px 0 6px;
+    color:var(--navy-soft);
+    font-size:.96rem;
+  }
+  .unit-inner h4:first-child{ margin-top:0; }
+  .unit-inner ul, .unit-inner ol{ margin:0 0 14px; padding-inline-start:1.3em; }
+  .unit-inner li{ margin-bottom:6px; }
+
+  .callout{
+    background:var(--bg);
+    border-right:4px solid var(--navy);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.92rem;
+  }
+  .callout.gold{
+    background:var(--gold-soft);
+    border-right-color:var(--gold);
+  }
+  .callout strong{ color:var(--navy); }
+
+  .closing-note{
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#FDF6E3;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px 24px;
+    margin:28px 0 8px;
+    text-align:center;
+    font-size:.98rem;
+    line-height:1.8;
+  }
+  .closing-note strong{ color:var(--gold-soft); }
+
+  footer.page-footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:20px 12px 0;
+  }
+
+  @media (max-width:520px){
+    header.app-header h1{ font-size:24px; }
+  }
+
+  /* GATE */
+  #pageContent{ display:none; }
+  #gateScreen{
+    max-width:380px;
+    margin:0 auto;
+    padding:60px 20px;
+    text-align:center;
+  }
+  #gateScreen .lock-icon{
+    width:64px; height:64px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:var(--gold-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
+    box-shadow:0 6px 18px rgba(31,42,68,.3);
+  }
+  #gateScreen h2{ margin:0 0 6px; color:var(--navy); font-size:20px; }
+  #gateScreen p.gate-sub{ margin:0 0 22px; color:var(--muted); font-size:14px; }
+  #gateScreen input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:13px 16px;
+    font-family:inherit;
+    font-size:15px;
+    background:var(--card);
+    color:var(--text);
+    text-align:center;
+    margin-bottom:12px;
+  }
+  #gateScreen input:focus{ outline:2px solid var(--gold-soft); }
+  #gateScreen button{
+    width:100%;
+    background:linear-gradient(135deg,var(--navy),var(--navy-soft));
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:13px 16px;
+    font-weight:700;
+    font-size:15px;
+    font-family:inherit;
+    cursor:pointer;
+  }
+  #gateScreen button:active{ transform:scale(0.98); }
+  #gateScreen .gate-error{
+    color:#B4534A;
+    font-size:13px;
+    margin-top:10px;
+    display:none;
+  }
+  #gateScreen .gate-request{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:13.5px;
+    color:var(--muted);
+  }
+  #gateScreen .gate-request a{
+    color:#25D366;
+    font-weight:700;
+    text-decoration:none;
+  }
+  #gateScreen .gate-request a:hover{ text-decoration:underline; }
+  #gateScreen .gate-request svg{ width:16px; height:16px; flex:none; fill:#25D366; }
+</style>
+</head>
+<body>
+
+<div id="gateScreen">
+  <div class="lock-icon">🔒</div>
+  <h2>תוכן נעול</h2>
+  <p class="gate-sub">העמוד הזה פתוח רק למי שיש לו קוד גישה</p>
+  <input type="password" id="gateInput" placeholder="קוד גישה" autocomplete="off">
+  <button id="gateSubmit">כניסה</button>
+  <div class="gate-error" id="gateError">קוד שגוי, נסו שוב</div>
+  <div class="gate-request">
+    <span>אין לכם קוד?</span>
+    <a id="gateWa" href="https://wa.me/972528990131" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.001 3C9.107 3 3.5 8.607 3.5 15.5c0 2.3.62 4.46 1.7 6.32L3 29l7.36-2.15a12.44 12.44 0 0 0 5.64 1.36h.005C22.9 28.21 28.5 22.6 28.5 15.71 28.5 8.82 22.9 3.21 16.001 3zm0 22.7h-.004a10.4 10.4 0 0 1-5.3-1.46l-.38-.23-3.94 1.15 1.08-3.84-.25-.4a10.35 10.35 0 0 1-1.58-5.42c0-5.75 4.68-10.43 10.43-10.43 2.79 0 5.4 1.09 7.37 3.06a10.33 10.33 0 0 1 3.05 7.35c0 5.75-4.68 10.22-10.42 10.22zm5.72-7.62c-.31-.16-1.85-.91-2.14-1.02-.29-.1-.5-.16-.71.16-.21.31-.81 1.02-1 1.23-.18.21-.37.23-.68.08-.31-.16-1.32-.49-2.51-1.56-.93-.83-1.56-1.85-1.74-2.16-.18-.31-.02-.48.14-.63.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.72-.97-2.35-.26-.62-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39s-1.1 1.08-1.1 2.63 1.13 3.05 1.29 3.26c.16.21 2.22 3.4 5.39 4.77.75.32 1.34.52 1.8.66.76.24 1.45.21 1.99.13.61-.09 1.85-.76 2.11-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37z"/></svg>
+      דברו איתנו
+    </a>
+  </div>
+</div>
+
+<div class="wrap" id="pageContent">
+
+  <a class="back-link" href="../index.html">→ חזרה לדף הבית</a>
+
+  <header class="app-header">
+    <div class="eyebrow">הדרכת חתנים</div>
+    <h1>הפרדה בין לידות</h1>
+    <p class="sub">טהרה, רווח בין לידות ואמצעי מניעה</p>
+  </header>
+
+  <div class="hero-frame">
+    <img src="../media/images/home-birth-spacing.jpeg" alt="הפרדה בין לידות">
+  </div>
+
+  <div class="disclaimer">
+    <span class="d-icon">⚠️</span>
+    <div>
+      <strong>לתשומת לבכם</strong>
+      המדריך מרכז מקורות ודעות כדי לסייע בהכרת הנושא ובהכנה לשיחה עם רב ועם רופא. הוא אינו מהווה פסיקת הלכה אישית או ייעוץ רפואי. בכל החלטה על אמצעי מניעה, ובמיוחד מניעה מעבר לשנה, יש להתייעץ עם רב מוסמך ועם הצוות הרפואי המטפל.
+    </div>
+  </div>
+
+  <div class="intro">
+    אחרי לידה צריך לחשוב על כמה דברים יחד: חזרה לטהרה ולקרבה, ההנקה, כוחות הגוף והנפש, והשאלה מתי ואיך נרצה להרחיב את המשפחה. לפניכם סקירה מסודרת של הנושאים. עברו על היחידות לפי הסדר, או קפצו ישירות לנושא שמעניין אתכם.
+  </div>
+
+  <div class="section-label"><span class="num">1</span><h2>יחידות לימוד</h2></div>
+
+  <div id="units"></div>
+
+  <div class="closing-note">
+    🌿 <strong>בברכה לבית של שמחה, נחת ויציבות</strong> — ולגידול ילדים בשלווה.
+  </div>
+
+  <footer class="page-footer">
+    המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד, ואינו מהווה פסיקת הלכה. בכל שאלה או מקרה קונקרטי — יש לפנות לרב מוסמך.
+  </footer>
+
+</div>
+
+<script>
+const UNITS = [
+  {
+    icon:"🛁",
+    title:"1. הטהרה אחרי לידה",
+    subtitle:"משך התהליך, בדיקות וכתמים",
+    html:`
+      <h4>משך התהליך</h4>
+      <p>תהליך הטהרה והחזרה לטהרה אחרי לידה נמשך בדרך כלל כשישה שבועות.</p>
+
+      <h4>הקלות בבדיקות שבעה נקיים</h4>
+      <p>בגלל הקושי הגופני והחשש לפציעה או להתחלת דימום מחדש, אפשר להקל בבדיקות בשבעה נקיים:</p>
+      <ul>
+        <li><strong>המינימום ההלכתי:</strong> בדיקה ביום הראשון ובדיקה ביום השביעי (בנוסף לבדיקת הפסק טהרה).</li>
+        <li><strong>המלצה מורחבת:</strong> בדיקות בימים ראשון, רביעי ושביעי.</li>
+        <li><strong>עיתוי הבדיקה:</strong> בדיקה אחת ביום, בשעות הצהריים או אחר הצהריים, ולא בשעות הבוקר המוקדמות או סמוך מאוד לשקיעה, כדי להימנע מספקות הלכתיים.</li>
+      </ul>
+
+      <h4>כתמים בשבעה נקיים</h4>
+      <p>מומלץ ללכת במהלך שבעת הנקיים עם מגן תחתון, תחבושת או הלבשה תחתונה צבעונית (דברים שאינם מקבלים טומאה), כדי להימנע מהיטמאות מכתמים קטנים. זאת בהסתמך על שיטת הרב שלמה זלמן אוירבך (בשונה מדעת מכון פועה, המחמירים).</p>
+
+      <h4>דימום חוזר</h4>
+      <p>תופעה נפוצה מאוד: האישה רואה ימים נקיים ומבצעת הפסק טהרה, ואז ביום השלישי או הרביעי לנקיים חוזר דימום משמעותי. חשוב להכיר את התופעה: היא חלק טבעי מהחלמת הרחם. כשזה קורה, יש לשאול רב כיצד להמשיך.</p>
+
+      <h4>גלולות בתקופה זו</h4>
+      <p>מי שנוטלת גלולות: מומלץ להתחיל ליטול אותן ביום השלישי לשבעה נקיים. החתמות והכתמים מופיעים לרוב כחמישה-שישה ימים אחרי תחילת הנטילה, וכך יופיעו רק אחרי הטבילה ולא יפריעו לשבעת הנקיים.</p>
+    `
+  },
+  {
+    icon:"🤍",
+    title:"2. הגוף, הנפש והזוגיות",
+    subtitle:"חזרה לקרבה אחרי לידה",
+    html:`
+      <h4>מה עובר על האישה</h4>
+      <ul>
+        <li><strong>שינוי גופני עמוק:</strong> בטן הריונית שנשארת כמו בחודש שלישי, סימני מתיחה.</li>
+        <li><strong>שינוי נפשי:</strong> המעבר מאישה לאם.</li>
+        <li><strong>שינוי הורמונלי קיצוני.</strong></li>
+      </ul>
+
+      <h4>הורמונים וחשק</h4>
+      <p><strong>פרולקטין</strong>, ההורמון שאחראי על ייצור החלב, מדכא את החשק המיני ומשפיע על מצב הרוח ועל התחושות הגופניות.</p>
+      <p><strong>ירידה באסטרוגן</strong> אחרי הלידה גורמת לעיתים ליובש נרתיקי, ולכן מומלץ להשתמש בחומרי סיכוך להקלה על חיי האישות.</p>
+
+      <h4>דכדוך ודיכאון אחרי לידה</h4>
+      <p>תופעה מוכרת שדורשת ערנות. הכתובת הראשונה לעזרה וליעוץ היא אחיות טיפת חלב.</p>
+
+      <h4>חזרה לחיי אישות</h4>
+      <p>החזרה צריכה להיות הדרגתית ובשיחה פתוחה (אפשר להתחיל בחיבור חלקי, כניסה חלקית). חשוב לשמור על שגרה זוגית תומכת, "דייט שבועי" ונופש שנתי, מתוך ההבנה שהבסיס לגידול ילדים הוא קשר זוגי אוהב ויציב.</p>
+
+      <h4>הרחקות בזמן הנקה</h4>
+      <p>מותר לבני הזוג לשבת יחד כשהאישה מניקה, בהקפדה על כיסוי המקומות המכוסים (או כדעת הרב לבנון, המתיר לבעל לראות בזמן הנקה).</p>
+      <p>העברת התינוק מיד ליד: לכתחילה יש להניחו על המיטה או הספה. אבל בלילה, כשיש צורך, במצבי עייפות או כדי למנוע מבוכה בנוכחות אנשים, יש על מה לסמוך להקל.</p>
+    `
+  },
+  {
+    icon:"⚖️",
+    title:"3. רווח בין לידות: העיקרון",
+    subtitle:"המצווה, והצורך בהתאוששות",
+    html:`
+      <h4>המצווה והמתח הבסיסי</h4>
+      <ul>
+        <li><strong>פרו ורבו:</strong> מצווה מן התורה ללדת בן ובת.</li>
+        <li><strong>אחרי שקויימה:</strong> "לערב אל תנח ידך" ו"לשבת יצרה" (להמשיך ולהוסיף ילדים בעולם) הן מצוות מדרבנן. הן קלות יותר ומאפשרות גמישות רבה יותר בריווח.</li>
+      </ul>
+
+      <h4>למה רווח?</h4>
+      <ul>
+        <li><strong>שיקום הגוף:</strong> חז"ל מתארים שאחרי הלידה איבריה של האישה מתפרקים, ונפשה חוזרת אליה בהדרגה עד כעשרים וארבעה חודשים.</li>
+        <li><strong>משמעות "רבו":</strong> הדרשנים והפוסקים מציינים שהמילה נדרשת מלשון "רביה": גידול הילדים בנחת, בשמחה ובתשומת לב ראויה, ולא הולדה ברצף בלתי מבוקר.</li>
+        <li><strong>בפסיקת ההלכה:</strong> הפסיקה המקובלת (הרב הנקין בשם הרב יעקב אריאל בשו"ת "אהלה של תורה", וכן החזון איש) מאפשרת ואף ממליצה על רווח של שנה עד שנתיים בין לידות, לצורך התאוששות גופנית ונפשית.</li>
+        <li><strong>היבט רפואי:</strong> מחקרים וגישות רפואיות (כגון עמדת ד"ר יוסי לוי) מדגישים את חשיבות מנוחת הגוף בין הריונות, כדי להפחית סיכונים רפואיים (למשל משקל לידה נמוך).</li>
+      </ul>
+    `
+  },
+  {
+    icon:"🗓️",
+    title:"4. ניהול מעשי של תקופת המניעה",
+    subtitle:"תקופות קצובות, התייעצות וסדר שיקולים",
+    html:`
+      <h4>חלוקה לתקופות קצובות</h4>
+      <p>מומלץ לקבוע תקופת מניעה קצובה (למשל חצי שנה ראשונה), ובסופה לעצור ולבחון מחדש את כוחות בני הזוג ואת המוכנות להריון נוסף.</p>
+
+      <h4>התייעצות רבנית</h4>
+      <p>בכל מקרה שבו מתוכננת מניעה מעבר לשנה, מומלץ להתייעץ עם פוסק הלכה.</p>
+
+      <h4>סדר השיקולים</h4>
+      <ol>
+        <li><strong>שיקולים פנים-משפחתיים (ראשוניים):</strong> כוחה הגופני והנפשי של האישה, היכולת לגדל את הילד הקיים, והתחושה הזוגית.</li>
+        <li><strong>שיקולים משניים:</strong> לימודים, צבא, קריירה ומצב כלכלי. גם שיקולים אלה לגיטימיים הלכתית (לדברי הרב אריאל, "יש מצווה לא להיות עני"), אך הם דורשים שיקול דעת זהיר והתייעצות.</li>
+      </ol>
+    `
+  },
+  {
+    icon:"🚫",
+    title:"5. אמצעים שאסורים הלכתית",
+    subtitle:"סירוס, קונדום ומשגל נסוג",
+    html:`
+      <ul>
+        <li><strong>סירוס:</strong> איסור חמור ומוחלט על אמצעים בלתי הפיכים, כמו קשירת חצוצרות אצל האישה, או חיתוך או קשירת צינורות הזרע אצל הגבר.</li>
+        <li><strong>קונדום (הוצאת זרע לבטלה / חציצה):</strong> איסור מוחלט על שימוש בקונדום, למעט מקרים חריגים ונדירים מאוד בהוראת פוסק.</li>
+        <li><strong>משגל נסוג:</strong> אסור הלכתית ("מעשה ער ואונן"), וגם אינו יעיל מבחינה רפואית.</li>
+      </ul>
+    `
+  },
+  {
+    icon:"🤱",
+    title:"6. הנקה כמניעה, והמעבר לגלולות",
+    subtitle:"על מה אפשר להסתמך ומתי עוברים",
+    html:`
+      <h4>כמה יעילה ההנקה?</h4>
+      <p>הנקה מלאה מונעת הריון בשיעור של כ-90%–95% בפועל (יש מקורות המציינים 98%), אך אינה מניעה מוחלטת. זוג שחשוב לו מאוד למנוע הריון, מסיבות רפואיות או נפשיות, לא יסתמך על הנקה בלבד.</p>
+
+      <h4>ארבעת התנאים של מכון פועה</h4>
+      <p>אפשר להסתמך על הנקה כמניעה טובה בחצי השנה הראשונה רק כשארבעת התנאים האלה מתקיימים יחד:</p>
+      <ol>
+        <li>הנקה מלאה (ולא שאיבות בלבד או שילוב של תחליפי חלב).</li>
+        <li>בתוך חצי שנה מהלידה.</li>
+        <li>לא התקבל מחזור מאז הלידה.</li>
+        <li>שילוב של קוטלי זרע (כגון VCF) בכל תשמיש.</li>
+      </ol>
+
+      <h4>בחצי השנה הראשונה</h4>
+      <p>משתמשים בגלולות פרוגסטרון בלבד (POP), כי הורמון האסטרוגן שבגלולות הרגילות פוגע בייצור החלב.</p>
+
+      <h4>אחרי חצי שנה</h4>
+      <p>לפי המלצת ארגון הבריאות העולמי (WHO), אפשר לעבור לגלולות משולבות (המכילות אסטרוגן ופרוגסטרון) או לאמצעים משולבים אחרים, כמו מדבקת אווה או טבעת נובארינג.</p>
+      <p><strong>ההגיון במעבר:</strong> בגיל חצי שנה התינוק מתחיל לאכול מזון משלים, ולכן הפגיעה בחלב פחות קריטית. הגלולות המשולבות מייצבות את רירית הרחם ופותרות את בעיית הכתמים. בגלולות משולבות אפשר גם לחבר חפיסות זו לזו כדי להאריך את ימי הטהרה.</p>
+    `
+  },
+  {
+    icon:"💊",
+    title:"7. גלולות פרוגסטרון בלבד (POP)",
+    subtitle:"למשל סרזת, דימילה",
+    html:`
+      <ul>
+        <li><strong>מעמד הלכתי:</strong> המקום הראשון והמועדף ביותר, לפי רוב הפוסקים ומכון פועה.</li>
+        <li><strong>איך זה עובד:</strong> מכילות פרוגסטרון בלבד, שמונע ביוץ ומסמיך את ריר צוואר הרחם.</li>
+        <li><strong>יעילות:</strong> כ-99% בשימוש מדויק.</li>
+        <li><strong>יתרונות:</strong> זולות (כ-15–20 ש"ח לחודש), קלות לשימוש, בטוחות, מותרות בהנקה, והפיכות מיידית.</li>
+        <li><strong>חסרונות:</strong> היעדר אסטרוגן גורם לרירית רחם לא יציבה, ומוביל לכתמים ולדימומים לא סדירים אצל כמחצית מהנשים. זה עלול לסבך את הטהרה ואף לאסור.</li>
+      </ul>
+      <h4>הנחיות לשימוש קפדני</h4>
+      <ol>
+        <li>להתחיל ליטול ביום השלישי לשבעה נקיים.</li>
+        <li>להקפיד על שעת נטילה קבועה בכל יום (למשל בדיוק ב-15:00).</li>
+        <li>להקפיד על הלכות כתמים: ללכת עם בגד צבעוני ומגן תחתון, ולא להסתכל על נייר טואלט.</li>
+      </ol>
+    `
+  },
+  {
+    icon:"🛡️",
+    title:"8. התקן תוך רחמי – נחושת",
+    subtitle:"IUD ללא הורמונים",
+    html:`
+      <ul>
+        <li><strong>מעמד הלכתי:</strong> מותר, והוא במקום השני בדירוג ההלכתי (נחשב מעט פחות מגלולות, בשל חשש רחוק למניעת השתרשות של ביצית מופרית).</li>
+        <li><strong>איך זה עובד:</strong> התקן בצורת T עם חוט נחושת מלופף. הוא יוצר סביבה עוינת לזרע (תגובה דלקתית מקומית וריר סמיך) ומונע השתרשות ברחם.</li>
+        <li><strong>יעילות:</strong> כ-99%, גבוהה ביותר, במתכונת "שגר ושכח".</li>
+        <li><strong>יתרונות:</strong> ללא הורמונים כלל, אינו משפיע על מצב הרוח, על החשק או על המערכת ההורמונלית, ומתאים לטווח ארוך (שנה ומעלה).</li>
+        <li><strong>חסרונות:</strong> התקנה והוצאה אצל רופא בלבד, עלות, ועלול להאריך את ימי הווסת (מחמישה ימים לשבעה-שמונה) ולהגביר כאבי מחזור, וכך לקצר את ימי הטהרה.</li>
+      </ul>
+    `
+  },
+  {
+    icon:"🛡️",
+    title:"9. התקן תוך רחמי – הורמונלי",
+    subtitle:"מירנה, קיילינה, סקיילה",
+    html:`
+      <ul>
+        <li><strong>מעמד הלכתי:</strong> מותר.</li>
+        <li><strong>איך זה עובד:</strong> מפריש פרוגסטרון באופן מקומי בתוך חלל הרחם, מדלל את רירית הרחם ומונע את בנייתה.</li>
+        <li><strong>יעילות:</strong> מעל 99%.</li>
+        <li><strong>יתרונות:</strong> ההורמון מופרש מקומית בלבד ואינו נכנס למחזור הדם הכללי. מקטין את הווסת או מעלים אותה לחלוטין לתקופה ארוכה.</li>
+        <li><strong>חסרונות:</strong> דורש התקנה אצל רופא, יקר, ועלול לגרום לכתמים מרובים בחודשים הראשונים (תקופת הסתגלות).</li>
+        <li><strong>המלצת שימוש:</strong> בדרך כלל אינו מומלץ למניעה קצרה (חצי שנה עד שנה אחרי לידה ראשונה), אלא למניעה ממושכת של שנתיים עד ארבע שנים.</li>
+      </ul>
+    `
+  },
+  {
+    icon:"💧",
+    title:"10. קוטלי זרע",
+    subtitle:"VCF, נרות פורמטקס, ג'ל קיה, סמארט צ'ויס",
+    html:`
+      <ul>
+        <li><strong>מעמד הלכתי:</strong> מותרים לשימוש לפי רוב הפוסקים (המקום השלישי בדירוג).</li>
+        <li><strong>איך זה עובד:</strong> חומרים כימיים הפוגעים במעטפת הזרע, בזנב שלו (ATP) או במטען הגנטי שלו, ובכושר השחייה שלו.</li>
+        <li><strong>יעילות:</strong> נמוכה יחסית. כ-70%–80% בפועל (בשימוש מיטבי כ-90%–94%).</li>
+        <li><strong>יתרונות:</strong> ללא הורמונים, זמין בסופר-פארם ללא מרשם, שימוש ממוקד וללא התערבות רפואית.</li>
+        <li><strong>חסרונות:</strong> יעילות נמוכה כשהוא לבדו, עלול לגרום לגירוי, לצריבה או ליובש נרתיקי, ופוגע בספונטניות (דף VCF דורש המתנה של כ-15 דקות להתמוססות).</li>
+      </ul>
+    `
+  },
+  {
+    icon:"⭕",
+    title:"11. דיאפרגמה",
+    subtitle:"מחלוקת בין הפוסקים",
+    html:`
+      <ul>
+        <li><strong>מעמד הלכתי:</strong> במחלוקת (המקום הרביעי בדירוג). דורשת שאלת רב פרטנית.</li>
+      </ul>
+      <p><strong>אוסרים:</strong> הרב מרדכי אליהו ומכון פועה (רואים בה חציצה הדומה לקונדום).</p>
+      <p><strong>מתירים וממליצים:</strong> הרב דוב ליאור והרב נחום אליעזר רבינוביץ' (רואים בה חסימה פנימית שאינה חוצצת בביאה כדרך כל הארץ).</p>
+      <ul>
+        <li><strong>איך זה עובד:</strong> כיפת סיליקון גמישה שמונחת על צוואר הרחם ויוצרת מחסום מכני לזרע.</li>
+        <li><strong>יעילות:</strong> בינונית (80%–90%). מומלץ לשלב עם קוטל זרע כדי להגביר את היעילות.</li>
+        <li><strong>יתרונות:</strong> ללא הורמונים, שליטה מלאה של האישה, ואפשר להפסיק מתי שרוצים.</li>
+        <li><strong>חסרונות:</strong> דורשת התאמה אישית אצל מתאימת דיאפרגמות מוסמכת והדרכה מעשית, ויעילותה בינונית.</li>
+      </ul>
+    `
+  },
+  {
+    icon:"🌡️",
+    title:"12. מודעות לפוריות / ימים בטוחים",
+    subtitle:"מניעה בדרך של הימנעות",
+    html:`
+      <ul>
+        <li><strong>מעמד הלכתי:</strong> מעולה. מניעה פסיבית, בדרך של "שב ואל תעשה". כשהיא כרוכה בהימנעות בליל הטבילה, נדרשת הסכמת שני בני הזוג (מחילה על מצוות עונה).</li>
+        <li><strong>איך זה עובד:</strong> מזהים את חלון הפוריות: יום הביוץ, והימים שלפניו שבהם הזרע עדיין חי (כ-3–5 ימים), ויום אחריו. מתרחקים מחיבור בימים האלה.</li>
+      </ul>
+      <div class="callout gold">
+        <strong>מגבלה קריטית:</strong> השיטה אינה רלוונטית לחלוטין אחרי לידה, כי אין מחזור סדיר ואין עוגן לחישוב מועד הביוץ.
+      </div>
+      <p>לטווח ארוך השיטה דורשת קורס מקצועי אצל מדריכה (מדידת חום שחרית, מעקב אחרי ריר צווארי) ואיפוק זוגי רב: כשבעה ימי הימנעות סביב הביוץ.</p>
+    `
+  },
+  {
+    icon:"🧭",
+    title:"13. דירוג והתאמה אישית",
+    subtitle:"איך בוחרים אמצעי",
+    html:`
+      <h4>סדר העדיפויות ההלכתי המקובל</h4>
+      <ol>
+        <li>גלולות (POP בהנקה, ומשולבות בהמשך).</li>
+        <li>התקן תוך רחמי (נחושת או הורמונלי).</li>
+        <li>קוטלי זרע.</li>
+        <li>דיאפרגמה.</li>
+      </ol>
+      <h4>עקרון ההתאמה האישית</h4>
+      <ul>
+        <li><strong>אין אמצעי מניעה מושלם:</strong> לכל אמצעי יש יתרונות, חסרונות ומחיר גופני או הלכתי.</li>
+        <li><strong>התאמה אישית מלאה:</strong> מה שהיה מצוין לחברה או לאחות עלול להיות לא מתאים לאישה אחרת.</li>
+        <li><strong>קבלת ההחלטה:</strong> היא תלויה ברמת הוודאות הנדרשת למניעה, ברגישות גופנית להורמונים, בנטייה לכתמים ובנוחות הזוגית.</li>
+      </ul>
+    `
+  },
+  {
+    icon:"📚",
+    title:"14. מסרים מחזקים וספרות להרחבה",
+    subtitle:"בלי רגשות אשמה, ומה כדאי לקרוא",
+    html:`
+      <h4>לבנות את הבית מתוך שמחה</h4>
+      <ul>
+        <li><strong>גידול ילדים בנחת:</strong> המטרה היא לבנות משפחה מתוך שמחה, שלווה ויציבות זוגית.</li>
+        <li><strong>בלי ייסורי מצפון:</strong> הורים אינם צריכים להסתובב עם ייסורי מצפון. עליהם להיות בטוחים בהורותם ולדאוג לשמחה ולנחת בבית.</li>
+      </ul>
+      <h4>ספרות מומלצת</h4>
+      <ul>
+        <li><strong>"ספר פועה" (כרך ג', הריון ולידה):</strong> האנציקלופדיה המקיפה והמקצועית ביותר מבחינה הלכתית ורפואית.</li>
+        <li><strong>"עת ללדת" (ד"ר חנה קטן):</strong> סקירה תמציתית במבט רגשי וחווייתי.</li>
+        <li><strong>"שו"ת פועה":</strong> דיונים, שאלות ותשובות ופסיקות רבנים.</li>
+        <li><strong>שו"ת "אהלה של תורה" (הרב יעקב אריאל):</strong> תשובות מפורטות בהלכות מניעת הריון ורווח בין לידות.</li>
+      </ul>
+    `
+  }
+];
+
+const unitsEl = document.getElementById('units');
+UNITS.forEach((u,i)=>{
+  const div = document.createElement('div');
+  div.className = 'unit';
+  div.innerHTML = `
+    <div class="unit-header" data-i="${i}">
+      <span class="icon">${u.icon}</span>
+      <span class="title">${u.title}<small>${u.subtitle}</small></span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="unit-body"><div class="unit-inner">${u.html}</div></div>
+  `;
+  unitsEl.appendChild(div);
+});
+
+unitsEl.addEventListener('click', (e)=>{
+  const header = e.target.closest('.unit-header');
+  if(!header) return;
+  const unit = header.closest('.unit');
+  const body = unit.querySelector('.unit-body');
+  const isOpen = unit.classList.contains('open');
+  if(isOpen){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(()=>{ body.style.maxHeight = '0px'; });
+    unit.classList.remove('open');
+  } else {
+    unit.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function te(){
+      if(unit.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', te);
+    });
+  }
+});
+
+/* GATE — אותו מפתח וקוד כמו בעמוד "הריון ולידה": מי שנכנס לאחד נכנס לשניהם */
+(function(){
+  var GATE_KEY = 'pregnancy-birth-unlocked';
+  var CODE = 'hatanim';
+  var gateScreen = document.getElementById('gateScreen');
+  var pageContent = document.getElementById('pageContent');
+  var input = document.getElementById('gateInput');
+  var submitBtn = document.getElementById('gateSubmit');
+  var errorMsg = document.getElementById('gateError');
+  document.getElementById('gateWa').href = 'https://wa.me/972528990131?text=' +
+    encodeURIComponent('היי דביר, אני מנסה להיכנס לעמוד "הפרדה בין לידות" ואין לי קוד גישה. אפשר לשלוח לי?');
+
+  function unlock(){
+    gateScreen.style.display = 'none';
+    pageContent.style.display = 'block';
+    try{ localStorage.setItem(GATE_KEY, '1'); }catch(e){}
+    if (typeof gtag === 'function') gtag('event', 'gate_unlock', { gate: 'birth-spacing' });
+  }
+
+  var alreadyUnlocked = false;
+  try{ alreadyUnlocked = localStorage.getItem(GATE_KEY) === '1'; }catch(e){}
+  if(alreadyUnlocked){
+    unlock();
+  } else {
+    gateScreen.style.display = 'block';
+  }
+
+  function tryUnlock(){
+    var val = (input.value || '').trim().toLowerCase();
+    if(val === CODE){
+      errorMsg.style.display = 'none';
+      unlock();
+    } else {
+      errorMsg.style.display = 'block';
+    }
+  }
+
+  submitBtn.addEventListener('click', tryUnlock);
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); tryUnlock(); }
+  });
+})();
+</script>
+</body>
+</html>
