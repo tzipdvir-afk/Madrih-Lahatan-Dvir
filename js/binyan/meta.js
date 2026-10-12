@@ -34,3 +34,7 @@ window.BINYAN.authors = {
   kook: 'הראי"ה קוק',
   agada: 'חז"ל – מדרשי אגדה'
 };
+/* תמונה קטנה לכפתור המחבר (נתיב יחסי לעמוד). מחבר בלי תמונה מוצג בלי עיגול. */
+window.BINYAN.authorImg = {
+  agada: '../media/images/author-agada-book.svg'
+};

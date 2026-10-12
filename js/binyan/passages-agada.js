@@ -68,4 +68,25 @@ window.BINYAN.passages.push(
   qSelf:'מי השפיע עלי הכי הרבה, ובאיזה כיוון?',
   qCouple:'באיזה דבר אחד כל אחד מאיתנו נעשה גרסה טובה יותר של עצמו בזכות השני?' }
 );
-window.BINYAN.passages.forEach(function(p){ if (p.words == null) p.words = p.paras.join(' ').split(/\s+/).length; });
+/* מקורות בספריא (u = נתיב בספריא). כל הפניה נבדקה מול הטקסט בספריא ומול המקורות שמצוינים באתר האגדה. */
+(function(){
+  var SRC = {
+    471: [{t:'בראשית רבה סח, ד', u:'Bereshit_Rabbah.68.4'}, {t:'ויקרא רבה ח, א', u:'Vayikra_Rabbah.8.1'}],
+    540: [{t:'מועד קטן יח ע"ב', u:'Moed_Katan.18b'}],
+    651: [{t:'תענית כו ע"ב', u:'Taanit.26b'}, {t:'תענית לא ע"א', u:'Taanit.31a'}],
+    408: [{t:'שבת קנו ע"ב', u:'Shabbat.156b'}],
+    756: [{t:'תענית כד ע"א', u:'Taanit.24a'}],
+    102: [{t:'קידושין לב ע"ב', u:'Kiddushin.32b'}],
+    101: [{t:'בראשית רבה כו, ד', u:'Bereshit_Rabbah.26.4'}],
+    441: [{t:'מדרש תהלים נט, ג', u:'Midrash_Tehillim.59.3'}, {t:'ברכות ח ע"א', u:'Berakhot.8a'}],
+    539: [{t:'כתובות סב ע"ב', u:'Ketubot.62b'}],
+    145: [{t:'ויקרא רבה כח, ב', u:'Vayikra_Rabbah.28.2'}, {t:'קהלת רבה א, ג', u:'Kohelet_Rabbah.1.3'}],
+    542: [{t:'נדרים סו ע"א', u:'Nedarim.66a'}, {t:'נדרים סו ע"ב', u:'Nedarim.66b'}],
+    215: [{t:'איכה רבה ג, ז', u:'Eikhah_Rabbah.3.7'}],
+    541: [{t:'בראשית רבה יז, ז', u:'Bereshit_Rabbah.17.7'}]
+  };
+  window.BINYAN.passages.forEach(function(p){
+    if (p.nid && SRC[p.nid]) p.src = SRC[p.nid];
+    if (p.words == null) p.words = p.paras.join(' ').split(/\s+/).length;
+  });
+})();

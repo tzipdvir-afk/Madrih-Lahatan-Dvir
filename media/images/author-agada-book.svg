@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="ספר עתיק">
+  <rect width="120" height="120" fill="#F3E7CB"/>
+  <!-- pages block -->
+  <rect x="30" y="26" width="64" height="74" rx="3" fill="#E9D9AE"/>
+  <g stroke="#B79B58" stroke-width="1" opacity=".75">
+    <line x1="92" y1="32" x2="92" y2="96"/><line x1="90" y1="31" x2="90" y2="97"/><line x1="88" y1="30" x2="88" y2="98"/>
+  </g>
+  <!-- leather cover -->
+  <path d="M24 22h66a5 5 0 0 1 5 5v72a5 5 0 0 1-5 5H24a6 6 0 0 1-6-6V28a6 6 0 0 1 6-6z" fill="#6B3F22"/>
+  <path d="M24 22h66a5 5 0 0 1 5 5v72a5 5 0 0 1-5 5H24a6 6 0 0 1-6-6V28a6 6 0 0 1 6-6z" fill="none" stroke="#3E2312" stroke-width="2"/>
+  <!-- spine -->
+  <rect x="18" y="22" width="12" height="82" rx="4" fill="#4E2C16"/>
+  <g stroke="#C9A227" stroke-width="2" stroke-linecap="round">
+    <line x1="18" y1="40" x2="30" y2="40"/><line x1="18" y1="63" x2="30" y2="63"/><line x1="18" y1="86" x2="30" y2="86"/>
+  </g>
+  <!-- gold frame + ornament -->
+  <rect x="38" y="31" width="49" height="64" rx="2" fill="none" stroke="#C9A227" stroke-width="2"/>
+  <rect x="42" y="35" width="41" height="56" rx="1" fill="none" stroke="#C9A227" stroke-width="1" opacity=".8"/>
+  <g fill="none" stroke="#E4C878" stroke-width="2.2" stroke-linecap="round">
+    <path d="M62.5 52 L69 63 L62.5 74 L56 63 Z"/>
+    <circle cx="62.5" cy="63" r="3" fill="#E4C878" stroke="none"/>
+  </g>
+  <g fill="#C9A227"><circle cx="46" cy="39" r="1.8"/><circle cx="79" cy="39" r="1.8"/><circle cx="46" cy="87" r="1.8"/><circle cx="79" cy="87" r="1.8"/></g>
+  <!-- clasp -->
+  <rect x="88" y="55" width="12" height="16" rx="2" fill="#C9A227"/>
+  <circle cx="94" cy="63" r="2" fill="#6B3F22"/>
+</svg>
