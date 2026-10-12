@@ -14,8 +14,8 @@
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-<title>בנין עדי עד — המדריך לחתן</title>
-<meta name="description" content="פסקאות נבחרות מדברי הראי״ה קוק על הזוגיות, הבית וקדושת חיי המשפחה — עם שאלות לשיחה אישית וזוגית.">
+<title>לומדים יחד על הביחד — המדריך לחתן</title>
+<meta name="description" content="לימוד זוגי ממחברים שונים: פסקאות ומדרשים על הזוגיות, הבית ושלום הבית — עם שאלות לשיחה אישית וזוגית.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -127,6 +127,8 @@
     color:var(--navy-soft); background:none; border:0; padding:4px 0; cursor:pointer;
   }
   .p-source{ margin-top:12px; font-size:.82rem; color:var(--muted); }
+  .p-source + .p-source{ margin-top:2px; }
+  a.p-link{ color:var(--navy-soft); font-weight:600; }
   sup.fn{
     font-family:'Heebo',sans-serif; font-size:.62em; font-weight:700; color:var(--gold);
     cursor:pointer; margin:0 1px; padding:0 2px;
@@ -176,12 +178,12 @@
 
   <header class="app-header">
     <div class="eyebrow">כלים לתקשורת זוגית</div>
-    <h1>בנין עדי עד</h1>
-    <p class="sub">מדברי הראי"ה קוק על הזוגיות, הבית וקדושת חיי המשפחה</p>
+    <h1>לומדים יחד על הביחד</h1>
+    <p class="sub">לימוד זוגי ממחברים שונים</p>
   </header>
 
   <div class="intro-card">
-    <p>פסקאות נבחרות מדברי הראי"ה קוק. אפשר להגריל פסקה, או לבחור לפי נושא ואורך. מתחת לכל פסקה שתי שאלות לשיחה: אחת לעצמי ואחת לשנינו.</p>
+    <p>פסקאות ומדרשים נבחרים על הזוגיות, הבית ושלום הבית. אפשר להגריל פסקה, או לבחור לפי מחבר, נושא ואורך. מתחת לכל פסקה שתי שאלות לשיחה: אחת לעצמי ואחת לשנינו.</p>
   </div>
 
   <button class="primary-btn" id="randomBtn" type="button">🎲 פסקה אקראית</button>
@@ -222,6 +224,7 @@
 <script src="../js/binyan/passages-apart.js"></script>
 <script src="../js/binyan/passages-covenant.js"></script>
 <script src="../js/binyan/passages-kedusha.js"></script>
+<script src="../js/binyan/passages-agada.js"></script>
 <script>
 (function(){
   var B = window.BINYAN;
@@ -402,6 +405,12 @@
 
     if (p.source){
       var src = div('p-source'); src.textContent = 'מקור: ' + p.source; art.appendChild(src);
+    }
+    if (p.link){
+      var lk = document.createElement('a');
+      lk.className = 'p-link'; lk.href = p.link; lk.target = '_blank'; lk.rel = 'noopener';
+      lk.textContent = 'לסיפור המלא ↗';
+      var lw = div('p-source'); lw.appendChild(lk); art.appendChild(lw);
     }
 
     if (p.notes && p.notes.length){

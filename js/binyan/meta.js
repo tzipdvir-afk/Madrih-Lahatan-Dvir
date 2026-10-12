@@ -31,5 +31,6 @@ window.BINYAN.topics = [
   }
 ];
 window.BINYAN.authors = {
-  kook: 'הראי"ה קוק'
+  kook: 'הראי"ה קוק',
+  agada: 'חז"ל – מדרשי אגדה'
 };
