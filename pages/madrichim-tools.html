@@ -187,6 +187,8 @@
   .feature-card .chev{ flex:none; color:var(--gold); font-size:20px; transition:transform .25s ease; }
   .feature-card.open .chev{ transform:rotate(180deg); }
 
+  .couple-video{ margin:0 0 16px; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#000; }
+  .couple-video video{ display:block; width:100%; max-height:70vh; background:#000; }
   .gift-panel{ margin-top:14px; }
   .gift-intro{ margin:0 0 12px; font-size:.92rem; color:var(--muted); text-align:center; }
   .subtabs{ display:flex; flex-wrap:wrap; gap:7px; justify-content:center; margin-bottom:14px; }
@@ -346,6 +348,9 @@
   </div>
 
   <div class="screen" id="screen-couple" hidden>
+    <figure class="couple-video">
+      <video src="../media/videos/gift-ideas.mp4#t=0.5" controls playsinline preload="metadata"></video>
+    </figure>
     <div class="link-grid">
       <button class="tool-link feature-card" id="giftOpen" type="button" aria-expanded="false" aria-controls="giftPanel">
         <span class="icon">🎁</span>
