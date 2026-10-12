@@ -338,6 +338,35 @@
   }
   @media (prefers-reduced-motion:reduce){ .iv-shine,.iv-ring{ animation:none; display:none; } }
 
+  /* עיגול "שמח תשמח" באמצע ארבעת הכרטיסיות העליונות */
+  .grid{ position:relative; }
+  .smach{
+    position:absolute; z-index:5; display:none; text-decoration:none;
+    transform:translate(-50%,-50%); -webkit-tap-highlight-color:transparent;
+  }
+  .smach.ready{ display:block; }
+  .smach-circle{
+    position:relative; display:block; width:min(104px, 27vw); height:min(104px, 27vw);
+    border-radius:50%; overflow:hidden; background:#fff;
+    border:3px solid var(--gold);
+    box-shadow:0 0 0 4px var(--bg), 0 8px 20px rgba(31,42,68,.28);
+  }
+  .smach-circle{ display:flex; align-items:center; justify-content:center; }
+  .smach-circle img{ width:80%; height:80%; object-fit:cover; display:block; border-radius:50%; }
+  .smach-ring{
+    position:absolute; left:0; top:0; width:100%; height:100%; border-radius:50%;
+    border:2px solid var(--gold-soft); pointer-events:none; animation:smachRing 4s ease-out infinite;
+  }
+  @keyframes smachRing{ 0%,60%{ transform:scale(1); opacity:0; } 66%{ opacity:.9; } 100%{ transform:scale(1.3); opacity:0; } }
+  .smach-cap{
+    position:absolute; left:50%; bottom:-9px; transform:translateX(-50%);
+    background:var(--navy); color:var(--gold-soft); font-size:12.5px; font-weight:700;
+    padding:3px 12px; border-radius:999px; white-space:nowrap;
+    box-shadow:0 3px 8px rgba(31,42,68,.3);
+  }
+  .smach:active .smach-circle{ transform:scale(.95); }
+  @media (prefers-reduced-motion:reduce){ .smach-ring{ animation:none; display:none; } }
+
   .video-modal{
     position:fixed; inset:0; z-index:1000; display:none;
     align-items:center; justify-content:center;
@@ -436,6 +465,12 @@
       <div class="label">הפרדה בין לידות</div>
     </a>
 
+    <a class="smach" id="smach" href="pages/smach-tismach.html" aria-label="שמח תשמח">
+      <span class="smach-circle"><img src="media/images/home-smach-tismach.jpeg" alt="" decoding="async"></span>
+      <span class="smach-ring"></span>
+      <span class="smach-cap">שמח תשמח</span>
+    </a>
+
   </div>
 
   <div class="no-results" id="noResults">לא נמצאו נושאים מתאימים</div>
@@ -474,7 +509,30 @@
       if (match) visible++;
     });
     noResults.style.display = visible === 0 ? 'block' : 'none';
+    placeSmach();
   });
+
+  /* העיגול "שמח תשמח" יושב במרכז ארבעת הכרטיסיות הראשונות מתחת לכרטיסיית ההדרכה */
+  var smach = document.getElementById('smach');
+  var grid = smach.parentNode;
+  function placeSmach(){
+    var four = cards.filter(function(c){ return !c.classList.contains('featured'); }).slice(0, 4);
+    var ok = four.length === 4 && !input.value.trim() && four.every(function(c){ return c.style.display !== 'none'; });
+    if (!ok){ smach.classList.remove('ready'); return; }
+    var g = grid.getBoundingClientRect();
+    var l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
+    four.forEach(function(c){
+      var rc = c.getBoundingClientRect();
+      l = Math.min(l, rc.left); t = Math.min(t, rc.top); r = Math.max(r, rc.right); b = Math.max(b, rc.bottom);
+    });
+    smach.style.left = ((l + r) / 2 - g.left) + 'px';
+    smach.style.top = ((t + b) / 2 - g.top) + 'px';
+    smach.classList.add('ready');
+  }
+  window.addEventListener('resize', placeSmach);
+  window.addEventListener('load', placeSmach);
+  if (window.ResizeObserver) new ResizeObserver(placeSmach).observe(grid);
+  placeSmach();
 })();
 
 (function(){
