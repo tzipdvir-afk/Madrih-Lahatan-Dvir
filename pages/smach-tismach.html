@@ -83,6 +83,24 @@
   }
   .yt-btn.primary{ background:var(--navy); color:#fff; border-color:var(--navy); }
 
+  .sec-title{ font-size:1.15rem; color:var(--navy); margin:22px 2px 12px; }
+  .clips{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:6px; }
+  .clips video{
+    width:min(250px, 100%); aspect-ratio:9/16; background:#000; border-radius:14px;
+    box-shadow:var(--shadow); object-fit:contain;
+  }
+  .pics{ display:grid; grid-template-columns:1fr; gap:14px; }
+  .pic{
+    padding:0; border:0; background:var(--card); border-radius:16px; overflow:hidden; cursor:zoom-in;
+    box-shadow:var(--shadow); border:1px solid rgba(43,38,32,0.05);
+  }
+  .pic img{ width:100%; display:block; }
+  .lb{
+    position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.88);
+    display:flex; align-items:center; justify-content:center; padding:14px; cursor:zoom-out;
+  }
+  .lb img{ max-width:100%; max-height:100%; border-radius:8px; }
+
   /* חלון יוטיוב צף */
   .fpl{
     position:fixed; z-index:50; left:12px; bottom:12px; width:min(330px, calc(100vw - 24px));
@@ -115,12 +133,26 @@
     <img src="../media/images/smach-tismach-hero.jpeg" alt="זוג צוחק יחד מול הטלפון">
   </div>
 
+  <h2 class="sec-title">🎬 סרטונים</h2>
   <div id="items"></div>
 
-  <div class="soon-card" id="soonCard">
+  <div class="clips">
+    <video src="../media/videos/smach-3.mp4#t=0.5" controls playsinline preload="metadata"></video>
+    <video src="../media/videos/smach-4.mp4#t=0.5" controls playsinline preload="metadata"></video>
+  </div>
+
+  <h2 class="sec-title">🖼️ תמונות</h2>
+  <div class="pics">
+    <button type="button" class="pic" data-src="../media/images/smach-1.jpeg"><img src="../media/images/smach-1.jpeg" alt="שלט: סגולה לאריכות ימים לומר: את צודקת" loading="lazy" decoding="async"></button>
+    <button type="button" class="pic" data-src="../media/images/smach-2.jpeg"><img src="../media/images/smach-2.jpeg" alt="כשהיא אומרת אני מעדיפה שלא אבל תעשה מה שאתה רוצה" loading="lazy" decoding="async"></button>
+  </div>
+
+  <div class="soon-card" id="soonCard" hidden>
     <strong>בקרוב</strong>
     כאן יופיעו קישורים ותמונות משעשעים.
   </div>
+
+  <div class="lb" id="lb" hidden><img id="lbImg" alt=""></div>
 
   <footer class="page-footer">
     המדריך נועד ללימוד עצמי ולליווי הדרכת חתנים בלבד.
@@ -163,7 +195,24 @@ var ITEMS = [
   }
   document.getElementById('fplClose').addEventListener('click', closePlayer);
 
-  if (ITEMS.length) soon.hidden = true;
+  /* תמונות: הגדלה בלחיצה */
+  var lb = document.getElementById('lb');
+  Array.prototype.forEach.call(document.querySelectorAll('.pic'), function(p){
+    p.addEventListener('click', function(){ document.getElementById('lbImg').src = p.getAttribute('data-src'); lb.hidden = false; });
+  });
+  lb.addEventListener('click', function(){ lb.hidden = true; });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') lb.hidden = true; });
+
+  /* סרטונים מקומיים: נגן אחד בכל פעם */
+  var clips = Array.prototype.slice.call(document.querySelectorAll('.clips video'));
+  clips.forEach(function(v){
+    v.addEventListener('play', function(){
+      clips.forEach(function(o){ if (o !== v) o.pause(); });
+      if (!fpl.hidden) closePlayer();
+    });
+  });
+
+  if (!ITEMS.length && !clips.length) soon.hidden = false;
   ITEMS.forEach(function(it){
     var card = document.createElement('div');
     card.className = 'yt-card';
