@@ -36,5 +36,6 @@ window.BINYAN.authors = {
 };
 /* תמונה קטנה לכפתור המחבר (נתיב יחסי לעמוד). מחבר בלי תמונה מוצג בלי עיגול. */
 window.BINYAN.authorImg = {
+  kook: '../media/images/author-kook.jpg',
   agada: '../media/images/author-agada-book.svg'
 };
